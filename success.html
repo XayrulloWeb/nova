@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KINETIC NOIR | Success &amp; FAQ</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#690005",
+                        "tertiary-fixed-dim": "#eac324",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "surface-dim": "#131315",
+                        "background": "#131315",
+                        "surface-container-highest": "#353437",
+                        "tertiary": "#fff5de",
+                        "surface-container-low": "#1b1b1d",
+                        "secondary": "#c6c6c7",
+                        "on-tertiary-fixed": "#231b00",
+                        "on-primary": "#00363a",
+                        "on-primary-fixed": "#002022",
+                        "on-secondary-container": "#b4b5b5",
+                        "surface-bright": "#39393b",
+                        "surface-variant": "#353437",
+                        "on-surface": "#e5e1e4",
+                        "surface-tint": "#00dbe9",
+                        "surface": "#131315",
+                        "primary-container": "#00f0ff",
+                        "primary": "#dbfcff",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "primary-fixed": "#7df4ff",
+                        "on-tertiary": "#3b2f00",
+                        "inverse-primary": "#006970",
+                        "on-tertiary-fixed-variant": "#554500",
+                        "on-secondary": "#2f3131",
+                        "error-container": "#93000a",
+                        "on-surface-variant": "#b9cacb",
+                        "surface-container-high": "#2a2a2c",
+                        "surface-container-lowest": "#0e0e10",
+                        "on-primary-container": "#006970",
+                        "tertiary-fixed": "#ffe179",
+                        "surface-container": "#201f21",
+                        "on-error-container": "#ffdad6",
+                        "on-background": "#e5e1e4",
+                        "inverse-surface": "#e5e1e4",
+                        "outline-variant": "#3b494b",
+                        "on-primary-fixed-variant": "#004f54",
+                        "on-secondary-fixed-variant": "#454747",
+                        "inverse-on-surface": "#303032",
+                        "secondary-container": "#454747",
+                        "secondary-fixed": "#e2e2e2",
+                        "primary-fixed-dim": "#00dbe9",
+                        "outline": "#849495",
+                        "on-tertiary-container": "#715d00",
+                        "tertiary-container": "#fed639",
+                        "error": "#ffb4ab"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-unit": "8px",
+                        "margin-desktop": "60px",
+                        "margin-mobile": "20px",
+                        "gutter-desktop": "24px",
+                        "columns": "12"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Manrope"],
+                        "body-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "display-hero-mobile": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "display-hero": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "display-hero-mobile": ["80px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-md": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "display-hero": ["200px", { "lineHeight": "180px", "letterSpacing": "-0.04em", "fontWeight": "800" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        body {
+            background-color: #0F0F11; /* Enforce lowest surface tier */
+            color: theme('colors.on-surface');
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        
+        .magnetic-btn {
+            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .magnetic-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Custom Scrollbar for Carousel */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* FAQ Accordion Transition */
+        .faq-content {
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .faq-item.active .faq-content {
+            max-height: 500px;
+            opacity: 1;
+        }
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen flex flex-col relative selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-6 border-b border-white/[0.12] bg-transparent backdrop-blur-[40px] bg-white/[0.03]">
+<div class="font-headline-md text-headline-md font-extrabold tracking-tighter text-on-surface">KINETIC NOIR</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:text-primary transition-all duration-300" href="#">Curriculum</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:text-primary transition-all duration-300" href="#">Admissions</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:text-primary transition-all duration-300" href="#">Projects</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-caps text-label-caps active scale-95 transition-transform duration-200" href="#">LAB</a>
+</div>
+<button class="hidden md:block px-6 py-3 rounded-full bg-on-surface text-background font-label-caps text-label-caps hover:bg-primary transition-colors magnetic-btn">Apply Now</button>
+<button class="md:hidden text-on-surface"><span class="material-symbols-outlined">menu</span></button>
+</nav>
+<main class="flex-grow pt-32">
+<!-- Header Section -->
+<section class="px-margin-mobile md:px-margin-desktop py-24 md:py-32 grid grid-cols-1 md:grid-cols-12 gap-gutter-desktop relative z-10">
+<div class="col-span-1 md:col-span-8 md:col-start-3 text-center">
+<h1 class="font-display-hero-mobile text-display-hero-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-8">Outcomes &amp; Inquiries</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Discover where our alumni go and find answers to common questions about the Kinetic Noir experience.</p>
+</div>
+</section>
+<!-- Section 1: Alumni Success Stories Carousel -->
+<section class="py-24 relative overflow-hidden">
+<!-- Background Glow -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary-container/5 blur-[120px] rounded-full pointer-events-none"></div>
+<div class="px-margin-mobile md:px-margin-desktop mb-12 flex justify-between items-end">
+<h2 class="font-headline-md text-headline-md text-on-surface">Alumni Trajectories</h2>
+<div class="hidden md:flex gap-4">
+<button class="w-12 h-12 rounded-full glass-panel flex items-center justify-center text-on-surface hover:text-primary transition-colors hover:border-primary/50" id="carousel-prev">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<button class="w-12 h-12 rounded-full glass-panel flex items-center justify-center text-on-surface hover:text-primary transition-colors hover:border-primary/50" id="carousel-next">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="flex gap-6 overflow-x-auto hide-scrollbar px-margin-mobile md:px-margin-desktop pb-8 snap-x snap-mandatory" id="testimonial-carousel">
+<!-- Card 1 -->
+<div class="min-w-[320px] md:min-w-[480px] glass-panel rounded-lg p-8 snap-start flex flex-col justify-between h-[360px] relative group hover:border-primary/30 transition-colors">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/10 blur-[40px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+<div>
+<span class="material-symbols-outlined text-primary text-4xl mb-6 opacity-50">format_quote</span>
+<p class="font-body-lg text-body-lg text-on-surface mb-6">"Kinetic Noir didn't just teach me syntax; it rewired how I perceive system architecture. The gallery-style crits pushed me beyond conventional limits."</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-high overflow-hidden relative">
+<div class="bg-cover bg-center w-full h-full opacity-80 mix-blend-screen" data-alt="A highly blurred, abstract profile avatar portrait of a person. The image is out of focus, creating soft gradients of deep black, soft white, and subtle cyan. The overall mood is mysterious, high-end, and technologically advanced, fitting a dark minimal UI aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA_DTasmAsRTBvPsFA3dugOmmrDrMa-Ib9e-kJ_7zhN9wWN_QsooqqTmYSBybGkiOlDueWfS9sSoEEUaX9IKU6dzyAe5WImMyAfRZuCReydfdz_6fwa-rlAV9BpUaTFxfWB4z-0It7wvrDphlV7nMHRurKbHYTWHp51GuV2QYU7ST_rjAldJ2x_8FkvsiulP1ZDsGqPB16Ze8JerZP8Qvyuw1SCBbAu7L3ARLsk_rPtcMOPmwsyhJPi')"></div>
+</div>
+<div>
+<div class="font-label-caps text-label-caps text-on-surface mb-1">ELARA V.</div>
+<div class="font-body-md text-body-md text-primary">AI Researcher at DeepMind</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="min-w-[320px] md:min-w-[480px] glass-panel rounded-lg p-8 snap-start flex flex-col justify-between h-[360px] relative group hover:border-primary/30 transition-colors">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/10 blur-[40px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+<div>
+<span class="material-symbols-outlined text-primary text-4xl mb-6 opacity-50">format_quote</span>
+<p class="font-body-lg text-body-lg text-on-surface mb-6">"The emphasis on spatial computing and minimalist design principles gave me an edge I couldn't have found in a traditional boot camp."</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-high overflow-hidden relative">
+<div class="bg-cover bg-center w-full h-full opacity-80 mix-blend-screen" data-alt="An abstract, out-of-focus avatar portrait featuring soft geometric light refractions. Deep charcoal background with striking minimal white highlights and a faint neon blue edge glow. High-end, gallery-like, anonymous." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDObndsECml_mToWwHbc7GK8ULyM9k512Hz1JJ-EK3CyuRvk11dusvSGyK-hAwH31oCBPQ2RkipQGwNkV4ZEsWvO--wmMOe9gv-joZEY6WtEMSdlSlqEmJv0Evg_yMaDBMm9Ei2YIVF9PRZrfz3ClIIl_S1Is3Kvr1KsvDr1Enmq43No5zEOZbvCM0pxev36ombQrQHUjtAP1O8erEGYbaFPqYa3tOqemShjIonnFslAoXCF92pOFU_')"></div>
+</div>
+<div>
+<div class="font-label-caps text-label-caps text-on-surface mb-1">MARCUS T.</div>
+<div class="font-body-md text-body-md text-primary">Creative Tech Lead</div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="min-w-[320px] md:min-w-[480px] glass-panel rounded-lg p-8 snap-start flex flex-col justify-between h-[360px] relative group hover:border-primary/30 transition-colors">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/10 blur-[40px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+<div>
+<span class="material-symbols-outlined text-primary text-4xl mb-6 opacity-50">format_quote</span>
+<p class="font-body-lg text-body-lg text-on-surface mb-6">"Treating code as a medium for high-end design transformed my portfolio. I learned to build experiences, not just applications."</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-high overflow-hidden relative">
+<div class="bg-cover bg-center w-full h-full opacity-80 mix-blend-screen" data-alt="A blurred silhouette portrait against a dark, minimalist background. Subtle light leaks in cool cyan and stark white cross the frame, creating a sense of motion and technical precision. Anonymous, sleek, modern." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBB565_BszxZ_WXNsL66GUrVwl6o6AU0JCMHki7RL6vBC9UvmpMQTFt_84yRfyd0BzL_FeduQuPS9ZJz-mw2hwllF0iGiermN-oxlll02X412rx1RAZ1sPdbVK2yi9qvolDghvowe9zDswCmurNEtZzdJSu9283bv0ySebBd2TBXakt8IZk2kumjF-SR71gE1tQMbevuXRYxThXDrWgUuVX1g38DS2WNXLjTXB4nHXZUX50huwX2H45')"></div>
+</div>
+<div>
+<div class="font-label-caps text-label-caps text-on-surface mb-1">SARAH K.</div>
+<div class="font-body-md text-body-md text-primary">Senior Frontend Engineer</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: FAQ -->
+<section class="py-24 px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-12 gap-gutter-desktop">
+<div class="col-span-1 md:col-span-4 mb-12 md:mb-0">
+<h2 class="font-headline-md text-headline-md text-on-surface sticky top-32">Frequently<br/>Asked</h2>
+</div>
+<div class="col-span-1 md:col-span-8 flex flex-col border-t border-white/[0.12]">
+<!-- FAQ Item 1 -->
+<div class="faq-item border-b border-white/[0.12] py-8 cursor-pointer group" onclick="this.classList.toggle('active')">
+<div class="flex justify-between items-center">
+<h3 class="font-body-lg text-body-lg text-on-surface group-hover:text-primary transition-colors">Is prior coding experience required?</h3>
+<span class="material-symbols-outlined text-on-surface-variant faq-icon">add</span>
+</div>
+<div class="faq-content">
+<p class="font-body-md text-body-md text-on-surface-variant mt-6 pr-12">While a basic understanding of logic is helpful, Kinetic Noir is designed for those with high design sensibilities regardless of technical background. We start from foundational principles and rapidly scale into advanced architecture.</p>
+</div>
+</div>
+<!-- FAQ Item 2 -->
+<div class="faq-item border-b border-white/[0.12] py-8 cursor-pointer group" onclick="this.classList.toggle('active')">
+<div class="flex justify-between items-center">
+<h3 class="font-body-lg text-body-lg text-on-surface group-hover:text-primary transition-colors">What is the payment structure?</h3>
+<span class="material-symbols-outlined text-on-surface-variant faq-icon">add</span>
+</div>
+<div class="faq-content">
+<p class="font-body-md text-body-md text-on-surface-variant mt-6 pr-12">We operate on a lab-fee model. Tuition is paid per module, allowing for flexible progression. We also offer select Income Share Agreements for exceptional portfolios.</p>
+</div>
+</div>
+<!-- FAQ Item 3 -->
+<div class="faq-item border-b border-white/[0.12] py-8 cursor-pointer group" onclick="this.classList.toggle('active')">
+<div class="flex justify-between items-center">
+<h3 class="font-body-lg text-body-lg text-on-surface group-hover:text-primary transition-colors">Is the curriculum remote or in-person?</h3>
+<span class="material-symbols-outlined text-on-surface-variant faq-icon">add</span>
+</div>
+<div class="faq-content">
+<p class="font-body-md text-body-md text-on-surface-variant mt-6 pr-12">Kinetic Noir is a hybrid experience. Core lectures and crits occur in our virtual gallery spaces (spatial web), while select intensive workshops are held in physical labs in key cities.</p>
+</div>
+</div>
+<!-- FAQ Item 4 -->
+<div class="faq-item border-b border-white/[0.12] py-8 cursor-pointer group" onclick="this.classList.toggle('active')">
+<div class="flex justify-between items-center">
+<h3 class="font-body-lg text-body-lg text-on-surface group-hover:text-primary transition-colors">What kind of hardware do I need?</h3>
+<span class="material-symbols-outlined text-on-surface-variant faq-icon">add</span>
+</div>
+<div class="faq-content">
+<p class="font-body-md text-body-md text-on-surface-variant mt-6 pr-12">A modern machine capable of rendering WebGL/Three.js environments smoothly is required. Detailed specs are provided upon admission, but generally, a recent M-series Mac or equivalent PC is sufficient.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="w-full bottom-0 border-t border-white/[0.12] bg-surface-container-lowest grid grid-cols-12 gap-gutter-desktop px-margin-desktop py-[160px] max-w-full relative z-10">
+<div class="col-span-12 md:col-span-6 flex flex-col justify-between mb-16 md:mb-0">
+<div>
+<div class="font-headline-md text-headline-md text-on-surface mb-8 tracking-tighter">KINETIC NOIR</div>
+<div class="flex flex-col gap-4">
+<a class="font-body-lg text-body-lg text-on-surface-variant hover:text-primary transition-colors inline-block w-max" href="mailto:inquiries@kineticnoir.lab">inquiries@kineticnoir.lab</a>
+</div>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant mt-24">
+                © 2024 KINETIC NOIR LABS. ALL RIGHTS RESERVED.
+            </div>
+</div>
+<div class="col-span-12 md:col-span-3 mb-16 md:mb-0">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-6">INDEX</h4>
+<ul class="flex flex-col gap-4">
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface underline transition-all" href="#">Curriculum</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface underline transition-all" href="#">Mentorship</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface underline transition-all" href="#">Careers</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface underline transition-all" href="#">Legal</a></li>
+</ul>
+</div>
+<div class="col-span-12 md:col-span-3">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-6">NETWORK</h4>
+<ul class="flex flex-col gap-4 mb-12">
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface underline transition-all" href="#">Instagram</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface underline transition-all" href="#">Github</a></li>
+</ul>
+<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-4">DISPATCH</h4>
+<div class="relative group">
+<input class="w-full bg-transparent border-b border-white/[0.12] py-4 text-on-surface font-body-md focus:outline-none focus:border-primary focus:ring-0 transition-colors placeholder:text-[#A1A1AA]" placeholder="ENTER EMAIL" type="email"/>
+<button class="absolute right-0 top-1/2 -translate-y-1/2 text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</footer>
+<script>
+        // Simple Carousel Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const carousel = document.getElementById('testimonial-carousel');
+            const prevBtn = document.getElementById('carousel-prev');
+            const nextBtn = document.getElementById('carousel-next');
+
+            if(carousel && prevBtn && nextBtn) {
+                const scrollAmount = 400; // rough width of a card + gap
+
+                prevBtn.addEventListener('click', () => {
+                    carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                });
+
+                nextBtn.addEventListener('click', () => {
+                    carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                });
+            }
+        });
+    </script>
+</body></html>

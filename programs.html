@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Programs &amp; Admissions - Kinetic Noir</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-error": "#690005",
+                        "tertiary-fixed-dim": "#eac324",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "surface-dim": "#131315",
+                        "background": "#131315",
+                        "surface-container-highest": "#353437",
+                        "tertiary": "#fff5de",
+                        "surface-container-low": "#1b1b1d",
+                        "secondary": "#c6c6c7",
+                        "on-tertiary-fixed": "#231b00",
+                        "on-primary": "#00363a",
+                        "on-primary-fixed": "#002022",
+                        "on-secondary-container": "#b4b5b5",
+                        "surface-bright": "#39393b",
+                        "surface-variant": "#353437",
+                        "on-surface": "#e5e1e4",
+                        "surface-tint": "#00dbe9",
+                        "surface": "#131315",
+                        "primary-container": "#00f0ff",
+                        "primary": "#dbfcff",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "primary-fixed": "#7df4ff",
+                        "on-tertiary": "#3b2f00",
+                        "inverse-primary": "#006970",
+                        "on-tertiary-fixed-variant": "#554500",
+                        "on-secondary": "#2f3131",
+                        "error-container": "#93000a",
+                        "on-surface-variant": "#b9cacb",
+                        "surface-container-high": "#2a2a2c",
+                        "surface-container-lowest": "#0e0e10",
+                        "on-primary-container": "#006970",
+                        "tertiary-fixed": "#ffe179",
+                        "surface-container": "#201f21",
+                        "on-error-container": "#ffdad6",
+                        "on-background": "#e5e1e4",
+                        "inverse-surface": "#e5e1e4",
+                        "outline-variant": "#3b494b",
+                        "on-primary-fixed-variant": "#004f54",
+                        "on-secondary-fixed-variant": "#454747",
+                        "inverse-on-surface": "#303032",
+                        "secondary-container": "#454747",
+                        "secondary-fixed": "#e2e2e2",
+                        "primary-fixed-dim": "#00dbe9",
+                        "outline": "#849495",
+                        "on-tertiary-container": "#715d00",
+                        "tertiary-container": "#fed639",
+                        "error": "#ffb4ab"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                    spacing: {
+                        "stack-unit": "8px",
+                        "margin-desktop": "60px",
+                        "margin-mobile": "20px",
+                        "gutter-desktop": "24px",
+                        "columns": "12"
+                    },
+                    fontFamily: {
+                        "label-caps": ["Manrope"],
+                        "body-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "display-hero-mobile": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "display-hero": ["Manrope"]
+                    },
+                    fontSize: {
+                        "label-caps": ["12px", { lineHeight: "1", letterSpacing: "0.1em", fontWeight: "700" }],
+                        "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }],
+                        "headline-lg": ["64px", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "display-hero-mobile": ["80px", { lineHeight: "72px", letterSpacing: "-0.02em", fontWeight: "800" }],
+                        "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }],
+                        "headline-md": ["32px", { lineHeight: "1.2", fontWeight: "600" }],
+                        "display-hero": ["200px", { lineHeight: "180px", letterSpacing: "-0.04em", fontWeight: "800" }]
+                    }
+                }
+            }
+        };
+    </script>
+<style>
+        body {
+            background-color: #0F0F11;
+            color: #e5e1e4;
+            overflow-x: hidden;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .magnetic-button {
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .magnetic-button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at center, rgba(255,255,255,1) 0%, rgba(240,240,240,1) 100%);
+            z-index: -1;
+            opacity: 0.9;
+        }
+
+        .magnetic-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Timeline Connector Glow */
+        .timeline-connector {
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+        }
+
+        /* Smooth reveal for scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-surface antialiased font-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-transparent backdrop-blur-[40px] border-b border-white/[0.12] bg-white/[0.03] transition-transform duration-200" id="top-nav">
+<div class="flex justify-between items-center w-full px-margin-desktop py-6">
+<div class="font-headline-md text-headline-md font-extrabold tracking-tighter text-on-surface">KINETIC NOIR</div>
+<div class="hidden md:flex space-x-8 items-center font-label-caps text-label-caps">
+<a class="text-on-surface-variant hover:text-primary transition-all duration-300" href="#">Curriculum</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 hover:text-primary transition-all duration-300" href="#">Admissions</a>
+<a class="text-on-surface-variant hover:text-primary transition-all duration-300" href="#">Projects</a>
+<a class="text-on-surface-variant hover:text-primary transition-all duration-300" href="#">LAB</a>
+</div>
+<button class="hidden md:block px-6 py-3 bg-white text-surface font-label-caps text-label-caps rounded-full magnetic-button text-black">
+                Apply Now
+            </button>
+<button class="md:hidden text-on-surface">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<!-- SideNavBar (Mobile / Overlay) - Hidden by default in this implementation -->
+<!-- Assuming focus on canvas per shell logic -->
+<main class="pt-[160px] pb-[160px] px-margin-mobile md:px-margin-desktop max-w-[1920px] mx-auto">
+<!-- Header Section -->
+<header class="mb-[160px] reveal">
+<h1 class="font-display-hero-mobile md:font-display-hero text-display-hero-mobile md:text-display-hero text-on-surface tracking-tighter mb-6">
+                PROGRAMS
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl md:ml-auto md:w-1/2">
+                Elite training for the next generation of digital architects. Immerse yourself in an environment that bridges the gap between theoretical computer science and high-end creative engineering.
+            </p>
+</header>
+<!-- Section 1: Programs Breakdown -->
+<section class="mb-[240px] reveal">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter-desktop">
+<!-- Card 1 -->
+<div class="glass-card rounded-xl p-8 flex flex-col h-full bg-surface-container-low group relative overflow-hidden transition-all duration-500 hover:bg-surface-container">
+<div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[120px]">code</span>
+</div>
+<div class="z-10 flex-grow">
+<span class="font-label-caps text-label-caps text-primary-container tracking-widest mb-4 block">12 MONTHS</span>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-6">Full-Stack Web Dev</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-12">
+                            Master modern architectural patterns, reactive front-ends, and scalable backends. Build production-grade applications that demand premium performance.
+                        </p>
+</div>
+<div class="z-10 mt-auto pt-8 border-t border-white/[0.05]">
+<div class="flex justify-between items-end mb-6">
+<span class="font-label-caps text-label-caps text-on-surface-variant">TUITION</span>
+<span class="font-headline-lg text-headline-lg text-on-surface leading-none">$12K</span>
+</div>
+<button class="w-full py-4 rounded-full magnetic-button text-black font-label-caps text-label-caps flex items-center justify-center gap-2">
+<span>Learn More</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-card rounded-xl p-8 flex flex-col h-full bg-surface-container-low group relative overflow-hidden transition-all duration-500 hover:bg-surface-container md:translate-y-12">
+<div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[120px]">memory</span>
+</div>
+<div class="z-10 flex-grow">
+<span class="font-label-caps text-label-caps text-primary-container tracking-widest mb-4 block">8 MONTHS</span>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-6">AI Engineering</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-12">
+                            Dive deep into machine learning infrastructure, model fine-tuning, and implementing LLMs into high-end user interfaces.
+                        </p>
+</div>
+<div class="z-10 mt-auto pt-8 border-t border-white/[0.05]">
+<div class="flex justify-between items-end mb-6">
+<span class="font-label-caps text-label-caps text-on-surface-variant">TUITION</span>
+<span class="font-headline-lg text-headline-lg text-on-surface leading-none">$15K</span>
+</div>
+<button class="w-full py-4 rounded-full magnetic-button text-black font-label-caps text-label-caps flex items-center justify-center gap-2">
+<span>Learn More</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-card rounded-xl p-8 flex flex-col h-full bg-surface-container-low group relative overflow-hidden transition-all duration-500 hover:bg-surface-container md:translate-y-24">
+<div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[120px]">security</span>
+</div>
+<div class="z-10 flex-grow">
+<span class="font-label-caps text-label-caps text-primary-container tracking-widest mb-4 block">6 MONTHS</span>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-6">Cybersecurity</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-12">
+                            Offensive and defensive security principles. Learn to protect digital assets with the same precision used to build them.
+                        </p>
+</div>
+<div class="z-10 mt-auto pt-8 border-t border-white/[0.05]">
+<div class="flex justify-between items-end mb-6">
+<span class="font-label-caps text-label-caps text-on-surface-variant">TUITION</span>
+<span class="font-headline-lg text-headline-lg text-on-surface leading-none">$9K</span>
+</div>
+<button class="w-full py-4 rounded-full magnetic-button text-black font-label-caps text-label-caps flex items-center justify-center gap-2">
+<span>Learn More</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Admissions Process -->
+<section class="reveal">
+<div class="md:w-8/12 mx-auto">
+<div class="mb-24 md:text-center">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">Admissions Process</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">A rigorous selection designed to identify potential, not just pedigree.</p>
+</div>
+<div class="relative">
+<!-- Vertical Line -->
+<div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-white/[0.12] -translate-x-1/2"></div>
+<!-- Timeline Items -->
+<div class="space-y-24 relative">
+<!-- Step 1 -->
+<div class="relative flex flex-col md:flex-row items-center justify-between group">
+<div class="hidden md:block md:w-[45%] text-right pr-12 relative">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Application</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Submit your portfolio and intent. Show us your raw capacity for complex problem-solving.</p>
+</div>
+<div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-surface border-2 border-primary-container z-10 timeline-connector transition-all duration-300 group-hover:scale-150 group-hover:bg-primary-container"></div>
+<div class="w-full pl-20 md:pl-0 md:w-[45%] md:text-left md:pl-12 relative overflow-hidden">
+<div class="absolute -z-10 font-display-hero text-display-hero text-white/[0.02] -top-20 -left-10 font-black leading-none select-none">01</div>
+<div class="md:hidden">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Application</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Submit your portfolio and intent. Show us your raw capacity for complex problem-solving.</p>
+</div>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="relative flex flex-col md:flex-row items-center justify-between group">
+<div class="w-full pl-20 md:pl-0 md:w-[45%] md:text-right pr-12 relative overflow-hidden">
+<div class="absolute -z-10 font-display-hero text-display-hero text-white/[0.02] -top-20 -right-10 font-black leading-none select-none hidden md:block">02</div>
+<div class="absolute -z-10 font-display-hero text-display-hero text-white/[0.02] -top-20 -left-10 font-black leading-none select-none md:hidden">02</div>
+<div class="md:hidden">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Technical Eval</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">A timed, logic-based assessment. We evaluate how you think under pressure, not syntax memorization.</p>
+</div>
+</div>
+<div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-surface border-2 border-primary-container z-10 timeline-connector transition-all duration-300 group-hover:scale-150 group-hover:bg-primary-container"></div>
+<div class="hidden md:block md:w-[45%] text-left pl-12 relative">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Technical Eval</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">A timed, logic-based assessment. We evaluate how you think under pressure, not syntax memorization.</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="relative flex flex-col md:flex-row items-center justify-between group">
+<div class="hidden md:block md:w-[45%] text-right pr-12 relative">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Strategic Interview</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">A deep-dive conversation with our lead engineers. We align on vision, drive, and commitment.</p>
+</div>
+<div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-surface border-2 border-primary-container z-10 timeline-connector transition-all duration-300 group-hover:scale-150 group-hover:bg-primary-container"></div>
+<div class="w-full pl-20 md:pl-0 md:w-[45%] md:text-left md:pl-12 relative overflow-hidden">
+<div class="absolute -z-10 font-display-hero text-display-hero text-white/[0.02] -top-20 -left-10 font-black leading-none select-none">03</div>
+<div class="md:hidden">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Strategic Interview</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">A deep-dive conversation with our lead engineers. We align on vision, drive, and commitment.</p>
+</div>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="relative flex flex-col md:flex-row items-center justify-between group">
+<div class="w-full pl-20 md:pl-0 md:w-[45%] md:text-right pr-12 relative overflow-hidden">
+<div class="absolute -z-10 font-display-hero text-display-hero text-white/[0.02] -top-20 -right-10 font-black leading-none select-none hidden md:block">04</div>
+<div class="absolute -z-10 font-display-hero text-display-hero text-white/[0.02] -top-20 -left-10 font-black leading-none select-none md:hidden">04</div>
+<div class="md:hidden">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Onboarding</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Access granted to the Kinetic Lab. Prepare your environment for day one.</p>
+</div>
+</div>
+<div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-surface border-2 border-primary-container z-10 timeline-connector transition-all duration-300 group-hover:scale-150 group-hover:bg-primary-container"></div>
+<div class="hidden md:block md:w-[45%] text-left pl-12 relative">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Onboarding</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Access granted to the Kinetic Lab. Prepare your environment for day one.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full bottom-0 bg-surface-container-lowest border-t border-white/[0.12] grid grid-cols-12 gap-gutter-desktop px-margin-desktop py-[160px] max-w-full relative z-10">
+<div class="col-span-12 md:col-span-4 flex flex-col justify-between mb-12 md:mb-0">
+<div class="font-headline-md text-headline-md text-on-surface font-extrabold tracking-tighter mb-4">KINETIC NOIR</div>
+<p class="font-body-md text-body-md text-on-surface-variant w-2/3">Building the architecture of tomorrow, today.</p>
+</div>
+<div class="col-span-6 md:col-span-2">
+<h4 class="font-label-caps text-label-caps text-on-surface mb-6">EXPLORE</h4>
+<ul class="space-y-4 font-body-md text-body-md">
+<li><a class="text-on-surface-variant hover:text-on-surface underline transition-all" href="#">Curriculum</a></li>
+<li><a class="text-on-surface-variant hover:text-on-surface underline transition-all" href="#">Mentorship</a></li>
+<li><a class="text-on-surface-variant hover:text-on-surface underline transition-all" href="#">Careers</a></li>
+</ul>
+</div>
+<div class="col-span-6 md:col-span-2">
+<h4 class="font-label-caps text-label-caps text-on-surface mb-6">CONNECT</h4>
+<ul class="space-y-4 font-body-md text-body-md">
+<li><a class="text-on-surface-variant hover:text-on-surface underline transition-all" href="#">Instagram</a></li>
+<li><a class="text-on-surface-variant hover:text-on-surface underline transition-all" href="#">Github</a></li>
+</ul>
+</div>
+<div class="col-span-12 md:col-span-4 flex flex-col justify-end mt-12 md:mt-0 md:text-right">
+<ul class="space-y-4 font-body-md text-body-md mb-8">
+<li><a class="text-on-surface-variant hover:text-on-surface underline transition-all" href="#">Legal</a></li>
+</ul>
+<p class="font-label-caps text-label-caps text-on-surface-variant">© 2024 KINETIC NOIR LABS. ALL RIGHTS RESERVED.</p>
+</div>
+</footer>
+<script>
+        // Magnetic button effect script
+        document.querySelectorAll('.magnetic-button').forEach(btn => {
+            btn.addEventListener('mousemove', e => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px) scale(1.05)`;
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0px, 0px) scale(1)';
+            });
+        });
+
+        // Simple scroll reveal
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Trigger on load
+        
+        // Hide nav on scroll down, show on scroll up
+        let lastScrollTop = 0;
+        const navbar = document.getElementById('top-nav');
+        
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // Scroll down
+                navbar.style.transform = 'translateY(-100%)';
+            } else {
+                // Scroll up
+                navbar.style.transform = 'translateY(0)';
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; 
+        }, false);
+    </script>
+</body></html>
