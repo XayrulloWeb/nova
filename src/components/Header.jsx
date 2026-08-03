@@ -9,52 +9,66 @@ export default function Header({ onOpenMenu }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'py-4 bg-background/80 backdrop-blur-lg border-b border-outline/10' : 'py-6'} text-on-background pointer-events-none`}>
-      <div className="max-w-[1920px] mx-auto px-margin-mobile md:px-margin-desktop flex items-center justify-between pointer-events-auto">
-        
-        {/* Logo */}
-        <Link to="/" className="font-headline-md tracking-tighter hover:opacity-70 transition-opacity">
-          NOVA
-        </Link>
-
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          <Link to="/" className={`text-label-caps font-label-caps tracking-widest hover:opacity-70 transition-opacity ${location.pathname === '/' ? 'opacity-100' : 'opacity-70'}`}>
-            O'QUV DASTURI
-          </Link>
-          <Link to="/admissions" className={`text-label-caps font-label-caps tracking-widest hover:opacity-70 transition-opacity ${location.pathname === '/admissions' ? 'opacity-100' : 'opacity-70'}`}>
-            QABUL
-          </Link>
-          <Link to="/labs" className="text-label-caps font-label-caps tracking-widest hover:opacity-70 transition-opacity opacity-70">
-            LABORATORIYALAR
-          </Link>
-        </nav>
-
-        {/* Desktop CTA & Mobile Toggle */}
-        <div className="flex items-center gap-4">
-          <button onClick={toggleTheme} className="hover:opacity-70 transition-opacity flex items-center justify-center p-2 rounded-full">
-            <span className="material-symbols-outlined">{theme === 'dark' ? 'light_mode' : 'dark_mode'}</span>
-          </button>
+    <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none p-4 transition-all duration-300">
+      <header className={`transition-all duration-500 ease-out pointer-events-auto w-full max-w-[1920px] ${isScrolled ? 'max-w-5xl bg-surface-container-low/80 backdrop-blur-xl border border-outline/10 shadow-lg rounded-full py-3 px-6 mt-2' : 'bg-transparent py-4 px-margin-mobile md:px-margin-desktop'}`}>
+        <div className="flex items-center justify-between w-full">
           
-          <Link to="/admissions" className="hidden md:flex items-center gap-2 bg-white text-black px-6 py-3 rounded-full font-label-caps text-label-caps tracking-widest hover:bg-gray-200 transition-all duration-300 magnetic-btn">
-            ARIZA TOPSHIRISH
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2 group">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-primary-container flex items-center justify-center text-on-primary font-bold shadow-[0_0_15px_rgba(0,219,233,0.4)] group-hover:scale-110 transition-transform">
+              N
+            </div>
+            <span className={`font-headline-md tracking-tight font-extrabold text-on-background transition-opacity ${isScrolled ? 'hidden sm:block' : 'block'}`}>
+              NOVA
+            </span>
           </Link>
-          <button 
-            onClick={onOpenMenu}
-            className="md:hidden hover:opacity-70 transition-opacity"
-          >
-            <span className="material-symbols-outlined text-3xl">menu</span>
-          </button>
-        </div>
 
-      </div>
-    </header>
+          {/* Desktop Nav */}
+          <nav className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+            <Link to="/about" className={`text-sm font-semibold tracking-wide hover:text-primary transition-colors ${location.pathname === '/about' ? 'text-primary' : 'text-on-surface-variant'}`}>
+              Maktab haqida
+            </Link>
+            <Link to="/parents" className={`text-sm font-semibold tracking-wide hover:text-primary transition-colors ${location.pathname === '/parents' ? 'text-primary' : 'text-on-surface-variant'}`}>
+              Ota-onalarga
+            </Link>
+            <Link to="/students" className={`text-sm font-semibold tracking-wide hover:text-primary transition-colors ${location.pathname === '/students' ? 'text-primary' : 'text-on-surface-variant'}`}>
+              O'quvchilarga
+            </Link>
+            <Link to="/news" className={`text-sm font-semibold tracking-wide hover:text-primary transition-colors ${location.pathname === '/news' ? 'text-primary' : 'text-on-surface-variant'}`}>
+              Yangiliklar
+            </Link>
+            <Link to="/contacts" className={`text-sm font-semibold tracking-wide hover:text-primary transition-colors ${location.pathname === '/contacts' ? 'text-primary' : 'text-on-surface-variant'}`}>
+              Aloqa
+            </Link>
+          </nav>
+
+          {/* Desktop CTA & Mobile Toggle */}
+          <div className="flex items-center gap-3">
+            <button onClick={toggleTheme} className="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-2 rounded-full bg-white/5 hover:bg-white/10">
+              <span className="material-symbols-outlined text-sm">{theme === 'dark' ? 'light_mode' : 'dark_mode'}</span>
+            </button>
+            
+            <Link to="/apply" className="hidden lg:flex items-center justify-center bg-primary text-on-primary px-6 py-2.5 rounded-full font-bold text-sm tracking-wide hover:bg-primary-container transition-all duration-300 shadow-[0_0_15px_rgba(0,219,233,0.2)] hover:shadow-[0_0_25px_rgba(0,219,233,0.4)] hover:-translate-y-0.5">
+              ARIZA TOPSHIRISH
+            </Link>
+            
+            <button 
+              onClick={onOpenMenu}
+              className="lg:hidden text-on-surface hover:text-primary transition-colors p-2 bg-white/5 rounded-full"
+            >
+              <span className="material-symbols-outlined">menu</span>
+            </button>
+          </div>
+
+        </div>
+      </header>
+    </div>
   );
 }

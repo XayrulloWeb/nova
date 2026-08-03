@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function OverlayMenu({ isOpen, onClose }) {
   return (
@@ -16,10 +17,14 @@ export default function OverlayMenu({ isOpen, onClose }) {
           <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>close</span>
         </button>
       </div>
-      <nav className="flex-1 flex flex-col justify-center items-center space-y-12">
-        <a onClick={onClose} className="font-headline-lg text-4xl md:text-6xl uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-300" href="#technology">Technology</a>
-        <a onClick={onClose} className="font-headline-lg text-4xl md:text-6xl uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-300" href="#mentors">Mentors</a>
-        <a onClick={onClose} className="font-headline-lg text-4xl md:text-6xl uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-300" href="#stats">Impact</a>
+      <nav className="flex-1 flex flex-col justify-center items-center space-y-8">
+        <Link to="/" onClick={onClose} className="font-headline-lg text-4xl md:text-5xl uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-300">Bosh sahifa</Link>
+        <Link to="/about" onClick={onClose} className="font-headline-lg text-4xl md:text-5xl uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-300">Maktab haqida</Link>
+        <Link to="/parents" onClick={onClose} className="font-headline-lg text-4xl md:text-5xl uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-300">Ota-onalarga</Link>
+        <Link to="/students" onClick={onClose} className="font-headline-lg text-4xl md:text-5xl uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-300">O'quvchilarga</Link>
+        <Link to="/news" onClick={onClose} className="font-headline-lg text-4xl md:text-5xl uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-300">Yangiliklar</Link>
+        <Link to="/contacts" onClick={onClose} className="font-headline-lg text-4xl md:text-5xl uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-300">Aloqa</Link>
+        <Link to="/apply" onClick={onClose} className="font-headline-lg text-4xl md:text-5xl uppercase tracking-wider text-primary hover:text-on-surface transition-colors duration-300 mt-4">Ariza topshirish</Link>
       </nav>
       <div className="flex justify-center space-x-12 mt-auto pb-8 font-label-caps tracking-widest uppercase">
         <a className="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Telegram</a>

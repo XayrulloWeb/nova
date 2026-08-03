@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import * as THREE from 'three';
 import { useTheme } from '../context/ThemeContext';
 
@@ -114,24 +115,20 @@ export default function Hero() {
     let height = window.innerHeight;
 
     const scene = new THREE.Scene();
-    // Increase field of view for dramatic effect
     const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
     camera.position.z = 20;
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    // Clear previous canvas if re-running
     container.innerHTML = '';
     container.appendChild(renderer.domElement);
 
     const mainGroup = new THREE.Group();
     scene.add(mainGroup);
 
-    // Beautiful Glowing Wireframe Icosahedron
     const coreGeom = new THREE.IcosahedronGeometry(6, 1);
     
-    // Solid inner core
     const coreMat = theme === 'light' 
       ? new THREE.MeshBasicMaterial({ color: 0xf8f9fa })
       : new THREE.MeshStandardMaterial({
@@ -142,7 +139,6 @@ export default function Hero() {
     const coreMesh = new THREE.Mesh(coreGeom, coreMat);
     mainGroup.add(coreMesh);
 
-    // Glowing outer wireframe
     const wireMat = new THREE.MeshBasicMaterial({
       color: theme === 'light' ? 0x009ca6 : 0x00dbe9,
       wireframe: true,
@@ -153,7 +149,6 @@ export default function Hero() {
     wireMesh.scale.set(1.05, 1.05, 1.05);
     mainGroup.add(wireMesh);
 
-    // Orbiting particles
     const particleCount = 1000;
     const pGeom = new THREE.BufferGeometry();
     const pPos = new Float32Array(particleCount * 3);
@@ -170,7 +165,6 @@ export default function Hero() {
     const particles = new THREE.Points(pGeom, pMat);
     scene.add(particles);
 
-    // Lights (Very Bright to ensure visibility)
     scene.add(new THREE.AmbientLight(0xffffff, 1.0));
     
     const pointLight = new THREE.PointLight(theme === 'light' ? 0x00dbe9 : 0x00f0ff, 50, 100);
@@ -181,7 +175,6 @@ export default function Hero() {
     pointLight2.position.set(-10, -10, -10);
     scene.add(pointLight2);
 
-    // Mouse Parallax Interaction
     let mouseX = 0;
     let mouseY = 0;
     const handleMouseMove = (e) => {
@@ -196,16 +189,13 @@ export default function Hero() {
       
       const time = Date.now() * 0.001;
 
-      // Rotation
       coreMesh.rotation.y += 0.005;
       coreMesh.rotation.x += 0.002;
       wireMesh.rotation.y += 0.005;
       wireMesh.rotation.x += 0.002;
 
-      // Float effect
       mainGroup.position.y = Math.sin(time) * 1.5;
 
-      // Subtle parallax based on mouse
       camera.position.x += (mouseX * 5 - camera.position.x) * 0.05;
       camera.position.y += (mouseY * 5 - camera.position.y) * 0.05;
       camera.lookAt(scene.position);
@@ -236,7 +226,8 @@ export default function Hero() {
   }, [theme]);
 
   return (
-    <div className="w-full h-screen relative bg-surface-container-lowest overflow-hidden flex items-center justify-center">
+    <section className="relative overflow-hidden bg-background pt-[120px] pb-[80px] lg:pt-[160px] lg:pb-[120px] min-h-[100vh] flex items-center z-10" id="home">
+      
       {/* Background Shader */}
       <div className="absolute inset-0 z-0">
         <canvas ref={shaderContainerRef} className="w-full h-full block pointer-events-none"></canvas>
@@ -245,26 +236,48 @@ export default function Hero() {
       {/* 3D Foreground Scene */}
       <div ref={threeContainerRef} className={`absolute inset-0 z-10 pointer-events-none ${theme === 'light' ? 'mix-blend-normal' : 'mix-blend-screen'}`}></div>
 
-      {/* Text Content */}
-      <div 
-        className="absolute inset-0 flex flex-col items-center justify-center text-center z-20 pointer-events-none mt-20 md:mt-0"
-        style={{ mixBlendMode: 'difference', color: 'white' }}
-      >
-        <h2 className="font-label-caps tracking-widest text-sm uppercase mb-4 cursor-default">NOVA XUSUSIY MAKTABI</h2>
-        <h1 className="text-[100px] md:text-[200px] lg:text-[240px] font-extrabold leading-[0.85] tracking-tighter uppercase cursor-default">
-          NOVA
-        </h1>
-        <p className="text-body-lg max-w-lg mt-8 opacity-90">
-          Ertangi kun maktabi shu yerda. Eng zamonaviy texnologiyalarni o'zlashtiring, real dasturiy ta'minotlar yarating va raqamli olam kelajagini shakllantiring.
-        </p>
-        
-        <div className="mt-12 pointer-events-auto">
-          <button className="magnetic-btn group">
-            <span>Dastur bilan tanishish</span>
-            <span className="material-symbols-outlined ml-2 group-hover:translate-x-1 transition-transform" style={{ fontVariationSettings: "'FILL' 0" }}>school</span>
-          </button>
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-20 w-full text-center pointer-events-none">
+        <div className="mx-auto max-w-4xl flex flex-col items-center" style={{ mixBlendMode: theme === 'light' ? 'normal' : 'difference', color: theme === 'light' ? '#000' : '#fff' }}>
+          
+          {/* Badge */}
+          <div className="pointer-events-auto inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 text-primary mb-8 font-label-caps text-sm tracking-widest uppercase shadow-[0_0_20px_rgba(0,219,233,0.15)]">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+            </span>
+            2026-2027 o'quv yiliga qabul ochiq
+          </div>
+          
+          {/* Main Title */}
+          <h1 className="text-6xl md:text-8xl lg:text-[130px] font-extrabold tracking-tight text-on-surface mb-6 leading-[0.9] uppercase">
+            Ertangi <br className="hidden md:block"/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-container animate-pulse-slow inline-block">
+              Kun Maktabi
+            </span>
+          </h1>
+          
+          {/* Subtitle */}
+          <p className="mt-6 text-xl md:text-3xl text-on-surface-variant max-w-3xl font-medium leading-relaxed opacity-90">
+            NOVA xususiy maktabi klassik akademik an'analarni 21-asrning ilg'or texnologiyalari bilan birlashtiradi. 
+          </p>
+
+          {/* Action Buttons */}
+          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 w-full sm:w-auto pointer-events-auto">
+            <Link 
+              to="/apply" 
+              className="w-full sm:w-auto px-10 py-5 rounded-full bg-on-surface text-surface font-semibold text-xl hover:scale-105 transition-all duration-300 hover:shadow-[0_10px_40px_-10px_rgba(255,255,255,0.3)] flex items-center justify-center"
+            >
+              Ariza topshirish
+            </Link>
+            <Link 
+              to="/about" 
+              className="w-full sm:w-auto px-10 py-5 rounded-full bg-transparent border-2 border-outline/50 text-on-surface font-semibold text-xl hover:bg-surface-container hover:border-outline-variant transition-all duration-300 flex items-center justify-center"
+            >
+              Batafsil ma'lumot
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
