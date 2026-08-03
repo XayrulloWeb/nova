@@ -21,9 +21,9 @@ export default function Header({ onOpenMenu }) {
         <div className="flex items-center justify-between w-full">
           
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-primary-container flex items-center justify-center text-on-primary font-bold shadow-[0_0_15px_rgba(0,219,233,0.4)] group-hover:scale-110 transition-transform">
-              N
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/50 shadow-[0_0_15px_rgba(0,219,233,0.4)] group-hover:scale-110 transition-transform">
+              <img src="/nova-logo.jpg" alt="NOVA Logo" className="w-full h-full object-cover" />
             </div>
             <span className={`font-headline-md tracking-tight font-extrabold text-on-background transition-opacity ${isScrolled ? 'hidden sm:block' : 'block'}`}>
               NOVA
