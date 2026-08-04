@@ -2,11 +2,13 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import * as THREE from 'three';
 import { useTheme } from '../context/ThemeContext';
+import { useTranslation } from 'react-i18next';
 
 export default function Hero() {
   const shaderContainerRef = useRef(null);
   const threeContainerRef = useRef(null);
   const { theme } = useTheme();
+  const { t } = useTranslation();
 
   useEffect(() => {
     // ----------------------------------------------------
@@ -120,7 +122,8 @@ export default function Hero() {
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    const isMobile = window.innerWidth < 768;
+    renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5));
     container.innerHTML = '';
     container.appendChild(renderer.domElement);
 
@@ -149,7 +152,7 @@ export default function Hero() {
     wireMesh.scale.set(1.05, 1.05, 1.05);
     mainGroup.add(wireMesh);
 
-    const particleCount = 1000;
+    const particleCount = isMobile ? 300 : 1000;
     const pGeom = new THREE.BufferGeometry();
     const pPos = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount * 3; i++) {
@@ -237,6 +240,14 @@ export default function Hero() {
       <div ref={threeContainerRef} className={`absolute inset-0 z-10 pointer-events-none ${theme === 'light' ? 'mix-blend-normal' : 'mix-blend-screen'}`}></div>
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-20 w-full text-center pointer-events-none">
+        
+        {/* Background "NOVA" text */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 select-none pointer-events-none flex justify-center w-full opacity-[0.04]">
+          <span className="text-[180px] sm:text-[280px] md:text-[400px] lg:text-[500px] font-black tracking-tighter uppercase whitespace-nowrap text-on-surface">
+            NOVA
+          </span>
+        </div>
+
         <div className="mx-auto max-w-4xl flex flex-col items-center" style={{ mixBlendMode: theme === 'light' ? 'normal' : 'difference', color: theme === 'light' ? '#000' : '#fff' }}>
           
           {/* Badge */}
@@ -245,21 +256,18 @@ export default function Hero() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
             </span>
-            2026-2027 o'quv yiliga qabul ochiq
+            {t('hero.badge')}
           </div>
           
           {/* Main Title */}
-          <h1 className="text-6xl md:text-8xl lg:text-[130px] font-extrabold tracking-tight text-on-surface mb-6 leading-[0.9] uppercase">
-            Ertangi <br className="hidden md:block"/>
+          <h1 className="text-5xl md:text-7xl lg:text-[90px] font-extrabold tracking-tight text-on-surface mb-6 leading-[1.1] uppercase">
+            NOVA <br className="hidden md:block"/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-container animate-pulse-slow inline-block">
-              Kun Maktabi
+              International AI School
             </span>
           </h1>
           
           {/* Subtitle */}
-          <p className="mt-6 text-xl md:text-3xl text-on-surface-variant max-w-3xl font-medium leading-relaxed opacity-90">
-            NOVA xususiy maktabi klassik akademik an'analarni 21-asrning ilg'or texnologiyalari bilan birlashtiradi. 
-          </p>
 
           {/* Action Buttons */}
           <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 w-full sm:w-auto pointer-events-auto">
@@ -267,13 +275,13 @@ export default function Hero() {
               to="/apply" 
               className="w-full sm:w-auto px-10 py-5 rounded-full bg-on-surface text-surface font-semibold text-xl hover:scale-105 transition-all duration-300 hover:shadow-[0_10px_40px_-10px_rgba(255,255,255,0.3)] flex items-center justify-center"
             >
-              Ariza topshirish
+              {t('hero.applyBtn')}
             </Link>
             <Link 
               to="/about" 
               className="w-full sm:w-auto px-10 py-5 rounded-full bg-transparent border-2 border-outline/50 text-on-surface font-semibold text-xl hover:bg-surface-container hover:border-outline-variant transition-all duration-300 flex items-center justify-center"
             >
-              Batafsil ma'lumot
+              {t('hero.aboutBtn')}
             </Link>
           </div>
         </div>

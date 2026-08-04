@@ -28,6 +28,12 @@
 }
 
 :root {
+  /* Brand Colors */
+  --brand-green: #093824; /* Darker, richer green from the new logo */
+  --brand-gold: #C29B40; /* Vintage gold from the new logo */
+  --brand-light: #F0F7F3;
+  --brand-text: #2d2d2d;
+
   --color-surface-val: #131315;
   --color-surface-dim-val: #131315;
   --color-surface-bright-val: #39393b;
@@ -36,47 +42,47 @@
   --color-surface-container-val: #201f21;
   --color-surface-container-high-val: #2a2a2c;
   --color-surface-container-highest-val: #353437;
-  --color-on-surface-val: #e5e1e4;
+  --color-on-surface-val: var(--brand-light);
   --color-on-surface-variant-val: #b9cacb;
-  --color-inverse-surface-val: #e5e1e4;
+  --color-inverse-surface-val: var(--brand-light);
   --color-inverse-on-surface-val: #303032;
   --color-outline-val: #849495;
   --color-outline-variant-val: #3b494b;
-  --color-surface-tint-val: #00dbe9;
-  --color-primary-val: #dbfcff;
-  --color-on-primary-val: #00363a;
-  --color-primary-container-val: #00f0ff;
-  --color-on-primary-container-val: #006970;
-  --color-inverse-primary-val: #006970;
+  --color-surface-tint-val: var(--brand-gold);
+  --color-primary-val: var(--brand-gold);
+  --color-on-primary-val: var(--brand-green);
+  --color-primary-container-val: var(--brand-green);
+  --color-on-primary-container-val: var(--brand-gold);
+  --color-inverse-primary-val: var(--brand-green);
   --color-background-val: #131315;
-  --color-on-background-val: #e5e1e4;
-  --color-primary-fixed-dim-val: #00dbe9;
+  --color-on-background-val: var(--brand-light);
+  --color-primary-fixed-dim-val: var(--brand-gold);
 }
 
 .light-mode {
-  --color-surface-val: #f8f9fa;
+  --color-surface-val: var(--brand-light);
   --color-surface-dim-val: #e9ecef;
   --color-surface-bright-val: #ffffff;
   --color-surface-container-lowest-val: #ffffff;
-  --color-surface-container-low-val: #f8f9fa;
-  --color-surface-container-val: #f1f3f5;
-  --color-surface-container-high-val: #e9ecef;
-  --color-surface-container-highest-val: #dee2e6;
-  --color-on-surface-val: #131315;
+  --color-surface-container-low-val: var(--brand-light);
+  --color-surface-container-val: #e6efe9;
+  --color-surface-container-high-val: #dce5df;
+  --color-surface-container-highest-val: #d1dbd5;
+  --color-on-surface-val: var(--brand-text);
   --color-on-surface-variant-val: #495057;
   --color-inverse-surface-val: #343a40;
-  --color-inverse-on-surface-val: #f8f9fa;
+  --color-inverse-on-surface-val: var(--brand-light);
   --color-outline-val: #adb5bd;
   --color-outline-variant-val: #ced4da;
-  --color-surface-tint-val: #009ca6;
-  --color-primary-val: #004b50;
-  --color-on-primary-val: #ffffff;
-  --color-primary-container-val: #00dbe9;
-  --color-on-primary-container-val: #002022;
-  --color-inverse-primary-val: #80f4ff;
-  --color-background-val: #f8f9fa;
-  --color-on-background-val: #131315;
-  --color-primary-fixed-dim-val: #009ca6;
+  --color-surface-tint-val: var(--brand-green);
+  --color-primary-val: var(--brand-green);
+  --color-on-primary-val: var(--brand-light);
+  --color-primary-container-val: var(--brand-gold);
+  --color-on-primary-container-val: var(--brand-green);
+  --color-inverse-primary-val: var(--brand-gold);
+  --color-background-val: var(--brand-light);
+  --color-on-background-val: var(--brand-text);
+  --color-primary-fixed-dim-val: var(--brand-green);
 }
 
 @theme {
@@ -183,7 +189,7 @@
   
   .glass-card:hover {
       border-color: rgba(255, 255, 255, 0.3);
-      box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1), 0 10px 40px -10px rgba(0, 219, 233, 0.3);
+      box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1), 0 10px 40px -10px rgba(201, 162, 39, 0.3);
       transform: translateY(-8px) scale(1.02);
   }
   

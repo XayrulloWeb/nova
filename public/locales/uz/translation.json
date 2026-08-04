@@ -1,0 +1,266 @@
+{
+  "header": {
+    "home": "Bosh sahifa",
+    "about": "Maktab haqida",
+    "parents": "Ota-onalarga",
+    "students": "O'quvchilarga",
+    "news": "Yangiliklar",
+    "contacts": "Aloqa",
+    "applyBtn": "ARIZA TOPSHIRISH"
+  },
+  "footer": {
+    "desc": "Ertangi kun maktabi. Kelajak yetakchilarini tayyorlash uchun klassik an'analar va ilg'or texnologiyalarni birlashtirgan innovatsion ta'lim.",
+    "nav": "Navigatsiya",
+    "subscribe": "Obuna",
+    "subscribeDesc": "Muhim maktab yangiliklarini to'g'ridan-to'g'ri pochtangizga oling.",
+    "emailPlaceholder": "Pochtangiz",
+    "socials": "Biz ijtimoiy tarmoqlarda",
+    "copyright": "© {{year}} NOVA SCHOOL. Barcha huquqlar himoyalangan.",
+    "privacy": "Maxfiylik siyosati",
+    "license": "Litsenziya"
+  },
+  "hero": {
+    "badge": "2026-2027 o'quv yiliga qabul ochiq",
+    "applyBtn": "Ariza topshirish",
+    "aboutBtn": "Batafsil ma'lumot"
+  },
+  "features": [
+    {
+      "title": "Joylashuv",
+      "desc": "Urganch shahri, 4 qavatli alohida bino, hovli va oshxona mavjud"
+    },
+    {
+      "title": "Ta'lim turi",
+      "desc": "1—11 sinflar uchun umumiy o'rta ta'lim, IT/AI kuchaytirilgan yo'nalish"
+    },
+    {
+      "title": "Metodika",
+      "desc": "Jahon tajribasidan olingan tarbiyaviy yondashuv — mustaqillik va jamoaviy mas'uliyat"
+    },
+    {
+      "title": "Tillar",
+      "desc": "O'zbek tilida ta'lim, kuchaytirilgan ingliz tili darslari"
+    }
+  ],
+  "advantages": {
+    "badge": "Afzalliklarimiz",
+    "title": "Nega NOVA ni tanlaydilar?",
+    "list": [
+      {
+        "title": "IT va AI ta'limi",
+        "desc": "Dasturlash, robototexnika va sun'iy intellekt — bolani ertangi ish bozoriga tayyorlash."
+      },
+      {
+        "title": "Intizom va mustaqillik",
+        "desc": "Har kuni amalda — jamoaviy tozalash, navbatchilik, guruhda mas'uliyat. Nazariy emas, amaliy tarbiya."
+      },
+      {
+        "title": "O'z oshxonamiz",
+        "desc": "Maktab ichidagi oshxona — bolalar birgalikda ovqatlanish madaniyatini o'rganadi."
+      },
+      {
+        "title": "Zamonaviy bino",
+        "desc": "4 qavatli bino, hovli, xavfsizlik tizimi — ota-onalar uchun tinchlik, bolalar uchun qulaylik."
+      },
+      {
+        "title": "Malakali o'qituvchilar",
+        "desc": "Har bir o'qituvchi tanlov va trening orqali qabul qilinadi — metodikani chuqur egallagan mutaxassislar."
+      },
+      {
+        "title": "Ota-onalar bilan ochiqlik",
+        "desc": "Har chorak hisobot, Telegram guruhi, tayanch murojaat tizimi — siz hamisha xabardor bo'lasiz."
+      }
+    ]
+  },
+  "methodology": {
+    "badge": "Metodikamiz",
+    "title": "Jahon tajribasi — o'zbek zaminida",
+    "desc": "Maktabimizdagi tarbiyaviy yondashuv dunyoning ilg'or ta'lim tizimlaridan ilhomlangan, lekin o'zbek milliy qadriyatlari va davlat standartlariga mos ravishda tuzilgan.",
+    "steps": [
+      {
+        "num": "01",
+        "title": "Kichik guruhlar",
+        "desc": "Har sinf 4—5 kishilik doimiy guruhlarga bo'linadi. Har guruh navbat bilan sinf tozaligi va tartibi uchun javob beradi."
+      },
+      {
+        "num": "02",
+        "title": "Birgalikda ovqatlanish",
+        "desc": "O'quvchilar oshxonada navbat bilan idish tarqatadi va yig'ishtiradi — xizmat ko'rsatish va mehnatga hurmat tarbiyasi."
+      },
+      {
+        "num": "03",
+        "title": "Mustaqil tarbiya soati",
+        "desc": "Haftada bir marta o'quvchilar mustaqil ravishda sinf kengashini o'tkazadi — tashkilotchilik va notiqlik."
+      },
+      {
+        "num": "04",
+        "title": "Kun yakuni",
+        "desc": "Har kuni oxirida guruh yig'ilishi: nima yaxshi bo'ldi, nima o'zgartirish kerak — mulohaza va o'sish."
+      }
+    ]
+  },
+  "programs": {
+    "badge": "Dasturlar",
+    "title": "Ta'lim bosqichlari",
+    "stages": [
+      {
+        "grades": "1—4 SINF",
+        "title": "Boshlang'ich ta'lim",
+        "subjects": [
+          "Ona tili va savodxonlik",
+          "Matematika (amaliy yondashuv)",
+          "Kuchaytirilgan ingliz tili",
+          "Tasviriy san'at va musiqa",
+          "Jamoaviy tarbiya amaliyoti"
+        ]
+      },
+      {
+        "grades": "5—9 SINF",
+        "title": "Tayanch ta'lim",
+        "subjects": [
+          "Barcha asosiy fanlar",
+          "Informatika va IT (kuchaytirilgan)",
+          "Fizika, kimyo, biologiya",
+          "Robototexnika to'garagi",
+          "Liderlik va jamoaviy loyihalar"
+        ]
+      },
+      {
+        "grades": "10—11 SINF",
+        "title": "Umumiy o'rta ta'lim",
+        "subjects": [
+          "Oliy ta'limga tayyorlov",
+          "AI va dasturlash (tanlov fani)",
+          "Ingliz tili (IELTS tayyorlov)",
+          "Karyera yo'naltirish darslari",
+          "Yakuniy loyiha ishlari"
+        ]
+      }
+    ]
+  },
+  "faq": {
+    "badge": "F.A.Q.",
+    "title": "Ko'p beriladigan savollarga javoblar",
+    "list": [
+      {
+        "q": "Maktab litsenziyaga egami?",
+        "a": "Ha, maktab Ta'lim sifatini nazorat qilish davlat inspeksiyasidan rasmiy litsenziya olgan va davlat ta'lim standartlari asosida faoliyat yuritadi."
+      },
+      {
+        "q": "Tarbiya metodikasi nima degani?",
+        "a": "Bu bolalarda jamoaviy mas'uliyat, mustaqillik va intizomni amaliy mashg'ulotlar orqali tarbiyalashni anglatadi — har kuni sinfni tozalash, navbatchilik, guruhda ishlash kabi amaliyotlar."
+      },
+      {
+        "q": "IT yo'nalishida nima o'rganiladi?",
+        "a": "Informatika, dasturlash asoslari, robototexnika, va yuqori sinflarda AI/mashinaviy o'rganish elementlari o'rganiladi."
+      },
+      {
+        "q": "Ovqatlanish masalasi qanday hal qilingan?",
+        "a": "Maktabning o'z oshxonasi mavjud. Tushlik maktab ichida — o'quvchilar birgalikda ovqatlanadi, bu ham tarbiyaviy jarayonning bir qismi."
+      },
+      {
+        "q": "To'lov qancha?",
+        "a": "To'lov miqdori sinf va dasturga ko'ra farqlanadi. Batafsil ma'lumot uchun bizga murojaat qiling yoki Open House kuniga tashrif buyuring."
+      },
+      {
+        "q": "Maktabni qaydan topa olaman?",
+        "a": "Maktab Urganch shahrida joylashgan. Aniq manzilni qabul jarayoni boshlanganda e'lon qilamiz."
+      }
+    ]
+  },
+  "stats": {
+    "badge": "Samaradorlik ko'rsatkichlari",
+    "title": "Mukammallikka erishish uchun yaratilgan.",
+    "uniTitle": "Oliygohlarga qabul",
+    "uniDesc": "99% bitiruvchilarimiz maktabni tamomlagandan so'ng 90 kun ichida mamlakat va jahonning yetakchi universitetlariga muvaffaqiyatli qabul qilinadi.",
+    "expLabel": "Yillik tajriba",
+    "expDesc": "Tashkil etilgan kundan boshlab biz zamonaviy ta'lim sohasida kashshofmiz.",
+    "alumniLabel": "Bitiruvchilar",
+    "alumniDesc": "Dunyo bo'ylab bir-birini qo'llab-quvvatlovchi innovatorlarning kuchli tarmog'i.",
+    "partnersSubtitle": "Hamkorlarimiz",
+    "partnersTitle": "Ta'lim sohasidagi yetakchilar bizga ishonishadi."
+  },
+  "forms": {
+    "applyTitle": "1. Ota-ona ma'lumotlari",
+    "applyDesc": "Iltimos, o'zingiz haqingizda ma'lumot kiriting.",
+    "parentName": "F.I.SH",
+    "parentPhone": "Telefon raqami",
+    "nextBtn": "KEYINGISI",
+    "prevBtn": "ORQAGA",
+    "childInfoTitle": "2. Bola ma'lumotlari",
+    "childInfoDesc": "Farzandingiz haqida ma'lumot kiriting.",
+    "childName": "Farzandingizning F.I.SH",
+    "childDob": "Tug'ilgan sanasi",
+    "gradeTitle": "3. Sinfni tanlash",
+    "gradeDesc": "Farzandingiz qaysi sinfga bormoqchi?",
+    "submitBtn": "TASDIQLASH",
+    "sending": "YUBORILMOQDA...",
+    "ticketTitle": "ARIZA QABUL QILINDI",
+    "ticketDesc": "Sizning elektron chiptangiz tayyor.",
+    "ticketParent": "Ota-ona:",
+    "ticketChild": "O'quvchi:",
+    "ticketGrade": "Sinf:",
+    "ticketGradeSuffix": "-sinf",
+    "notEntered": "Kiritilmagan",
+    "newApplyBtn": "Yangi ariza topshirish",
+    "errorMsg": "Xatolik yuz berdi",
+    "contactTitle": "Savollaringiz qoldimi?",
+    "contactDesc": "Bizga yozing va biz jon deb javob beramiz.",
+    "contactSuccessTitle": "Xabaringiz yuborildi!",
+    "contactSuccessDesc": "Tez orada siz bilan bog'lanamiz.",
+    "contactNewMsg": "Yangi xabar yozish",
+    "contactName": "Ismingiz",
+    "contactMessage": "Xabar",
+    "contactSubmit": "YUBORISH",
+    "placeholderName": "Falonchiyev Pistonchi",
+    "placeholderMsg": "Savolingiz..."
+  },
+  "admin": {
+    "loginTitle": "Admin Panelga kirish",
+    "loginBtn": "Tizimga kirish",
+    "username": "Foydalanuvchi nomi",
+    "password": "Parol",
+    "errorMsg": "Login yoki parol noto'g'ri",
+    "dashboard": "Arizalar va xabarlar",
+    "news": "Yangiliklar",
+    "teachers": "O'qituvchilar",
+    "stats": "Statistika",
+    "logout": "Chiqish",
+    "applications": "Kelib tushgan arizalar",
+    "contacts": "Aloqa xabarlari",
+    "addNews": "Yangilik qo'shish",
+    "titleUz": "Sarlavha (UZ)",
+    "titleRu": "Sarlavha (RU)",
+    "contentUz": "Matn (UZ)",
+    "contentRu": "Matn (RU)",
+    "image": "Rasm",
+    "save": "Saqlash",
+    "delete": "O'chirish",
+    "addTeacher": "O'qituvchi qo'shish",
+    "nameUz": "F.I.SH (UZ)",
+    "nameRu": "F.I.SH (RU)",
+    "subjectUz": "Fan (UZ)",
+    "subjectRu": "Fan (RU)",
+    "statsTitle": "Statistikani o'zgartirish",
+    "studentsCount": "O'quvchilar soni (masalan: 600+)",
+    "expYears": "Tajriba yili (masalan: 15+)",
+    "gradCount": "Bitiruvchilar soni (masalan: 12K+)",
+    "cancel": "Bekor qilish",
+    "phone": "Telefon",
+    "grade": "Sinf",
+    "date": "Sana",
+    "success": "Muvaffaqiyatli saqlandi!",
+    "error": "Xatolik yuz berdi.",
+    "confirmDelete": "Haqiqatan ham o'chirmoqchimisiz?",
+    "categoryUz": "Toifasi (UZ) masalan: Oliy toifali o'qituvchi",
+    "categoryRu": "Toifasi (RU)",
+    "descUz": "Ta'rifi (UZ) masalan: Matematika va informatika o'qituvchisi...",
+    "descRu": "Ta'rifi (RU)",
+    "tagsUz": "Teglar (UZ) vergul bilan ajrating: Matematika, Informatika",
+    "tagsRu": "Teglar (RU) vergul bilan ajrating",
+    "administration": "Ma'muriyat",
+    "addAdmin": "A'zo qo'shish",
+    "roleUz": "Lavozimi (UZ)",
+    "roleRu": "Lavozimi (RU)"
+  }
+}

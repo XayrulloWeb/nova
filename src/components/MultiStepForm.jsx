@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function MultiStepForm() {
+  const { t } = useTranslation();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     parentName: '',
@@ -9,6 +11,30 @@ export default function MultiStepForm() {
     childDob: '',
     grade: '1',
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const submitApplication = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch('/api/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setStep(4);
+      } else {
+        setError(data.error || t('forms.errorMsg'));
+      }
+    } catch (err) {
+      setError(t('forms.errorMsg'));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,53 +58,53 @@ export default function MultiStepForm() {
         
         {/* Step 1: Parent Info */}
         <div className={`absolute inset-0 w-full p-8 glass-card rounded-3xl transition-all duration-700 ease-in-out flex flex-col justify-center ${step === 1 ? 'translate-x-0 opacity-100' : step > 1 ? '-translate-x-full opacity-0' : 'translate-x-full opacity-0'}`}>
-          <h2 className="text-3xl font-bold text-on-surface mb-2">1. Ota-ona ma'lumotlari</h2>
-          <p className="text-on-surface-variant mb-8">Iltimos, o'zingiz haqingizda ma'lumot kiriting.</p>
+          <h2 className="text-3xl font-bold text-on-surface mb-2">{t('forms.applyTitle')}</h2>
+          <p className="text-on-surface-variant mb-8">{t('forms.applyDesc')}</p>
           <div className="space-y-6">
             <div className="flex flex-col gap-2">
-              <label className="font-label-caps text-xs text-primary tracking-widest uppercase">F.I.SH</label>
-              <input type="text" name="parentName" value={formData.parentName} onChange={handleChange} className="bg-surface-container border border-outline/20 rounded-xl p-4 text-on-surface focus:outline-none focus:border-primary transition-colors" placeholder="Falonchiyev Pistonchi" />
+              <label className="font-label-caps text-xs text-primary tracking-widest uppercase">{t('forms.parentName')}</label>
+              <input type="text" name="parentName" value={formData.parentName} onChange={handleChange} className="bg-surface-container border border-outline/20 rounded-xl p-4 text-on-surface focus:outline-none focus:border-primary transition-colors" placeholder={t('forms.placeholderName')} />
             </div>
             <div className="flex flex-col gap-2">
-              <label className="font-label-caps text-xs text-primary tracking-widest uppercase">Telefon raqami</label>
+              <label className="font-label-caps text-xs text-primary tracking-widest uppercase">{t('forms.parentPhone')}</label>
               <input type="tel" name="parentPhone" value={formData.parentPhone} onChange={handleChange} className="bg-surface-container border border-outline/20 rounded-xl p-4 text-on-surface focus:outline-none focus:border-primary transition-colors" placeholder="+998 90 123 45 67" />
             </div>
           </div>
           <div className="mt-auto pt-8 flex justify-end">
             <button onClick={nextStep} className="bg-primary text-on-primary px-8 py-3 rounded-full font-bold tracking-wider hover:scale-105 transition-transform flex items-center gap-2">
-              KEYINGISI <span className="material-symbols-outlined">arrow_forward</span>
+              {t('forms.nextBtn')} <span className="material-symbols-outlined">arrow_forward</span>
             </button>
           </div>
         </div>
 
         {/* Step 2: Child Info */}
         <div className={`absolute inset-0 w-full p-8 glass-card rounded-3xl transition-all duration-700 ease-in-out flex flex-col justify-center ${step === 2 ? 'translate-x-0 opacity-100' : step > 2 ? '-translate-x-full opacity-0' : 'translate-x-full opacity-0'}`}>
-          <h2 className="text-3xl font-bold text-on-surface mb-2">2. Bola ma'lumotlari</h2>
-          <p className="text-on-surface-variant mb-8">Farzandingiz haqida ma'lumot kiriting.</p>
+          <h2 className="text-3xl font-bold text-on-surface mb-2">{t('forms.childInfoTitle')}</h2>
+          <p className="text-on-surface-variant mb-8">{t('forms.childInfoDesc')}</p>
           <div className="space-y-6">
             <div className="flex flex-col gap-2">
-              <label className="font-label-caps text-xs text-primary tracking-widest uppercase">Farzandingizning F.I.SH</label>
-              <input type="text" name="childName" value={formData.childName} onChange={handleChange} className="bg-surface-container border border-outline/20 rounded-xl p-4 text-on-surface focus:outline-none focus:border-primary transition-colors" placeholder="Falonchiyev Pistonchi" />
+              <label className="font-label-caps text-xs text-primary tracking-widest uppercase">{t('forms.childName')}</label>
+              <input type="text" name="childName" value={formData.childName} onChange={handleChange} className="bg-surface-container border border-outline/20 rounded-xl p-4 text-on-surface focus:outline-none focus:border-primary transition-colors" placeholder={t('forms.placeholderName')} />
             </div>
             <div className="flex flex-col gap-2">
-              <label className="font-label-caps text-xs text-primary tracking-widest uppercase">Tug'ilgan sanasi</label>
+              <label className="font-label-caps text-xs text-primary tracking-widest uppercase">{t('forms.childDob')}</label>
               <input type="date" name="childDob" value={formData.childDob} onChange={handleChange} className="bg-surface-container border border-outline/20 rounded-xl p-4 text-on-surface focus:outline-none focus:border-primary transition-colors [color-scheme:dark]" />
             </div>
           </div>
           <div className="mt-auto pt-8 flex justify-between">
             <button onClick={prevStep} className="text-on-surface-variant px-6 py-3 rounded-full font-bold hover:bg-surface-container transition-colors flex items-center gap-2">
-              <span className="material-symbols-outlined">arrow_back</span> ORQAGA
+              <span className="material-symbols-outlined">arrow_back</span> {t('forms.prevBtn')}
             </button>
             <button onClick={nextStep} className="bg-primary text-on-primary px-8 py-3 rounded-full font-bold tracking-wider hover:scale-105 transition-transform flex items-center gap-2">
-              KEYINGISI <span className="material-symbols-outlined">arrow_forward</span>
+              {t('forms.nextBtn')} <span className="material-symbols-outlined">arrow_forward</span>
             </button>
           </div>
         </div>
 
         {/* Step 3: Grade Selection */}
         <div className={`absolute inset-0 w-full p-8 glass-card rounded-3xl transition-all duration-700 ease-in-out flex flex-col justify-center ${step === 3 ? 'translate-x-0 opacity-100' : step > 3 ? '-translate-x-full opacity-0' : 'translate-x-full opacity-0'}`}>
-          <h2 className="text-3xl font-bold text-on-surface mb-2">3. Sinfni tanlash</h2>
-          <p className="text-on-surface-variant mb-8">Farzandingiz qaysi sinfga bormoqchi?</p>
+          <h2 className="text-3xl font-bold text-on-surface mb-2">{t('forms.gradeTitle')}</h2>
+          <p className="text-on-surface-variant mb-8">{t('forms.gradeDesc')}</p>
           <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(num => (
               <button 
@@ -92,12 +118,13 @@ export default function MultiStepForm() {
           </div>
           <div className="mt-auto pt-8 flex justify-between">
             <button onClick={prevStep} className="text-on-surface-variant px-6 py-3 rounded-full font-bold hover:bg-surface-container transition-colors flex items-center gap-2">
-              <span className="material-symbols-outlined">arrow_back</span> ORQAGA
+              <span className="material-symbols-outlined">arrow_back</span> {t('forms.prevBtn')}
             </button>
-            <button onClick={nextStep} className="bg-primary text-on-primary px-8 py-3 rounded-full font-bold tracking-wider hover:scale-105 transition-transform flex items-center gap-2">
-              TASDIQLASH <span className="material-symbols-outlined">done</span>
+            <button disabled={loading} onClick={submitApplication} className="bg-primary text-on-primary px-8 py-3 rounded-full font-bold tracking-wider hover:scale-105 transition-transform flex items-center gap-2 disabled:opacity-50 disabled:hover:scale-100">
+              {loading ? t('forms.sending') : t('forms.submitBtn')} <span className="material-symbols-outlined">{loading ? 'hourglass_empty' : 'done'}</span>
             </button>
           </div>
+          {error && <div className="mt-4 text-center text-red-500 font-bold">{error}</div>}
         </div>
 
         {/* Step 4: Ticket Generation (Success) */}
@@ -112,8 +139,8 @@ export default function MultiStepForm() {
               <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-primary/50">
                 <span className="material-symbols-outlined text-primary text-3xl">check</span>
               </div>
-              <h2 className="text-2xl font-bold text-on-surface text-primary">ARIZA QABUL QILINDI</h2>
-              <p className="text-on-surface-variant text-sm mt-2">Sizning elektron chiptangiz tayyor.</p>
+              <h2 className="text-2xl font-bold text-on-surface text-primary">{t('forms.ticketTitle')}</h2>
+              <p className="text-on-surface-variant text-sm mt-2">{t('forms.ticketDesc')}</p>
             </div>
 
             <div className="border-t-2 border-dashed border-outline/30 my-6 relative z-10">
@@ -124,16 +151,16 @@ export default function MultiStepForm() {
 
             <div className="space-y-4 relative z-10">
               <div className="flex justify-between">
-                <span className="text-on-surface-variant text-sm">Ota-ona:</span>
-                <span className="text-on-surface font-bold">{formData.parentName || 'Kiritilmagan'}</span>
+                <span className="text-on-surface-variant text-sm">{t('forms.ticketParent')}</span>
+                <span className="text-on-surface font-bold">{formData.parentName || t('forms.notEntered')}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-on-surface-variant text-sm">O'quvchi:</span>
-                <span className="text-on-surface font-bold">{formData.childName || 'Kiritilmagan'}</span>
+                <span className="text-on-surface-variant text-sm">{t('forms.ticketChild')}</span>
+                <span className="text-on-surface font-bold">{formData.childName || t('forms.notEntered')}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-on-surface-variant text-sm">Sinf:</span>
-                <span className="text-primary font-bold">{formData.grade}-sinf</span>
+                <span className="text-on-surface-variant text-sm">{t('forms.ticketGrade')}</span>
+                <span className="text-primary font-bold">{formData.grade}{t('forms.ticketGradeSuffix')}</span>
               </div>
             </div>
 
@@ -151,7 +178,7 @@ export default function MultiStepForm() {
           </div>
           
           <button onClick={() => { setStep(1); setFormData({ parentName: '', parentPhone: '', childName: '', childDob: '', grade: '1' })}} className="mt-8 text-on-surface-variant underline hover:text-primary transition-colors text-sm">
-            Yangi ariza topshirish
+            {t('forms.newApplyBtn')}
           </button>
         </div>
 

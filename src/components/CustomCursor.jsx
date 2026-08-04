@@ -44,15 +44,19 @@ export default function CustomCursor() {
   return (
     <>
       <div
-        className={`fixed top-0 left-0 w-8 h-8 rounded-full border border-primary-container pointer-events-none z-[9999] transition-transform duration-300 ease-out mix-blend-difference hidden md:block ${
-          isHovering ? 'scale-150 bg-primary-container/20 border-transparent' : 'scale-100'
-        }`}
+        className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block"
         style={{
-          transform: `translate3d(${position.x - 16}px, ${position.y - 16}px, 0) scale(${isHovering ? 1.5 : 1})`,
+          transform: `translate3d(${position.x - 16}px, ${position.y - 16}px, 0)`,
         }}
-      />
+      >
+        <div
+          className={`w-8 h-8 rounded-full border border-primary-container transition-all duration-300 ease-out ${
+            isHovering ? 'scale-150 bg-primary-container/20 border-transparent' : 'scale-100'
+          }`}
+        />
+      </div>
       <div
-        className={`fixed top-0 left-0 w-2 h-2 rounded-full bg-primary-container pointer-events-none z-[10000] transition-transform duration-100 hidden md:block`}
+        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-primary-container pointer-events-none z-[10000] hidden md:block"
         style={{
           transform: `translate3d(${position.x - 4}px, ${position.y - 4}px, 0)`,
         }}
