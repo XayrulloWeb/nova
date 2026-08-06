@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import * as THREE from 'three';
 import { useTheme } from '../context/ThemeContext';
 import { useTranslation } from 'react-i18next';
+import Countdown from './Countdown';
 
 export default function Hero() {
   const shaderContainerRef = useRef(null);
@@ -284,6 +285,9 @@ export default function Hero() {
               {t('hero.aboutBtn')}
             </Link>
           </div>
+
+          {/* Countdown Timer */}
+          <Countdown targetDate="2026-09-03T00:00:00" />
         </div>
       </div>
     </section>

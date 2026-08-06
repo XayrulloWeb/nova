@@ -9,7 +9,10 @@ export default function LatestNews() {
   useEffect(() => {
     fetch('http://localhost:5000/api/public/news')
       .then(res => res.json())
-      .then(data => setNews(data.slice(0, 3))) // Show only 3 on homepage
+      .then(data => {
+        const arr = data.data || data;
+        setNews(arr.slice(0, 3)); // Show only 3 on homepage
+      })
       .catch(err => console.error(err));
   }, []);
 

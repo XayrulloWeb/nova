@@ -28,6 +28,7 @@ export default function AdminLayout() {
     { path: '/admin/news', label: t('admin.news'), icon: 'article' },
     { path: '/admin/teachers', label: t('admin.teachers'), icon: 'school' },
     { path: '/admin/administration', label: t('admin.administration'), icon: 'admin_panel_settings' },
+    { path: '/admin/gallery', label: 'Галерея', icon: 'collections' },
     { path: '/admin/stats', label: t('admin.stats'), icon: 'bar_chart' }
   ];
 

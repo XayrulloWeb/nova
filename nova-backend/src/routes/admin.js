@@ -180,4 +180,25 @@ router.delete('/teachers/:id', auth, async (req, res) => {
   }
 });
 
+// --- Gallery Management (Protected) ---
+router.post('/gallery', auth, upload.single('image'), async (req, res) => {
+  if (!req.file) return res.status(400).json({ error: 'No image uploaded' });
+  try {
+    const image_url = '/uploads/' + req.file.filename;
+    const gallery = await prisma.gallery.create({ data: { image_url } });
+    res.status(201).json(gallery);
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+router.delete('/gallery/:id', auth, async (req, res) => {
+  try {
+    await prisma.gallery.delete({ where: { id: parseInt(req.params.id) } });
+    res.json({ message: 'Gallery image deleted' });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 module.exports = router;

@@ -8,6 +8,8 @@ import Header from './components/Header';
 import OverlayMenu from './components/OverlayMenu';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
+import Preloader from './components/Preloader';
+import ScrollToTop from './components/ScrollToTop';
 
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
@@ -26,6 +28,7 @@ import NewsManager from './pages/admin/NewsManager';
 import TeacherManager from './pages/admin/TeacherManager';
 import StatsManager from './pages/admin/StatsManager';
 import AdministrationManager from './pages/admin/AdministrationManager';
+import GalleryManager from './pages/admin/GalleryManager';
 
 function AppContent() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -34,6 +37,8 @@ function AppContent() {
 
   return (
     <div className="bg-surface-container-lowest text-on-surface antialiased min-h-screen flex flex-col font-body-md overflow-x-hidden">
+      <ScrollToTop />
+      {!isAdminRoute && <Preloader />}
       <CustomCursor />
       {!isAdminRoute && <Header onOpenMenu={() => setMenuOpen(true)} />}
       {!isAdminRoute && <OverlayMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />}
@@ -55,6 +60,7 @@ function AppContent() {
             <Route path="news" element={<NewsManager />} />
             <Route path="teachers" element={<TeacherManager />} />
             <Route path="administration" element={<AdministrationManager />} />
+            <Route path="gallery" element={<GalleryManager />} />
             <Route path="stats" element={<StatsManager />} />
           </Route>
 

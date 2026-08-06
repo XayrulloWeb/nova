@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 
 export default function TeacherManager() {
   const [teachers, setTeachers] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
   const { t } = useTranslation();
   const [form, setForm] = useState({ 
@@ -16,11 +18,15 @@ export default function TeacherManager() {
 
   useEffect(() => {
     fetchTeachers();
-  }, []);
+  }, [page]);
 
   const fetchTeachers = async () => {
-    const res = await fetch('http://localhost:5000/api/public/teachers');
-    if (res.ok) setTeachers(await res.json());
+    const res = await fetch(`http://localhost:5000/api/public/teachers?page=${page}&limit=10`);
+    if (res.ok) {
+      const json = await res.json();
+      setTeachers(json.data || []);
+      setTotalPages(json.totalPages || 1);
+    }
   };
 
   const handleAdd = async (e) => {
@@ -128,6 +134,23 @@ export default function TeacherManager() {
             </button>
           </div>
         ))}
+      </div>
+      <div className="flex justify-between items-center mt-8">
+        <button 
+          disabled={page <= 1} 
+          onClick={() => setPage(page - 1)}
+          className="px-4 py-2 bg-surface-container rounded-lg disabled:opacity-50"
+        >
+          {t('admin.prev', 'Previous')}
+        </button>
+        <span>Page {page} of {totalPages || 1}</span>
+        <button 
+          disabled={page >= totalPages} 
+          onClick={() => setPage(page + 1)}
+          className="px-4 py-2 bg-surface-container rounded-lg disabled:opacity-50"
+        >
+          {t('admin.next', 'Next')}
+        </button>
       </div>
     </div>
   );

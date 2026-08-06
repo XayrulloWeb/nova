@@ -9,7 +9,7 @@ export default function TeachersGrid() {
   useEffect(() => {
     fetch('http://localhost:5000/api/public/teachers')
       .then(res => res.json())
-      .then(data => setTeachers(data))
+      .then(data => setTeachers(data.data || data))
       .catch(err => console.error(err));
   }, []);
 

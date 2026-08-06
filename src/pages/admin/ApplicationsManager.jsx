@@ -3,27 +3,48 @@ import { useTranslation } from 'react-i18next';
 
 export default function ApplicationsManager() {
   const [applications, setApplications] = useState([]);
+  const [appPage, setAppPage] = useState(1);
+  const [appTotalPages, setAppTotalPages] = useState(1);
+
   const [contacts, setContacts] = useState([]);
+  const [contPage, setContPage] = useState(1);
+  const [contTotalPages, setContTotalPages] = useState(1);
+
   const { t } = useTranslation();
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchApplications();
+  }, [appPage]);
 
-  const fetchData = async () => {
+  useEffect(() => {
+    fetchContacts();
+  }, [contPage]);
+
+  const fetchApplications = async () => {
     const token = localStorage.getItem('adminToken');
-    const headers = { 'Authorization': `Bearer ${token}` };
-
     try {
-      const [appRes, contRes] = await Promise.all([
-        fetch('http://localhost:5000/api/admin/applications', { headers }),
-        fetch('http://localhost:5000/api/admin/contacts', { headers })
-      ]);
-      
-      if (appRes.ok) setApplications(await appRes.json());
-      if (contRes.ok) setContacts(await contRes.json());
+      const res = await fetch(`http://localhost:5000/api/admin/applications?page=${appPage}&limit=10`, { headers: { 'Authorization': `Bearer ${token}` } });
+      if (res.ok) {
+        const json = await res.json();
+        setApplications(json.data || []);
+        setAppTotalPages(json.totalPages || 1);
+      }
     } catch (error) {
-      console.error('Failed to fetch data');
+      console.error('Failed to fetch applications');
+    }
+  };
+
+  const fetchContacts = async () => {
+    const token = localStorage.getItem('adminToken');
+    try {
+      const res = await fetch(`http://localhost:5000/api/admin/contacts?page=${contPage}&limit=10`, { headers: { 'Authorization': `Bearer ${token}` } });
+      if (res.ok) {
+        const json = await res.json();
+        setContacts(json.data || []);
+        setContTotalPages(json.totalPages || 1);
+      }
+    } catch (error) {
+      console.error('Failed to fetch contacts');
     }
   };
 
@@ -57,6 +78,23 @@ export default function ApplicationsManager() {
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="flex justify-between items-center mt-4">
+          <button 
+            disabled={appPage <= 1} 
+            onClick={() => setAppPage(appPage - 1)}
+            className="px-4 py-2 bg-surface-container rounded-lg disabled:opacity-50"
+          >
+            {t('admin.prev', 'Previous')}
+          </button>
+          <span>Page {appPage} of {appTotalPages || 1}</span>
+          <button 
+            disabled={appPage >= appTotalPages} 
+            onClick={() => setAppPage(appPage + 1)}
+            className="px-4 py-2 bg-surface-container rounded-lg disabled:opacity-50"
+          >
+            {t('admin.next', 'Next')}
+          </button>
         </div>
       </section>
 

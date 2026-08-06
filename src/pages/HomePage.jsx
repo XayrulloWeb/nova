@@ -1,6 +1,8 @@
 import React from 'react';
 import SEO from '../components/SEO';
 import Hero from '../components/Hero';
+import CampusPreview from '../components/CampusPreview';
+import SchoolUniform from '../components/SchoolUniform';
 import SchoolFeatures from '../components/SchoolFeatures';
 import Advantages from '../components/Advantages';
 import Methodology from '../components/Methodology';
@@ -16,6 +18,8 @@ export default function HomePage() {
     <div className="relative z-10">
       <SEO title="NOVA-INTERNATIONAL AI SCHOOL" />
       <Hero />
+      <CampusPreview />
+      <SchoolUniform />
       <SchoolFeatures />
       <Advantages />
       <Methodology />

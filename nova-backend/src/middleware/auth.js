@@ -1,5 +1,10 @@
 const jwt = require('jsonwebtoken');
 
+if (!process.env.JWT_SECRET) {
+  console.error("FATAL ERROR: JWT_SECRET is not defined in .env");
+  process.exit(1);
+}
+
 const authMiddleware = (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
 
@@ -8,7 +13,7 @@ const authMiddleware = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'supersecret_nova_key');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.admin = decoded;
     next();
   } catch (error) {

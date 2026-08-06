@@ -35,7 +35,11 @@ router.post('/', async (req, res) => {
 📅 <b>Tug'ilgan sana:</b> ${childDob}
 🏫 <b>Sinf:</b> ${grade}-sinf
     `;
-    await sendNotification(message);
+    try {
+      await sendNotification(message);
+    } catch (telegramErr) {
+      console.error('Telegram notification failed, but application was saved:', telegramErr);
+    }
     
     res.status(201).json({ success: true, applicationId: id });
   } catch (err) {
