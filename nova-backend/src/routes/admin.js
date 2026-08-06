@@ -7,20 +7,10 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const auth = require('../middleware/auth');
+const sharp = require('sharp');
 
-// Multer storage for images
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    const dir = path.join(__dirname, '../../public/uploads');
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    cb(null, dir);
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
-});
+// Multer storage in memory to allow sharp to process
+const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
   const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp'];
@@ -32,6 +22,30 @@ const fileFilter = (req, file, cb) => {
 };
 
 const upload = multer({ storage: storage, fileFilter: fileFilter });
+
+// Middleware to process image to WebP
+const processImage = async (req, res, next) => {
+  if (!req.file) return next();
+  
+  const filename = Date.now() + '.webp';
+  const dir = path.join(__dirname, '../../public/uploads');
+  const outputPath = path.join(dir, filename);
+  
+  try {
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    
+    await sharp(req.file.buffer)
+      .webp({ quality: 80 })
+      .toFile(outputPath);
+      
+    req.file.filename = filename;
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
 
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecret_nova_key';
 
@@ -96,7 +110,7 @@ router.get('/contacts', auth, async (req, res, next) => {
 });
 
 // --- Administration Management (Protected) ---
-router.post('/administration', auth, upload.single('image'), async (req, res, next) => {
+router.post('/administration', auth, upload.single('image'), processImage, async (req, res, next) => {
   const { name_uz, name_ru, role_uz, role_ru, desc_uz, desc_ru } = req.body;
   let imageUrl = null;
   if (req.file) {
@@ -151,7 +165,7 @@ router.post('/stats', auth, async (req, res, next) => {
 });
 
 // --- News Management (Protected) ---
-router.post('/news', auth, upload.single('image'), async (req, res, next) => {
+router.post('/news', auth, upload.single('image'), processImage, async (req, res, next) => {
   try {
     const { title_uz, title_ru, content_uz, content_ru } = req.body;
     const image_url = req.file ? `/uploads/${req.file.filename}` : null;
@@ -180,7 +194,7 @@ router.delete('/news/:id', auth, async (req, res, next) => {
 });
 
 // --- Teacher Management (Protected) ---
-router.post('/teachers', auth, upload.single('image'), async (req, res, next) => {
+router.post('/teachers', auth, upload.single('image'), processImage, async (req, res, next) => {
   const { name_uz, name_ru, subject_uz, subject_ru, title_uz, title_ru, desc_uz, desc_ru, tags_uz, tags_ru } = req.body;
   let imageUrl = null;
   if (req.file) {
@@ -224,7 +238,7 @@ router.delete('/teachers/:id', auth, async (req, res, next) => {
 });
 
 // --- Gallery Management (Protected) ---
-router.post('/gallery', auth, upload.single('image'), async (req, res, next) => {
+router.post('/gallery', auth, upload.single('image'), processImage, async (req, res, next) => {
   if (!req.file) return res.status(400).json({ error: 'No image uploaded' });
   try {
     const image_url = '/uploads/' + req.file.filename;

@@ -11,6 +11,7 @@ const stripHtml = (html) => {
 export default function LatestNews({ showAll = false }) {
   const { t, i18n } = useTranslation();
   const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('http://localhost:5000/api/public/news')
@@ -26,6 +27,9 @@ export default function LatestNews({ showAll = false }) {
       .catch(err => {
         console.error(err);
         setNews([]);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [showAll]);
 
@@ -54,8 +58,28 @@ export default function LatestNews({ showAll = false }) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {news.length === 0 && <p className="text-on-surface-variant">{i18n.language?.startsWith('uz') ? "Yangiliklar topilmadi." : "Новости не найдены."}</p>}
-          {news.map((item) => {
+          {loading ? (
+            Array.from({ length: showAll ? 6 : 3 }).map((_, i) => (
+              <div key={i} className="flex flex-col glass-card rounded-[24px] overflow-hidden">
+                <div className="h-64 bg-surface-container-high animate-pulse"></div>
+                <div className="p-8 flex flex-col flex-1">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-16 h-6 rounded-full bg-primary/20 animate-pulse"></div>
+                    <div className="w-24 h-4 rounded bg-surface-container-highest animate-pulse"></div>
+                  </div>
+                  <div className="w-full h-6 rounded bg-surface-container-highest mb-3 animate-pulse"></div>
+                  <div className="w-3/4 h-6 rounded bg-surface-container-highest mb-6 animate-pulse"></div>
+                  <div className="w-full h-4 rounded bg-surface-container-high mb-2 animate-pulse"></div>
+                  <div className="w-full h-4 rounded bg-surface-container-high mb-2 animate-pulse"></div>
+                  <div className="w-2/3 h-4 rounded bg-surface-container-high mb-6 animate-pulse"></div>
+                  <div className="mt-auto w-20 h-5 rounded bg-surface-container-highest animate-pulse"></div>
+                </div>
+              </div>
+            ))
+          ) : news.length === 0 ? (
+            <p className="text-on-surface-variant">{i18n.language?.startsWith('uz') ? "Yangiliklar topilmadi." : "Новости не найдены."}</p>
+          ) : (
+            news.map((item) => {
             const isUz = i18n.language?.startsWith('uz');
             const title = isUz ? item.title_uz : item.title_ru;
             const desc = isUz ? item.content_uz : item.content_ru;
@@ -84,7 +108,8 @@ export default function LatestNews({ showAll = false }) {
               </div>
             </Link>
             );
-          })}
+            })
+          )}
         </div>
       </div>
     </section>

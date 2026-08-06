@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PageHeader from '../components/PageHeader';
+import SEO from '../components/SEO';
 
 export default function NewsArticle() {
   const { id } = useParams();
@@ -50,6 +51,11 @@ export default function NewsArticle() {
 
   return (
     <div className="min-h-screen bg-surface-container-lowest">
+      <SEO 
+        title={`${title} | NOVA`} 
+        description={content.replace(/<[^>]+>/g, '').substring(0, 150) + '...'}
+        image={newsItem.image_url ? `https://nova-maktab.uz${newsItem.image_url}` : "https://nova-maktab.uz/og-image.webp"}
+      />
       <PageHeader 
         title={i18n.language?.startsWith('uz') ? 'Yangiliklar' : 'Новости'} 
         subtitle={title} 

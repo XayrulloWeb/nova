@@ -2,6 +2,7 @@ import React, { useState, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { ReactLenis } from 'lenis/react';
 import { ThemeProvider } from './context/ThemeContext';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
 import './index.css';
 
 import Header from './components/Header';
@@ -38,47 +39,58 @@ function AppContent() {
   const isAdminRoute = location.pathname.startsWith('/admin');
 
   return (
-    <div className="bg-surface-container-lowest text-on-surface antialiased min-h-screen flex flex-col font-body-md">
-      <ScrollToTop />
-      {!isAdminRoute && <Preloader />}
-      <CustomCursor />
-      {!isAdminRoute && <Header onOpenMenu={() => setMenuOpen(true)} />}
-      {!isAdminRoute && <OverlayMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />}
-      
-      <main className="flex-grow relative">
-        <Suspense fallback={
-          <div className="absolute inset-0 flex items-center justify-center min-h-[50vh]">
-            <div className="w-12 h-12 rounded-full border-4 border-primary/30 border-t-primary animate-spin"></div>
-          </div>
-        }>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/parents" element={<ParentsPage />} />
-            <Route path="/students" element={<StudentsPage />} />
-            <Route path="/news" element={<NewsPage />} />
-            <Route path="/news/:id" element={<NewsArticle />} />
-            <Route path="/contacts" element={<ContactsPage />} />
-            <Route path="/apply" element={<ApplyPage />} />
-            
-            {/* Admin Routes */}
-            <Route path="/admin" element={<AdminLogin />} />
-            <Route path="/admin/*" element={<AdminLayout />}>
-              <Route path="dashboard" element={<ApplicationsManager />} />
-              <Route path="news" element={<NewsManager />} />
-              <Route path="teachers" element={<TeacherManager />} />
-              <Route path="administration" element={<AdministrationManager />} />
-              <Route path="gallery" element={<GalleryManager />} />
-              <Route path="stats" element={<StatsManager />} />
-            </Route>
+    <HelmetProvider>
+      <div className="min-h-screen bg-background text-on-surface font-sans selection:bg-primary/30">
+        <Helmet>
+          <title>NOVA | International AI School</title>
+          <meta name="description" content="Умная школа будущего в сердце Хорезма. Международная школа с углубленным изучением IT, робототехники и искусственного интеллекта." />
+          <meta property="og:title" content="NOVA | International AI School" />
+          <meta property="og:description" content="Умная школа будущего в сердце Хорезма. Международная школа с углубленным изучением IT, робототехники и искусственного интеллекта." />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content="https://nova-maktab.uz" />
+          <meta property="og:image" content="https://nova-maktab.uz/og-image.webp" />
+        </Helmet>
+        <ScrollToTop />
+        {!isAdminRoute && <Preloader />}
+        <CustomCursor />
+        {!isAdminRoute && <Header onOpenMenu={() => setMenuOpen(true)} />}
+        {!isAdminRoute && <OverlayMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />}
+        
+        <main className="flex-grow relative">
+          <Suspense fallback={
+            <div className="absolute inset-0 flex items-center justify-center min-h-[50vh]">
+              <div className="w-12 h-12 rounded-full border-4 border-primary/30 border-t-primary animate-spin"></div>
+            </div>
+          }>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/parents" element={<ParentsPage />} />
+              <Route path="/students" element={<StudentsPage />} />
+              <Route path="/news" element={<NewsPage />} />
+              <Route path="/news/:id" element={<NewsArticle />} />
+              <Route path="/contacts" element={<ContactsPage />} />
+              <Route path="/apply" element={<ApplyPage />} />
+              
+              {/* Admin Routes */}
+              <Route path="/admin" element={<AdminLogin />} />
+              <Route path="/admin/*" element={<AdminLayout />}>
+                <Route path="dashboard" element={<ApplicationsManager />} />
+                <Route path="news" element={<NewsManager />} />
+                <Route path="teachers" element={<TeacherManager />} />
+                <Route path="administration" element={<AdministrationManager />} />
+                <Route path="gallery" element={<GalleryManager />} />
+                <Route path="stats" element={<StatsManager />} />
+              </Route>
 
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Suspense>
-      </main>
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
+        </main>
 
-      {!isAdminRoute && <Footer />}
-    </div>
+        {!isAdminRoute && <Footer />}
+      </div>
+    </HelmetProvider>
   );
 }
 
