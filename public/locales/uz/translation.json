@@ -261,6 +261,307 @@
     "administration": "Ma'muriyat",
     "addAdmin": "A'zo qo'shish",
     "roleUz": "Lavozimi (UZ)",
-    "roleRu": "Lavozimi (RU)"
+    "roleRu": "Lavozimi (RU)",
+    "welcome": "Xush kelibsiz, {{name}}! 👋",
+    "gallery": "Galereya",
+    "galleryTitle": "Galereyani boshqarish",
+    "addPhoto": "Rasm qo'shish",
+    "emptyGallery": "Galereyada hozircha rasmlar yo'q",
+    "uploading": "Yuklanmoqda...",
+    "confirmDeleteGallery": "Ushbu rasmni o'chirmoqchimisiz?",
+    "loadingGallery": "Galereya yuklanmoqda..."
+  },
+  "countdown": {
+    "days": "Kun",
+    "hours": "Soat",
+    "minutes": "Daqiqa",
+    "seconds": "Soniya",
+    "title": "O'quv yili boshlanishiga qoldi:",
+    "finished": "O'quv yili boshlandi! 🎉"
+  },
+  "administration": {
+    "title": "Rahbariyat",
+    "desc": "Maktab ma'muriyati",
+    "empty": "Ma'muriyat ro'yxati bo'sh.",
+    "noDesc": "Ma'lumot kiritilmagan"
+  },
+  "teachers": {
+    "title": "Bizning o'qituvchilarimiz",
+    "desc": "Bizning o'qituvchilarimiz — yillar davomida to'plangan boy tajribaga ega bo'lgan va o'quvchilarni o'qish hamda hayotda yuksak natijalarga olib chiquvchi mutaxassislardir.",
+    "empty": "O'qituvchilar ro'yxati bo'sh.",
+    "noDesc": "Ma'lumot kiritilmagan"
+  },
+  "pages": {
+    "about": {
+      "title": "Maktab haqida",
+      "subtitle": "Ta'lim tashkiloti haqida ma'lumot"
+    },
+    "parents": {
+      "title": "Ota-onalarga",
+      "subtitle": "NOVA xususiy maktabi o'quvchilarining ota-onalari uchun barcha kerakli ma'lumotlar."
+    },
+    "students": {
+      "title": "O'quvchilarga",
+      "subtitle": "Dars jadvali, to'garaklar va imtihonlarga tayyorgarlik."
+    },
+    "news": {
+      "title": "Yangiliklar",
+      "subtitle": "So'nggi yangiliklar va hodisalar"
+    },
+    "apply": {
+      "title": "Ariza topshirish",
+      "subtitle": "Qabul uchun shaklni to'ldiring"
+    },
+    "contacts": {
+      "title": "Aloqa",
+      "subtitle": "Biz bilan bog'laning"
+    }
+  },
+  "campus": {
+    "title": "Bizning Kampus",
+    "subtitle": "Zamonaviy o'quv binosi va qulay sport infratuzilmasi",
+    "comingSoon": "Tez Kunda",
+    "sportsField": "Sport maydonchasi",
+    "sportsFieldDesc": "O'quvchilar uchun xavfsiz va zamonaviy sun'iy qoplamali mini-futbol maydoni hamda keng avtoturargoh.",
+    "size": "O'lchami: 9x13 m",
+    "parking": "Keng turargoh"
+  },
+  "uniform": {
+    "badge": "PREMIUM SIFAT",
+    "title": "Bizning Maxsus Formamiz",
+    "desc": "Nova International AI School o'quvchilari uchun maxsus dizayn qilingan qulay, zamonaviy va yuqori sifatli maktab formasi. Har bir detal o'quvchining qulayligi va maktab nufuzini hisobga olib yaratilgan.",
+    "natural": "Tabiiy mato",
+    "naturalDesc": "Nafas oluvchi, alergiya chaqirmaydigan yuqori sifatli paxta.",
+    "modern": "Zamonaviy dizayn",
+    "modernDesc": "Har qanday mavsum uchun ideal va chiroyli bichim.",
+    "forGirls": "Qizlar uchun",
+    "forBoys": "O'g'il bolalar uchun",
+    "moreInfo": "Batafsil ma'lumot",
+    "rotate": "Aylantirib ko'rish"
+  },
+  "admissions": {
+    "banner": "MUHIM: 2026-2027 o'quv yili uchun hujjatlar qabuli boshlandi.",
+    "moreInfo": "BATAFSIL MA'LUMOT",
+    "process": "Qabul jarayoni",
+    "processDesc": "Maktabga qabul ochiq, shaffof va adolatli tarzda amalga oshiriladi.",
+    "step1": "Ariza topshirish",
+    "step1Desc": "Bolangiz va o'zingiz haqingizdagi ma'lumotlarni to'ldirib, onlayn ariza qoldiring.",
+    "step2": "Kirish sinovlari",
+    "step2Desc": "Bolaning bilim darajasi va psixologik tayyorgarligini baholash uchun yoshiga mos suhbat va testlar.",
+    "step3": "Ota-onalar bilan suhbat",
+    "step3Desc": "Farzandingizning ta'lim maqsadlari va kelajagini muhokama qilish uchun maktab ma'muriyati bilan uchrashuv."
+  },
+  "diary": {
+    "badge": "Elektron kundalik",
+    "title": "Elektron kundalik",
+    "desc": "Farzandingizning o'zlashtirishi, dars jadvali va uy vazifalarini real vaqt rejimida kuzatib boring. Tizim shuningdek, o'qituvchilar bilan to'g'ridan-to'g'ri muloqot qilish imkonini beradi.",
+    "loginBtn": "TIZIMGA KIRISH",
+    "downloadAppBtn": "ILOVALARNI YUKLAB OLISH",
+    "schedule": "Dars jadvali",
+    "grades": "Baholar",
+    "meals": "Taomnoma",
+    "documents": "Hujjatlar"
+  },
+  "meals": {
+    "mealsTitle": "Ovqatlanish",
+    "mealsDesc": "Maktabda muvozanatlashgan uch mahal issiq ovqat (nonushta, tushlik, tushki ovqat) tashkil etilgan. Menyu yosh ehtiyojlari va diyetologlar tavsiyalarini hisobga olgan holda tuzilgan.",
+    "freshProducts": "Yangi fermer mahsulotlari",
+    "customMenu": "Yakka tartibdagi menyu (allergiya, parhez)",
+    "ownBakery": "Shaxsiy novvoyxona",
+    "viewMenu": "HAFTALIK MENYUNI KO'RISH",
+    "uniformTitle": "Maktab formasi",
+    "uniformDesc": "Biz ishbilarmonlik kiyim uslubiga amal qilamiz. Maktab formasi tartibga o'rgatadi va NOVA hamjamiyatiga daxldorlik hissini shakllantiradi.",
+    "everydayUniform": "Kundalik forma (to'q ko'k rang)",
+    "festiveUniform": "Bayram formasi (oq ust, ko'k ost)",
+    "sportsUniform": "Jismoniy tarbiya uchun sport formasi",
+    "uniformReqs": "FORMAGA QO'YILADIGAN TALABLAR"
+  },
+  "schedule": {
+    "title": "Dars jadvali (Qo'ng'iroqlar)",
+    "breakfast": "NONUSHTA",
+    "lesson1": "1-DARS",
+    "break": "TANAFFUS",
+    "lesson2": "2-DARS",
+    "lunch": "TUSHLIK",
+    "lesson3": "3-DARS",
+    "afternoonTea": "TUSHKI OVQAT",
+    "club": "TO'GARAK",
+    "home": "UYGA",
+    "items": [
+      {
+        "time": "08:00 - 09:00",
+        "name": "NONUSHTA"
+      },
+      {
+        "time": "09:00 - 09:45",
+        "name": "1-DARS"
+      },
+      {
+        "time": "09:45 - 09:50",
+        "name": "TANAFFUS"
+      },
+      {
+        "time": "09:50 - 10:35",
+        "name": "2-DARS"
+      },
+      {
+        "time": "10:35 - 10:40",
+        "name": "TANAFFUS"
+      },
+      {
+        "time": "10:40 - 11:25",
+        "name": "3-DARS"
+      },
+      {
+        "time": "11:25 - 11:30",
+        "name": "TANAFFUS"
+      },
+      {
+        "time": "11:30 - 12:15",
+        "name": "4-DARS"
+      },
+      {
+        "time": "12:15 - 12:45",
+        "name": "1-4 SINFLARGA TUSHLIK, 5-7 SINFLARGA TANAFFUS"
+      },
+      {
+        "time": "12:45 - 13:15",
+        "name": "UYGA VAZIFA"
+      },
+      {
+        "time": "13:15 - 13:45",
+        "name": "1-4 SINFLARGA TANAFFUS, 5-7 SINFLARGA TUSHLIK"
+      },
+      {
+        "time": "13:45 - 14:30",
+        "name": "5-DARS"
+      },
+      {
+        "time": "14:30 - 14:45",
+        "name": "1-4 SINFLARGA COFFEE BREAK, 5-7 SINFLARGA TANAFFUS"
+      },
+      {
+        "time": "14:45 - 15:30",
+        "name": "6-DARS"
+      },
+      {
+        "time": "15:30 - 15:45",
+        "name": "1-4 SINFLARGA TANAFFUS, 5-7 SINFLARGA COFFEE BREAK"
+      },
+      {
+        "time": "15:45 - 16:30",
+        "name": "7-DARS"
+      },
+      {
+        "time": "16:30 - 16:35",
+        "name": "TANAFFUS"
+      },
+      {
+        "time": "16:35 - 17:20",
+        "name": "TO'GARAKLAR"
+      }
+    ]
+  },
+  "exams": {
+    "title": "Olimpiadalar va Imtihonlar",
+    "stateExams": "Davlat imtihonlariga tayyorgarlik",
+    "stateExamsDesc": "Yuqori sinflarda davlat imtihonlariga intensiv tayyorgarlik tizimi joriy etilgan. Mutaxassislik fanlari bo'yicha qo'shimcha soatlar va muntazam sinov testlari o'tkaziladi.",
+    "individualPath": "Yakka tartibdagi ta'lim yo'nalishlari",
+    "experts": "Ekspertlar bilan murakkab masalalarni tahlil qilish",
+    "psyPrep": "Psixologik tayyorgarlik",
+    "olympiads": "Olimpiada harakati",
+    "olympiadsDesc": "O'quvchilarimiz har yili butunrossiya va xalqaro olimpiadalar hamda nufuzli oliygohlar olimpiadalari g'olib va sovrindorlari bo'lishadi.",
+    "specialCourses": "Fanlar bo'yicha maxsus kurslar",
+    "visitingSchools": "Sayyor maktablarda ishtirok etish",
+    "stem": "STEM-laboratoriyalarda loyiha faoliyati"
+  },
+  "history": {
+    "title": "Asosiy ma'lumotlar",
+    "subtitle": "G'oyadan reallikka",
+    "desc1": "NOVA International School yaratish g'oyasi 2024 yilda, bir guruh entuziastlar va novator o'qituvchilar 21-asr talablariga javob beradigan maktab yaratishga qaror qilganda paydo bo'ldi.",
+    "desc2": "Biz eng yaxshi xalqaro tajribani o'rgandik, Finlyandiya, Singapur va Janubiy Koreyaning yetakchi maktablariga tashrif buyurib, eng samarali metodikalarni oldik va ularni sharoitimizga moslashtirdik.",
+    "desc3": "Bugungi kunda NOVA — bu har bir bola o'z imkoniyatlarini ro'yobga chiqarishi mumkin bo'lgan texnologiya, qulaylik va xavfsizlikni o'zida mujassam etgan zamonaviy ta'lim kampusi.",
+    "desc": "NOVA xususiy maktabi 2026-yilda fundamental bilimlar va zamonaviy texnologiyalarni o'zida mujassam etgan ilg'or ta'limni taqdim etish maqsadida tashkil etilgan. Bizning yondashuvimiz har bir bolaning individual salohiyatini ro'yobga chiqarishga asoslangan.",
+    "foundersLabel": "Ta'sischilar",
+    "foundersValue": "\"Innovatsiya\" xalqaro ta'lim fondi",
+    "hoursLabel": "Ish vaqti",
+    "hoursValue": "Dushanba - Juma: 08:00 - 18:00\nShanba: 09:00 - 14:00 (To'garaklar)",
+    "langsLabel": "Ta'lim tillari",
+    "langsValue": "O'zbek, Rus, Ingliz",
+    "infraLabel": "Infratuzilma",
+    "infraValue": "STEM-laboratoriyalar, IT-poligon, sport majmuasi, 21-asr kutubxonasi"
+  },
+  "documents": {
+    "title": "Hujjatlar",
+    "charter": "Maktab ustavi",
+    "license": "Ta'lim faoliyatini olib borish uchun litsenziya",
+    "accreditation": "Davlat akkreditatsiyasi to'g'risida guvohnoma",
+    "rules": "Ichki tartib qoidalari",
+    "finance": "Moliya-xo'jalik faoliyati to'g'risida hisobot"
+  },
+  "links": {
+    "title": "Tezkor havolalar",
+    "admission": "Qabul qoidalari",
+    "vacancies": "Bo'sh ish o'rinlari",
+    "calendar": "Kalendar o'quv grafigi"
+  },
+  "announcements": {
+    "title": "E'lonlar",
+    "empty": "Hozircha e'lonlar yo'q."
+  },
+  "contacts": {
+    "title": "Biz xaritada",
+    "address": "Manzil",
+    "phone": "Telefon",
+    "email": "Email",
+    "workingHours": "Ish vaqti",
+    "monFri": "Dush-Jum",
+    "sat": "Shanba",
+    "closed": "Dam olish kuni"
+  },
+  "quicklinks": {
+    "schedule": "Dars jadvali",
+    "grades": "Baholar",
+    "meals": "Taomnoma",
+    "docs": "Hujjatlar",
+    "soon": "Tez kunda"
+  },
+  "announcement": {
+    "important": "Muhim:",
+    "started": "2026-2027 o'quv yili uchun hujjatlar qabuli boshlandi.",
+    "moreInfo": "Batafsil ma'lumot"
+  },
+  "contactsMap": {
+    "title": "Kontaktlar",
+    "address": "Manzil",
+    "addressValue": "Toshkent sh., Mirzo-Ulug'bek tumani, Sayram ko'chasi, 15",
+    "phone": "Telefon",
+    "email": "Email",
+    "hours": "Ish vaqti",
+    "hoursValue": "Dush-Juma: 08:00 - 18:00\nShanba: 09:00 - 14:00",
+    "mapTitle": "Interaktiv Kampus Xaritasi",
+    "mapDesc": "Bino haqida ma'lumot olish uchun ustiga bosing yoki sichqonchani olib boring.",
+    "zones": {
+      "main": {
+        "name": "Asosiy Bino",
+        "desc": "Sinflar, ma'muriyat va majlislar zali."
+      },
+      "stem": {
+        "name": "STEM Laboratoriyasi",
+        "desc": "Zamonaviy fizika, kimyo va IT xonalari."
+      },
+      "sports": {
+        "name": "Sport Majmuasi",
+        "desc": "Yopiq basseyn, futbol va basketbol maydonlari."
+      },
+      "library": {
+        "name": "21-asr Kutubxonasi",
+        "desc": "Elektron va bosma adabiyotlar, kovorking zonasi."
+      },
+      "cafe": {
+        "name": "Oshxona",
+        "desc": "Sog'lom ovqatlanish va eko-kafe."
+      }
+    }
   }
 }

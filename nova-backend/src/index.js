@@ -62,6 +62,15 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Backend is running!' });
 });
 
+// Global Error Handler
+app.use((err, req, res, _next) => {
+  console.error(err);
+  if (err.message && err.message.includes('Invalid file type')) {
+    return res.status(400).json({ error: err.message });
+  }
+  res.status(500).json({ error: 'Server error' });
+});
+
 // Start server
 const startServer = async () => {
   app.listen(PORT, () => {

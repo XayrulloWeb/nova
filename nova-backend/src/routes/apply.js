@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
         parent_phone: parentPhone,
         child_name: childName,
         child_dob: new Date(childDob),
-        grade
+        grade: String(grade)
       }
     });
 
@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
 🏫 <b>Sinf:</b> ${grade}-sinf
     `;
     try {
-      await sendNotification(message);
+      await sendNotification(message, id);
     } catch (telegramErr) {
       console.error('Telegram notification failed, but application was saved:', telegramErr);
     }

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function Announcements() {
+  const { t } = useTranslation();
   return (
     <div className="bg-primary text-on-primary py-3 relative z-40 overflow-hidden">
       <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.2)_50%,transparent_75%)] bg-[length:250%_250%] animate-[shimmer_3s_linear_infinite]"></div>
@@ -12,12 +14,12 @@ export default function Announcements() {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-on-primary"></span>
           </span>
           <p className="text-sm font-semibold tracking-wide">
-            <strong className="font-bold uppercase tracking-wider mr-2">Muhim:</strong> 
-            2026-2027 o'quv yili uchun hujjatlar qabuli boshlandi.
+            <strong className="font-bold uppercase tracking-wider mr-2">{t('announcement.important')}</strong> 
+            {t('announcement.started')}
           </p>
         </div>
         <Link to="/parents" className="text-sm font-bold underline hover:text-white transition-colors uppercase tracking-wider text-on-primary/90">
-          Batafsil ma'lumot
+          {t('announcement.moreInfo')}
         </Link>
       </div>
     </div>

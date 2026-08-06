@@ -4,10 +4,11 @@ import { useTranslation } from 'react-i18next';
 export default function SchoolFeatures() {
   const { t } = useTranslation();
   
-  const features = t('features', { returnObjects: true }).map((f, i) => ({
+  const featuresData = t('features', { returnObjects: true });
+  const features = Array.isArray(featuresData) ? featuresData.map((f, i) => ({
     ...f,
     icon: ['location_on', 'school', 'public', 'language'][i]
-  }));
+  })) : [];
 
   return (
     <div className="py-16 md:py-24 bg-background relative z-20">

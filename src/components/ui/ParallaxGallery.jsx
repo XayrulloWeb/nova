@@ -33,7 +33,6 @@ const ImageCard = ({ src, onLoad }) => {
 };
 
 export default function ParallaxGallery() {
-  const scrollWrapperRef = useRef(null);
   const containerRef = useRef(null);
   const [isReady, setIsReady] = useState(false);
   const loadedCountRef = useRef(0);
@@ -47,18 +46,28 @@ export default function ParallaxGallery() {
         if (urls.length === 0) {
           urls = FALLBACK_IMAGES;
         }
-        // If we have few images, duplicate them so the 3D grid doesn't look empty
-        while (urls.length < 16) {
-          urls = [...urls, ...urls];
+        
+        // If we have few images, fill the rest of the 3D grid with fallbacks 
+        // so the user doesn't see a clone army of a single uploaded image
+        if (urls.length > 0 && urls.length < 16) {
+          let mixed = [...urls];
+          let fallbackIndex = 0;
+          while (mixed.length < 16) {
+             mixed.push(FALLBACK_IMAGES[fallbackIndex % FALLBACK_IMAGES.length]);
+             fallbackIndex++;
+          }
+          urls = mixed;
+        } else if (urls.length === 0) {
+           while (urls.length < 16) {
+             urls = [...urls, ...urls];
+           }
         }
+        
         setGalleryImages(urls);
       })
       .catch(err => {
         console.error(err);
-        let urls = FALLBACK_IMAGES;
-        while (urls.length < 16) {
-          urls = [...urls, ...urls];
-        }
+        let urls = [...FALLBACK_IMAGES, ...FALLBACK_IMAGES];
         setGalleryImages(urls);
       });
   }, []);
@@ -88,10 +97,9 @@ export default function ParallaxGallery() {
     };
   }, [galleryImages]);
 
-  // LINKED SCROLL: Trapped scroll using inner wrapper as requested by user
+  // Track scroll based on the component's position in the window
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    container: scrollWrapperRef,
     offset: ["start start", "end end"],
   });
 
@@ -101,44 +109,29 @@ export default function ParallaxGallery() {
     mass: 0.5,
   });
 
-  // Banner animations
-  const bannerWidth = useTransform(smoothProgress, [0, 0.15], ["90vw", "100vw"]);
-  const bannerHeight = useTransform(smoothProgress, [0, 0.15], ["80vh", "100vh"]);
-  const bannerRadius = useTransform(smoothProgress, [0, 0.15], ["48px", "0px"]);
-  const bannerBorderWidth = useTransform(smoothProgress, [0, 0.15], ["4px", "0px"]);
+  // Banner animations (disabled to stay full screen)
+  const bannerWidth = "100vw";
+  const bannerHeight = "100vh";
+  const bannerRadius = "0px";
+  const bannerBorderWidth = "0px";
 
-  // 3D Matrix animations
-  const rotateY = useTransform(smoothProgress, [0.15, 1], [-45, -8]);
-  const rotateX = useTransform(smoothProgress, [0.15, 1], [25, 4]);
-  const rotateZ = useTransform(smoothProgress, [0.15, 1], [15, 2]);
-  const translateZ = useTransform(smoothProgress, [0.15, 1], [-800, 0]);
+  // 3D Matrix animations (start immediately from 0)
+  const rotateY = useTransform(smoothProgress, [0, 1], [-45, -8]);
+  const rotateX = useTransform(smoothProgress, [0, 1], [25, 4]);
+  const rotateZ = useTransform(smoothProgress, [0, 1], [15, 2]);
+  const translateZ = useTransform(smoothProgress, [0, 1], [-800, 0]);
 
-  // Track columns parallax animations (reduced percentages to prevent running out of images)
-  const yCol1 = useTransform(smoothProgress, [0.15, 1], ["0%", "-12%"]);
-  const yCol2 = useTransform(smoothProgress, [0.15, 1], ["-12%", "8%"]);
-  const yCol3 = useTransform(smoothProgress, [0.15, 1], ["0%", "-12%"]);
-  const yCol4 = useTransform(smoothProgress, [0.15, 1], ["-8%", "10%"]);
+  // Track columns parallax animations (start immediately from 0)
+  const yCol1 = useTransform(smoothProgress, [0, 1], ["0%", "-12%"]);
+  const yCol2 = useTransform(smoothProgress, [0, 1], ["-12%", "8%"]);
+  const yCol3 = useTransform(smoothProgress, [0, 1], ["0%", "-12%"]);
+  const yCol4 = useTransform(smoothProgress, [0, 1], ["-8%", "10%"]);
 
   return (
-    <div 
-      ref={scrollWrapperRef}
-      data-lenis-prevent="true"
-      className="w-full h-screen overflow-y-auto overflow-x-hidden bg-[#050505] relative z-[50]"
-      style={{
-        overscrollBehavior: 'none', 
-        scrollbarWidth: 'none', 
-        msOverflowStyle: 'none'
-      }}
+    <section
+      ref={containerRef}
+      className="relative w-full h-[300vh] bg-[#050505] text-white font-sans selection:bg-white selection:text-black z-10"
     >
-      <style>{`
-        ::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
-      <section
-        ref={containerRef}
-        className="relative w-full h-[400vh] bg-[#050505] text-white font-sans selection:bg-white selection:text-black"
-      >
         <div className="sticky top-0 h-screen w-full flex justify-center items-center overflow-hidden">
           <motion.div
             style={{
@@ -146,7 +139,7 @@ export default function ParallaxGallery() {
               height: bannerHeight,
               borderRadius: bannerRadius,
               borderWidth: bannerBorderWidth,
-              borderColor: "#2c2738",
+              borderColor: "transparent",
             }}
             className="relative bg-black overflow-hidden flex items-center justify-center max-w-[1920px] mx-auto will-change-transform backface-hidden preserve-3d"
           >
@@ -197,6 +190,5 @@ export default function ParallaxGallery() {
           </motion.div>
         </div>
       </section>
-    </div>
   );
 }

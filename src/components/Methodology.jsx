@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 
 export default function Methodology() {
   const { t } = useTranslation();
-  const steps = t('methodology.steps', { returnObjects: true });
+  const stepsData = t('methodology.steps', { returnObjects: true });
+  const steps = Array.isArray(stepsData) ? stepsData : [];
 
   return (
     <section className="py-24 md:py-32 bg-background relative z-10 border-t border-outline/10" id="methodology">

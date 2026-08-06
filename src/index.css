@@ -108,8 +108,29 @@
     font-family: var(--font-sans);
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
+    overflow-x: clip;
     cursor: none;
+  }
+
+  /* Lenis Scroll Optimization */
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
   }
   
   a, button, input, select, textarea, .glass-card, [role="button"] {

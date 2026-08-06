@@ -18,7 +18,7 @@ export default function TeacherManager() {
 
   useEffect(() => {
     fetchTeachers();
-  }, [page]);
+  }, [page]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchTeachers = async () => {
     const res = await fetch(`http://localhost:5000/api/public/teachers?page=${page}&limit=10`);

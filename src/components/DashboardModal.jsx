@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function DashboardModal({ isOpen, onClose }) {
   const [animate, setAnimate] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (isOpen) {
@@ -70,7 +72,7 @@ export default function DashboardModal({ isOpen, onClose }) {
         {/* Main Dashboard Area */}
         <div className="flex-1 overflow-y-auto p-6 md:p-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent">
           <header className="mb-8">
-            <h1 className="text-3xl font-bold text-on-surface mb-2">Xush kelibsiz, Azizjon! 👋</h1>
+            <h1 className="text-3xl font-bold text-on-surface mb-2">{t('admin.welcome', { name: 'Azizjon' })}</h1>
             <p className="text-on-surface-variant">Bugun 24-sentabr, Chorshanba. O'qishlaringizga omad tilaymiz.</p>
           </header>
 

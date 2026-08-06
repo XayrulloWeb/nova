@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
+const stripHtml = (html) => {
+  if (!html) return '';
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  return doc.body.textContent || '';
+};
 
 export default function NewsManager() {
   const [news, setNews] = useState([]);
@@ -11,7 +19,7 @@ export default function NewsManager() {
 
   useEffect(() => {
     fetchNews();
-  }, [page]);
+  }, [page]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchNews = async () => {
     const res = await fetch(`http://localhost:5000/api/public/news?page=${page}&limit=10`);
@@ -71,8 +79,18 @@ export default function NewsManager() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <input type="text" placeholder={t('admin.titleUz')} value={form.title_uz} onChange={e => setForm({...form, title_uz: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20" required />
             <input type="text" placeholder={t('admin.titleRu')} value={form.title_ru} onChange={e => setForm({...form, title_ru: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20" required />
-            <textarea placeholder={t('admin.contentUz')} value={form.content_uz} onChange={e => setForm({...form, content_uz: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20 h-32" required></textarea>
-            <textarea placeholder={t('admin.contentRu')} value={form.content_ru} onChange={e => setForm({...form, content_ru: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20 h-32" required></textarea>
+            <div className="md:col-span-2">
+              <label className="block mb-2 font-bold">{t('admin.contentUz')}</label>
+              <div className="bg-surface-container rounded-xl overflow-hidden text-on-surface">
+                <ReactQuill theme="snow" value={form.content_uz} onChange={val => setForm({...form, content_uz: val})} />
+              </div>
+            </div>
+            <div className="md:col-span-2">
+              <label className="block mb-2 font-bold">{t('admin.contentRu')}</label>
+              <div className="bg-surface-container rounded-xl overflow-hidden text-on-surface">
+                <ReactQuill theme="snow" value={form.content_ru} onChange={val => setForm({...form, content_ru: val})} />
+              </div>
+            </div>
             <div className="md:col-span-2">
               <label className="block mb-2 font-bold">{t('admin.image')}</label>
               <input type="file" accept="image/*" onChange={e => setForm({...form, image: e.target.files[0]})} className="bg-surface-container p-4 rounded-xl border border-outline/20 w-full" />
@@ -92,7 +110,7 @@ export default function NewsManager() {
             </div>
             <div className="p-6 flex flex-col flex-grow">
               <h3 className="font-bold text-xl mb-2">{item.title_uz}</h3>
-              <p className="text-on-surface-variant line-clamp-2 mb-4 text-sm">{item.content_uz}</p>
+              <p className="text-on-surface-variant line-clamp-2 mb-4 text-sm">{stripHtml(item.content_uz)}</p>
               <button 
                 onClick={() => handleDelete(item.id)}
                 className="mt-auto bg-red-500/10 text-red-500 px-4 py-2 rounded-lg font-bold hover:bg-red-500/20 w-max"

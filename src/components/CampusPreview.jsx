@@ -1,13 +1,15 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function CampusPreview() {
+  const { t } = useTranslation();
   return (
     <div className="py-16 bg-background relative z-20">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mb-10 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-on-surface">Bizning Kampus</h2>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-on-surface">{t('campus.title')}</h2>
           <p className="mt-4 text-lg text-on-surface-variant max-w-2xl mx-auto">
-            Zamonaviy o'quv binosi va qulay sport infratuzilmasi
+            {t('campus.subtitle')}
           </p>
         </div>
 
@@ -27,7 +29,7 @@ export default function CampusPreview() {
             <div className="backdrop-blur-md bg-white/20 border-2 border-white/40 shadow-lg px-6 py-2 rounded-full flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse"></span>
               <span className="text-white font-bold tracking-widest uppercase text-sm md:text-base drop-shadow-md">
-                Tez Kunda
+                {t('campus.comingSoon')}
               </span>
             </div>
           </div>
@@ -40,19 +42,19 @@ export default function CampusPreview() {
                 <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center border border-green-500/30">
                   <span className="material-symbols-outlined text-green-400">sports_soccer</span>
                 </div>
-                <h3 className="text-xl md:text-2xl font-bold tracking-wide drop-shadow-md">Sport maydonchasi</h3>
+                <h3 className="text-xl md:text-2xl font-bold tracking-wide drop-shadow-md">{t('campus.sportsField')}</h3>
               </div>
               
               <p className="text-sm md:text-base text-gray-100 leading-relaxed mb-6 drop-shadow-sm font-medium">
-                O'quvchilar uchun xavfsiz va zamonaviy sun'iy qoplamali mini-futbol maydoni hamda keng avtoturargoh.
+                {t('campus.sportsFieldDesc')}
               </p>
               
               <div className="flex flex-wrap gap-2 text-xs md:text-sm font-semibold">
                 <span className="bg-black/20 backdrop-blur-md text-white py-1.5 px-4 rounded-full border border-white/20 shadow-inner">
-                  O'lchami: 9x13 m
+                  {t('campus.size')}
                 </span>
                 <span className="bg-white/20 backdrop-blur-md text-white py-1.5 px-4 rounded-full border border-white/30 shadow-inner">
-                  Keng turargoh
+                  {t('campus.parking')}
                 </span>
               </div>
 

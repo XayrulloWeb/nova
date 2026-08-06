@@ -106,18 +106,16 @@ export default function TeachersGrid() {
     <section className="flex-grow pt-[160px] pb-[160px] px-margin-mobile md:px-margin-desktop bg-surface-container-lowest" id="teachers">
       <header className="mb-20 max-w-4xl mx-auto md:mx-0">
         <h1 className="text-[40px] md:text-headline-lg font-extrabold text-on-surface mb-4 uppercase tracking-tighter">
-          {i18n.language.startsWith('uz') ? 'Bizning o\'qituvchilarimiz' : 'Наши преподаватели'}
+          {t('teachers.title')}
         </h1>
         <p className="text-body-lg text-on-surface-variant max-w-2xl">
-          {i18n.language.startsWith('uz') 
-            ? 'Bizning o\'qituvchilarimiz ko\'p yillik tajribaga ega bo\'lgan va o\'quvchilarni o\'qishda hamda hayotda yuksak natijalarga olib chiquvchi ekspertlardir.' 
-            : 'Наши преподаватели - эксперты с многолетним опытом, которые приводят учеников к высоким результатам в учебе и жизни.'}
+          {t('teachers.desc')}
         </p>
       </header>
       
       {teachers.length === 0 ? (
         <p className="text-on-surface-variant text-center py-20">
-          {i18n.language.startsWith('uz') ? 'O\'qituvchilar ro\'yxati bo\'sh.' : 'Список преподавателей пуст.'}
+          {t('teachers.empty')}
         </p>
       ) : (
         <div className="bento-grid">

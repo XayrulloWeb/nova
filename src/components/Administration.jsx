@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function Administration() {
   const [admins, setAdmins] = useState([]);
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const lang = i18n.language?.startsWith('uz') ? 'uz' : 'ru';
 
   useEffect(() => {
@@ -27,16 +27,16 @@ export default function Administration() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary mb-6 font-label-caps text-xs tracking-widest uppercase">
             <span className="material-symbols-outlined text-sm">stars</span>
-            {i18n.language?.startsWith('uz') ? 'Rahbariyat' : 'Руководство'}
+            {t('administration.title')}
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-on-surface tracking-tight">
-            {i18n.language?.startsWith('uz') ? 'Maktab ma\'muriyati' : 'Администрация школы'}
+            {t('administration.desc')}
           </h2>
         </div>
         
         {admins.length === 0 ? (
           <p className="text-on-surface-variant text-center text-lg">
-            {i18n.language?.startsWith('uz') ? 'Ma\'muriyat ro\'yxati bo\'sh.' : 'Список администрации пуст.'}
+            {t('administration.empty')}
           </p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
@@ -85,7 +85,7 @@ export default function Administration() {
                   {/* Biography/Description (Visible on hover) */}
                   <div className="h-0 opacity-0 overflow-hidden group-hover:h-auto group-hover:opacity-100 transition-all duration-500 delay-200">
                     <p className="text-white/80 text-sm md:text-base line-clamp-4 mt-2 font-medium">
-                      {admin[`desc_${lang}`] || (i18n.language?.startsWith('uz') ? 'Ma\'lumot kiritilmagan' : 'Информация не добавлена')}
+                      {admin[`desc_${lang}`] || t('administration.noDesc')}
                     </p>
                   </div>
                   

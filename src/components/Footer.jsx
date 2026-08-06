@@ -16,7 +16,7 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-12 lg:col-span-5 flex flex-col justify-between">
             <div>
               <Link to="/" className="flex items-center gap-2 mb-6 inline-flex group">
-                <img src="/logo.png" alt="NOVA Logo" className="h-12 md:h-16 w-auto object-contain group-hover:scale-105 transition-transform" />
+                <img src="/logo.webp" alt="NOVA Logo" className="h-12 md:h-16 w-auto object-contain group-hover:scale-105 transition-transform" />
               </Link>
               <p className="text-on-surface-variant max-w-md mb-8 leading-relaxed">
                 {t('footer.desc')}
@@ -32,7 +32,7 @@ export default function Footer() {
                 </a>
                 <p className="flex items-center gap-3 text-on-surface-variant w-max mt-2">
                   <span className="material-symbols-outlined text-sm">location_on</span>
-                  <span className="font-medium">Toshkent sh., Sayram ko'chasi, 15-uy</span>
+                  <span className="font-medium">{t('contactsMap.addressValue')}</span>
                 </p>
               </div>
             </div>
@@ -69,13 +69,13 @@ export default function Footer() {
             <h4 className="font-label-caps text-sm text-on-surface font-bold tracking-widest uppercase mb-6">{t('footer.socials')}</h4>
             <div className="flex gap-4">
               <a href="#" className="w-10 h-10 rounded-full bg-surface-container border border-outline/10 flex items-center justify-center text-on-surface-variant hover:bg-primary hover:text-on-primary hover:border-primary transition-all duration-300">
-                <span className="font-bold">Tg</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
               </a>
               <a href="#" className="w-10 h-10 rounded-full bg-surface-container border border-outline/10 flex items-center justify-center text-on-surface-variant hover:bg-primary hover:text-on-primary hover:border-primary transition-all duration-300">
-                <span className="font-bold">Ig</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
               </a>
               <a href="#" className="w-10 h-10 rounded-full bg-surface-container border border-outline/10 flex items-center justify-center text-on-surface-variant hover:bg-primary hover:text-on-primary hover:border-primary transition-all duration-300">
-                <span className="font-bold">Fb</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
               </a>
             </div>
           </div>

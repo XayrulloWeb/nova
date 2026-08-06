@@ -13,6 +13,7 @@ export default function MultiStepForm() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [validationError, setValidationError] = useState('');
 
   const submitApplication = async () => {
     setLoading(true);
@@ -29,7 +30,7 @@ export default function MultiStepForm() {
       } else {
         setError(data.error || t('forms.errorMsg'));
       }
-    } catch (err) {
+    } catch (err) { // eslint-disable-line no-unused-vars
       setError(t('forms.errorMsg'));
     } finally {
       setLoading(false);
@@ -37,14 +38,44 @@ export default function MultiStepForm() {
   };
 
   const handleChange = (e) => {
+    setValidationError('');
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const nextStep = () => setStep((prev) => Math.min(prev + 1, 4));
-  const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
+  const nextStep = () => {
+    setValidationError('');
+    if (step === 1 && (!formData.parentName.trim() || !formData.parentPhone.trim())) {
+      setValidationError(t('forms.fillRequired', 'Пожалуйста, заполните все поля!'));
+      return;
+    }
+    if (step === 2 && (!formData.childName.trim() || !formData.childDob.trim())) {
+      setValidationError(t('forms.fillRequired', 'Пожалуйста, заполните все поля!'));
+      return;
+    }
+    setStep((prev) => Math.min(prev + 1, 4));
+  };
+  const prevStep = () => {
+    setValidationError('');
+    setStep((prev) => Math.max(prev - 1, 1));
+  };
 
   return (
     <div className="w-full max-w-4xl mx-auto relative min-h-[500px] flex items-center justify-center p-4">
+      
+      {/* Premium Top-Right Toast Notification */}
+      <div className={`fixed top-32 right-6 bg-surface-container-highest border border-red-500/30 text-on-surface px-4 py-4 rounded-2xl shadow-[0_10px_40px_-10px_rgba(239,68,68,0.3)] z-[9999] min-w-[320px] max-w-md transition-all duration-500 cubic-bezier(0.4, 0, 0.2, 1) flex items-start gap-4 ${validationError ? 'translate-x-0 opacity-100' : 'translate-x-[120%] opacity-0'}`}>
+        <div className="bg-red-500/10 text-red-500 p-2 rounded-xl flex items-center justify-center shrink-0">
+          <span className="material-symbols-outlined text-2xl">error</span>
+        </div>
+        <div className="flex flex-col flex-grow">
+          <span className="font-bold text-sm">Ошибка валидации</span>
+          <span className="text-on-surface-variant text-sm mt-1">{validationError || '...'}</span>
+        </div>
+        <button onClick={() => setValidationError('')} className="text-on-surface-variant hover:text-on-surface transition-colors shrink-0">
+          <span className="material-symbols-outlined text-xl">close</span>
+        </button>
+      </div>
+
       {/* Progress Bar */}
       <div className="absolute top-0 left-0 w-full h-2 bg-surface-container-highest rounded-full overflow-hidden">
         <div 

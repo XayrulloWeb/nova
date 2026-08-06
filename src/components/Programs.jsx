@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 
 export default function Programs() {
   const { t } = useTranslation();
-  const stages = t('programs.stages', { returnObjects: true });
+  const stagesData = t('programs.stages', { returnObjects: true });
+  const stages = Array.isArray(stagesData) ? stagesData : [];
 
   return (
     <section className="py-24 bg-surface-container relative z-10 border-y border-outline/10" id="programs">

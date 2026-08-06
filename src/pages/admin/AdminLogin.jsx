@@ -20,7 +20,7 @@ export default function AdminLogin() {
     setError('');
     
     try {
-      const response = await fetch('http://localhost:5000/api/admin/login', {
+      const response = await fetch('/api/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
@@ -33,7 +33,7 @@ export default function AdminLogin() {
       } else {
         setError(t('admin.errorMsg') || 'Login failed');
       }
-    } catch (err) {
+    } catch (err) { // eslint-disable-line no-unused-vars
       setError('Network error');
     } finally {
       setLoading(false);

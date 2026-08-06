@@ -131,7 +131,7 @@ export default function Hero() {
     const mainGroup = new THREE.Group();
     scene.add(mainGroup);
 
-    const coreGeom = new THREE.IcosahedronGeometry(6, 1);
+    const coreGeom = new THREE.IcosahedronGeometry(4.5, 1);
     
     const coreMat = theme === 'light' 
       ? new THREE.MeshBasicMaterial({ color: 0xf8f9fa })
@@ -160,11 +160,26 @@ export default function Hero() {
         pPos[i] = (Math.random() - 0.5) * 50;
     }
     pGeom.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+    // Create circular texture for particles
+    const createCircleTexture = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 64;
+      canvas.height = 64;
+      const ctx = canvas.getContext('2d');
+      ctx.beginPath();
+      ctx.arc(32, 32, 30, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+      return new THREE.CanvasTexture(canvas);
+    };
+
     const pMat = new THREE.PointsMaterial({ 
         color: theme === 'light' ? 0x495057 : 0xffffff, 
-        size: 0.1, 
+        size: 0.12, 
         transparent: true, 
-        opacity: theme === 'light' ? 0.2 : 0.5 
+        opacity: theme === 'light' ? 0.3 : 0.6,
+        map: createCircleTexture(),
+        depthWrite: false
     });
     const particles = new THREE.Points(pGeom, pMat);
     scene.add(particles);
@@ -230,7 +245,7 @@ export default function Hero() {
   }, [theme]);
 
   return (
-    <section className="relative overflow-hidden bg-background pt-[120px] pb-[80px] lg:pt-[160px] lg:pb-[120px] min-h-[100vh] flex items-center z-10" id="home">
+    <section className="relative overflow-hidden bg-background h-[100dvh] pt-20 flex items-center justify-center z-10" id="home">
       
       {/* Background Shader */}
       <div className="absolute inset-0 z-0">
@@ -244,7 +259,7 @@ export default function Hero() {
         
         {/* Background "NOVA" text */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 select-none pointer-events-none flex justify-center w-full opacity-[0.04]">
-          <span className="text-[180px] sm:text-[280px] md:text-[400px] lg:text-[500px] font-black tracking-tighter uppercase whitespace-nowrap text-on-surface">
+          <span className="text-[120px] sm:text-[180px] md:text-[250px] lg:text-[350px] font-black tracking-tighter uppercase whitespace-nowrap text-on-surface">
             NOVA
           </span>
         </div>
@@ -261,7 +276,7 @@ export default function Hero() {
           </div>
           
           {/* Main Title */}
-          <h1 className="text-5xl md:text-7xl lg:text-[90px] font-extrabold tracking-tight text-on-surface mb-6 leading-[1.1] uppercase">
+          <h1 className="text-4xl md:text-6xl lg:text-[72px] font-extrabold tracking-tight text-on-surface mb-6 leading-[1.1] uppercase">
             NOVA <br className="hidden md:block"/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-container animate-pulse-slow inline-block">
               International AI School
@@ -274,13 +289,13 @@ export default function Hero() {
           <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 w-full sm:w-auto pointer-events-auto">
             <Link 
               to="/apply" 
-              className="w-full sm:w-auto px-10 py-5 rounded-full bg-on-surface text-surface font-semibold text-xl hover:scale-105 transition-all duration-300 hover:shadow-[0_10px_40px_-10px_rgba(255,255,255,0.3)] flex items-center justify-center"
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-on-surface text-surface font-semibold text-lg hover:scale-105 transition-all duration-300 hover:shadow-[0_10px_40px_-10px_rgba(255,255,255,0.3)] flex items-center justify-center"
             >
               {t('hero.applyBtn')}
             </Link>
             <Link 
               to="/about" 
-              className="w-full sm:w-auto px-10 py-5 rounded-full bg-transparent border-2 border-outline/50 text-on-surface font-semibold text-xl hover:bg-surface-container hover:border-outline-variant transition-all duration-300 flex items-center justify-center"
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-transparent border-2 border-outline/50 text-on-surface font-semibold text-lg hover:bg-surface-container hover:border-outline-variant transition-all duration-300 flex items-center justify-center"
             >
               {t('hero.aboutBtn')}
             </Link>

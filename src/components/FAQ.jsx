@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 export default function FAQ() {
   const [activeIndex, setActiveIndex] = useState(null);
   const { t } = useTranslation();
-  const faqs = t('faq.list', { returnObjects: true });
+  const faqsData = t('faq.list', { returnObjects: true });
+  const faqs = Array.isArray(faqsData) ? faqsData : [];
 
   return (
     <section className="py-24 bg-background relative z-10 border-t border-outline/10" id="faq">

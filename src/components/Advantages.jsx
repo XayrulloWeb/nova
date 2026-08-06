@@ -4,10 +4,11 @@ import { useTranslation } from 'react-i18next';
 export default function Advantages() {
   const { t } = useTranslation();
   
-  const advantages = t('advantages.list', { returnObjects: true }).map((a, i) => ({
+  const advantagesData = t('advantages.list', { returnObjects: true });
+  const advantages = Array.isArray(advantagesData) ? advantagesData.map((a, i) => ({
     ...a,
-    icon: ['smart_toy', 'self_improvement', 'restaurant', 'apartment', 'cast_for_education', 'stacked_bar_chart'][i]
-  }));
+    icon: ['psychology', 'sports_esports', 'language', 'groups', 'cast_for_education', 'stacked_bar_chart'][i]
+  })) : [];
 
   return (
     <section className="py-24 bg-surface-container relative z-10" id="advantages">

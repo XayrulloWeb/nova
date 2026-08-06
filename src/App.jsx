@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { ReactLenis } from 'lenis/react';
 import { ThemeProvider } from './context/ThemeContext';
@@ -11,24 +11,26 @@ import CustomCursor from './components/CustomCursor';
 import Preloader from './components/Preloader';
 import ScrollToTop from './components/ScrollToTop';
 
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import ParentsPage from './pages/ParentsPage';
-import StudentsPage from './pages/StudentsPage';
-import NewsPage from './pages/NewsPage';
-import ContactsPage from './pages/ContactsPage';
-import ApplyPage from './pages/ApplyPage';
-import NotFoundPage from './pages/NotFoundPage';
+// Lazy load Pages
+const HomePage = lazy(() => import('./pages/HomePage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ParentsPage = lazy(() => import('./pages/ParentsPage'));
+const StudentsPage = lazy(() => import('./pages/StudentsPage'));
+const NewsPage = lazy(() => import('./pages/NewsPage'));
+const NewsArticle = lazy(() => import('./pages/NewsArticle'));
+const ContactsPage = lazy(() => import('./pages/ContactsPage'));
+const ApplyPage = lazy(() => import('./pages/ApplyPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
-// Admin Pages
-import AdminLogin from './pages/admin/AdminLogin';
-import AdminLayout from './pages/admin/AdminLayout';
-import ApplicationsManager from './pages/admin/ApplicationsManager';
-import NewsManager from './pages/admin/NewsManager';
-import TeacherManager from './pages/admin/TeacherManager';
-import StatsManager from './pages/admin/StatsManager';
-import AdministrationManager from './pages/admin/AdministrationManager';
-import GalleryManager from './pages/admin/GalleryManager';
+// Lazy load Admin Pages
+const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
+const AdminLayout = lazy(() => import('./pages/admin/AdminLayout'));
+const ApplicationsManager = lazy(() => import('./pages/admin/ApplicationsManager'));
+const NewsManager = lazy(() => import('./pages/admin/NewsManager'));
+const TeacherManager = lazy(() => import('./pages/admin/TeacherManager'));
+const StatsManager = lazy(() => import('./pages/admin/StatsManager'));
+const AdministrationManager = lazy(() => import('./pages/admin/AdministrationManager'));
+const GalleryManager = lazy(() => import('./pages/admin/GalleryManager'));
 
 function AppContent() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -36,36 +38,43 @@ function AppContent() {
   const isAdminRoute = location.pathname.startsWith('/admin');
 
   return (
-    <div className="bg-surface-container-lowest text-on-surface antialiased min-h-screen flex flex-col font-body-md overflow-x-hidden">
+    <div className="bg-surface-container-lowest text-on-surface antialiased min-h-screen flex flex-col font-body-md">
       <ScrollToTop />
       {!isAdminRoute && <Preloader />}
       <CustomCursor />
       {!isAdminRoute && <Header onOpenMenu={() => setMenuOpen(true)} />}
       {!isAdminRoute && <OverlayMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />}
       
-      <main className="flex-grow">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/parents" element={<ParentsPage />} />
-          <Route path="/students" element={<StudentsPage />} />
-          <Route path="/news" element={<NewsPage />} />
-          <Route path="/contacts" element={<ContactsPage />} />
-          <Route path="/apply" element={<ApplyPage />} />
-          
-          {/* Admin Routes */}
-          <Route path="/admin" element={<AdminLogin />} />
-          <Route path="/admin/*" element={<AdminLayout />}>
-            <Route path="dashboard" element={<ApplicationsManager />} />
-            <Route path="news" element={<NewsManager />} />
-            <Route path="teachers" element={<TeacherManager />} />
-            <Route path="administration" element={<AdministrationManager />} />
-            <Route path="gallery" element={<GalleryManager />} />
-            <Route path="stats" element={<StatsManager />} />
-          </Route>
+      <main className="flex-grow relative">
+        <Suspense fallback={
+          <div className="absolute inset-0 flex items-center justify-center min-h-[50vh]">
+            <div className="w-12 h-12 rounded-full border-4 border-primary/30 border-t-primary animate-spin"></div>
+          </div>
+        }>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/parents" element={<ParentsPage />} />
+            <Route path="/students" element={<StudentsPage />} />
+            <Route path="/news" element={<NewsPage />} />
+            <Route path="/news/:id" element={<NewsArticle />} />
+            <Route path="/contacts" element={<ContactsPage />} />
+            <Route path="/apply" element={<ApplyPage />} />
+            
+            {/* Admin Routes */}
+            <Route path="/admin" element={<AdminLogin />} />
+            <Route path="/admin/*" element={<AdminLayout />}>
+              <Route path="dashboard" element={<ApplicationsManager />} />
+              <Route path="news" element={<NewsManager />} />
+              <Route path="teachers" element={<TeacherManager />} />
+              <Route path="administration" element={<AdministrationManager />} />
+              <Route path="gallery" element={<GalleryManager />} />
+              <Route path="stats" element={<StatsManager />} />
+            </Route>
 
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Suspense>
       </main>
 
       {!isAdminRoute && <Footer />}

@@ -28,7 +28,7 @@ export default function Header({ onOpenMenu }) {
           
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0 flex items-center gap-2 group">
-              <img src="/logo.png" alt="NOVA Logo" className="h-10 md:h-12 w-auto object-contain group-hover:scale-105 transition-transform duration-300" />
+              <img src="/logo.webp" alt="NOVA Logo" className="h-10 md:h-12 w-auto object-contain group-hover:scale-105 transition-transform duration-300" />
             </Link>
           </div>
 

@@ -1,14 +1,39 @@
 import React, { useEffect, useState } from 'react';
+import { useProgress } from '@react-three/drei';
+import { useTranslation } from 'react-i18next';
 
 export default function Preloader() {
+  const { i18n } = useTranslation();
   const [isVisible, setIsVisible] = useState(true);
+  const { progress, active } = useProgress();
+  const [isWindowLoaded, setIsWindowLoaded] = useState(document.readyState === 'complete');
 
   useEffect(() => {
-    // Hide the preloader after a delay to ensure components (like 3D canvas) have mounted
+    const handleLoad = () => setIsWindowLoaded(true);
+    if (document.readyState === 'complete') {
+      setIsWindowLoaded(true);
+    } else {
+      window.addEventListener('load', handleLoad);
+      return () => window.removeEventListener('load', handleLoad);
+    }
+  }, []);
+
+  useEffect(() => {
+    const is3DLoaded = progress === 100 || (!active && progress === 0);
+    
+    if (is3DLoaded && isWindowLoaded) {
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+      }, 800); // 800ms delay after full load for smooth transition
+      return () => clearTimeout(timer);
+    }
+  }, [progress, active, isWindowLoaded]);
+
+  // Fallback timer just in case
+  useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
-    }, 2000); // 2 seconds minimum loading time
-
+    }, 5000); // Max wait 5 seconds
     return () => clearTimeout(timer);
   }, []);
 
@@ -30,7 +55,7 @@ export default function Preloader() {
           <div className="absolute inset-0 rounded-full border-4 border-primary/30 animate-ping"></div>
           {/* The Logo */}
           <img 
-            src="/logo.png" 
+            src="/logo.webp" 
             alt="Nova School Logo" 
             className="w-full h-full object-contain relative z-10 animate-bounce"
             style={{ animationDuration: '2s' }}
@@ -46,9 +71,19 @@ export default function Preloader() {
         </p>
         
         {/* Loading Bar */}
-        <div className="w-64 h-1.5 bg-surface-container-high rounded-full mt-8 overflow-hidden">
-          <div className="h-full bg-primary rounded-full animate-progress origin-left"></div>
+        <div className="w-64 h-1.5 bg-surface-container-high rounded-full mt-8 overflow-hidden relative">
+          <div 
+            className="h-full bg-primary rounded-full transition-all duration-300 ease-out"
+            style={{ width: `${(isWindowLoaded ? 50 : 0) + (progress > 0 ? progress * 0.5 : 0)}%` }}
+          ></div>
         </div>
+        <p className="mt-2 text-xs text-on-surface-variant font-mono">
+          {!isWindowLoaded 
+            ? (i18n.language?.startsWith('uz') ? 'Sayt yuklanmoqda...' : 'Загрузка сайта...') 
+            : progress < 100 
+              ? (i18n.language?.startsWith('uz') ? `3D model yuklanmoqda: ${Math.round(progress)}%` : `Загрузка 3D: ${Math.round(progress)}%`) 
+              : (i18n.language?.startsWith('uz') ? 'Tayyor!' : 'Готово!')}
+        </p>
       </div>
 
     </div>

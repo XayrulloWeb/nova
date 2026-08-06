@@ -7,6 +7,7 @@ export default function GalleryManager() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
+  const { t } = useTranslation();
 
   const fetchImages = async () => {
     try {
@@ -55,7 +56,7 @@ export default function GalleryManager() {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Точно удалить это изображение?')) return;
+    if (!window.confirm(t('admin.confirmDeleteGallery'))) return;
     
     const token = localStorage.getItem('adminToken');
     try {
@@ -74,12 +75,12 @@ export default function GalleryManager() {
     }
   };
 
-  if (loading) return <div>Загрузка галереи...</div>;
+  if (loading) return <div>{t('admin.loadingGallery')}</div>;
 
   return (
     <div>
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-bold">Управление Галереей</h2>
+        <h2 className="text-3xl font-bold">{t('admin.galleryTitle')}</h2>
         <div>
           <input 
             type="file" 
@@ -94,7 +95,7 @@ export default function GalleryManager() {
             className="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-xl font-bold hover:bg-primary/90 transition-colors disabled:opacity-50"
           >
             <span className="material-symbols-outlined">add_photo_alternate</span>
-            {uploading ? 'Загрузка...' : 'Добавить фото'}
+            {uploading ? t('admin.uploading') : t('admin.addPhoto')}
           </button>
         </div>
       </div>
@@ -107,7 +108,7 @@ export default function GalleryManager() {
 
       {images.length === 0 ? (
         <div className="text-center py-12 text-on-surface-variant bg-surface-container rounded-2xl border border-outline/20">
-          В галерее пока нет фотографий
+          {t('admin.emptyGallery')}
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -122,7 +123,7 @@ export default function GalleryManager() {
                 <button 
                   onClick={() => handleDelete(img.id)}
                   className="bg-red-500 text-white p-3 rounded-full hover:bg-red-600 hover:scale-110 transition-all shadow-lg"
-                  title="Удалить"
+                  title={t('admin.delete')}
                 >
                   <span className="material-symbols-outlined">delete</span>
                 </button>

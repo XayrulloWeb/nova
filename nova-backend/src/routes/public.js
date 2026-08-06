@@ -9,7 +9,7 @@ router.get('/stats', async (req, res) => {
       return res.json({ students_count: '600+', experience_years: '15+', graduates_count: '12K+' });
     }
     res.json(stats);
-  } catch (error) {
+  } catch (error) { // eslint-disable-line no-unused-vars
     res.status(500).json({ error: 'Server error' });
   }
 });
@@ -25,7 +25,22 @@ router.get('/news', async (req, res) => {
       prisma.news.count()
     ]);
     res.json({ data, total, page, totalPages: Math.ceil(total / limit) });
-  } catch (error) {
+  } catch (error) { // eslint-disable-line no-unused-vars
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+router.get('/news/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const newsItem = await prisma.news.findUnique({
+      where: { id: parseInt(id) }
+    });
+    if (!newsItem) {
+      return res.status(404).json({ error: 'News not found' });
+    }
+    res.json(newsItem);
+  } catch (error) { // eslint-disable-line no-unused-vars
     res.status(500).json({ error: 'Server error' });
   }
 });
@@ -41,7 +56,7 @@ router.get('/teachers', async (req, res) => {
       prisma.teachers.count()
     ]);
     res.json({ data, total, page, totalPages: Math.ceil(total / limit) });
-  } catch (error) {
+  } catch (error) { // eslint-disable-line no-unused-vars
     res.status(500).json({ error: 'Server error' });
   }
 });
@@ -60,7 +75,7 @@ router.get('/gallery', async (req, res) => {
   try {
     const images = await prisma.gallery.findMany({ orderBy: { created_at: 'desc' } });
     res.json(images);
-  } catch (error) {
+  } catch (error) { // eslint-disable-line no-unused-vars
     res.status(500).json({ error: 'Server error' });
   }
 });

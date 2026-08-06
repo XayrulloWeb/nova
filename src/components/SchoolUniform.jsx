@@ -1,6 +1,6 @@
 import React, { Suspense, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Environment, ContactShadows, useGLTF } from '@react-three/drei';
+import { OrbitControls, ContactShadows, useGLTF } from '@react-three/drei';
 import { useTranslation } from 'react-i18next';
 
 // This is the component that actually loads and renders the GLTF model
@@ -36,15 +36,15 @@ export default function SchoolUniform() {
           <div className="order-2 lg:order-1">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
               <span className="material-symbols-outlined text-primary text-sm">apparel</span>
-              <span className="text-primary font-bold text-sm tracking-widest uppercase">Premium Sifat</span>
+              <span className="text-primary font-bold text-sm tracking-widest uppercase">{t('uniform.badge')}</span>
             </div>
             
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-on-surface mb-6">
-              Bizning Maxsus Formamiz
+              {t('uniform.title')}
             </h2>
             
             <p className="text-lg text-on-surface-variant mb-8 leading-relaxed">
-              Nova International AI School o'quvchilari uchun maxsus dizayn qilingan qulay, zamonaviy va yuqori sifatli maktab formasi. Har bir detal o'quvchining qulayligi va maktab nufuzini hisobga olib yaratilgan.
+              {t('uniform.desc')}
             </p>
 
             <ul className="space-y-4 mb-8">
@@ -53,8 +53,8 @@ export default function SchoolUniform() {
                   <span className="material-symbols-outlined text-primary">eco</span>
                 </div>
                 <div>
-                  <h4 className="font-bold text-on-surface">Tabiiy mato</h4>
-                  <p className="text-on-surface-variant text-sm mt-1">Nafas oluvchi, alergiya chaqirmaydigan yuqori sifatli paxta.</p>
+                  <h4 className="font-bold text-on-surface">{t('uniform.natural')}</h4>
+                  <p className="text-on-surface-variant text-sm mt-1">{t('uniform.naturalDesc')}</p>
                 </div>
               </li>
               <li className="flex items-start gap-4">
@@ -62,8 +62,8 @@ export default function SchoolUniform() {
                   <span className="material-symbols-outlined text-primary">design_services</span>
                 </div>
                 <div>
-                  <h4 className="font-bold text-on-surface">Zamonaviy dizayn</h4>
-                  <p className="text-on-surface-variant text-sm mt-1">Har qanday mavsum uchun ideal va chiroyli bichim.</p>
+                  <h4 className="font-bold text-on-surface">{t('uniform.modern')}</h4>
+                  <p className="text-on-surface-variant text-sm mt-1">{t('uniform.modernDesc')}</p>
                 </div>
               </li>
             </ul>
@@ -73,18 +73,18 @@ export default function SchoolUniform() {
                 onClick={() => setGender('female')}
                 className={`px-6 py-3 rounded-full font-bold transition-all ${gender === 'female' ? 'bg-primary text-on-primary shadow-lg shadow-primary/30' : 'bg-surface-container-high text-on-surface-variant hover:bg-surface-container-highest'}`}
               >
-                Qizlar uchun
+                {t('uniform.forGirls')}
               </button>
               <button 
                 onClick={() => setGender('male')}
                 className={`px-6 py-3 rounded-full font-bold transition-all ${gender === 'male' ? 'bg-primary text-on-primary shadow-lg shadow-primary/30' : 'bg-surface-container-high text-on-surface-variant hover:bg-surface-container-highest'}`}
               >
-                O'g'il bolalar uchun
+                {t('uniform.forBoys')}
               </button>
             </div>
 
             <button className="magnetic-btn">
-              Batafsil ma'lumot
+              {t('uniform.moreInfo')}
             </button>
           </div>
 
@@ -123,7 +123,7 @@ export default function SchoolUniform() {
             {/* Overlay hint */}
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 text-on-surface-variant/70 text-sm font-medium backdrop-blur-md bg-surface-container-highest/30 px-4 py-2 rounded-full pointer-events-none">
               <span className="material-symbols-outlined text-base">360</span>
-              Aylantirib ko'rish
+              {t('uniform.rotate')}
             </div>
           </div>
 

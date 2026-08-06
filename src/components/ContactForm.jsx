@@ -21,7 +21,7 @@ export default function ContactForm() {
       } else {
         setStatus('error');
       }
-    } catch (err) {
+    } catch (err) { // eslint-disable-line no-unused-vars
       setStatus('error');
     }
   };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default function Countdown({ targetDate }) {
-  const { i18n } = useTranslation();
+  const { t } = useTranslation();
   
   const calculateTimeLeft = () => {
     const difference = +new Date(targetDate) - +new Date();
@@ -32,9 +32,7 @@ export default function Countdown({ targetDate }) {
   });
 
   const getLabel = (interval) => {
-      const labelsUz = { days: 'Kun', hours: 'Soat', minutes: 'Daqiqa', seconds: 'Soniya' };
-      const labelsRu = { days: 'Дней', hours: 'Часов', minutes: 'Минут', seconds: 'Секунд' };
-      return i18n.language?.startsWith('uz') ? labelsUz[interval] : labelsRu[interval];
+      return t(`countdown.${interval}`);
   };
 
   const isFinished = timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0;
@@ -42,7 +40,7 @@ export default function Countdown({ targetDate }) {
   return (
     <div className="mt-16 flex flex-col items-center pointer-events-auto w-full max-w-2xl mx-auto relative z-30">
         <h3 className="text-sm md:text-base font-semibold text-on-surface-variant uppercase tracking-widest mb-4">
-            {i18n.language?.startsWith('uz') ? "O'quv yili boshlanishiga qoldi:" : "До начала учебного года осталось:"}
+            {t('countdown.title')}
         </h3>
       {!isFinished ? (
         <div className="flex gap-3 sm:gap-6 justify-center">
@@ -60,7 +58,7 @@ export default function Countdown({ targetDate }) {
       ) : (
         <div className="p-4 bg-primary/20 backdrop-blur-md rounded-2xl border border-primary/50 text-center">
             <span className="text-xl md:text-3xl font-bold text-primary">
-                {i18n.language?.startsWith('uz') ? "O'quv yili boshlandi! 🎉" : "Учебный год начался! 🎉"}
+                {t('countdown.finished')}
             </span>
         </div>
       )}

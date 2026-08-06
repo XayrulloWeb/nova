@@ -1,30 +1,32 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function SchoolHistory() {
+  const { t } = useTranslation();
   return (
     <section className="py-24 px-margin-mobile md:px-margin-desktop bg-surface-container">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-[32px] md:text-headline-lg font-bold text-on-surface mb-8">Asosiy ma'lumotlar</h2>
+        <h2 className="text-[32px] md:text-headline-lg font-bold text-on-surface mb-8">{t('history.title')}</h2>
         <div className="glass-card p-8 rounded-3xl">
-          <p className="text-body-lg text-on-surface-variant mb-6">
-            NOVA xususiy maktabi 2026-yilda fundamental bilimlar va zamonaviy texnologiyalarni o'zida mujassam etgan ilg'or ta'limni taqdim etish maqsadida tashkil etilgan. Bizning yondashuvimiz har bir bolaning individual salohiyatini ro'yobga chiqarishga asoslangan.
+          <p className="text-body-lg text-on-surface-variant mb-6 whitespace-pre-line">
+            {t('history.desc')}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
             <div>
-              <h3 className="font-label-caps text-primary mb-2">Ta'sischilar</h3>
-              <p className="text-on-surface">"Innovatsiya" xalqaro ta'lim fondi</p>
+              <h3 className="font-label-caps text-primary mb-2">{t('history.foundersLabel')}</h3>
+              <p className="text-on-surface">{t('history.foundersValue')}</p>
             </div>
             <div>
-              <h3 className="font-label-caps text-primary mb-2">Ish vaqti</h3>
-              <p className="text-on-surface">Dushanba - Juma: 08:00 - 18:00<br/>Shanba: 09:00 - 14:00 (To'garaklar)</p>
+              <h3 className="font-label-caps text-primary mb-2">{t('history.hoursLabel')}</h3>
+              <p className="text-on-surface whitespace-pre-line">{t('history.hoursValue')}</p>
             </div>
             <div>
-              <h3 className="font-label-caps text-primary mb-2">Ta'lim tillari</h3>
-              <p className="text-on-surface">O'zbek, Rus, Ingliz</p>
+              <h3 className="font-label-caps text-primary mb-2">{t('history.langsLabel')}</h3>
+              <p className="text-on-surface">{t('history.langsValue')}</p>
             </div>
             <div>
-              <h3 className="font-label-caps text-primary mb-2">Infratuzilma</h3>
-              <p className="text-on-surface">STEM-laboratoriyalar, IT-poligon, sport majmuasi, 21-asr kutubxonasi</p>
+              <h3 className="font-label-caps text-primary mb-2">{t('history.infraLabel')}</h3>
+              <p className="text-on-surface">{t('history.infraValue')}</p>
             </div>
           </div>
         </div>
