@@ -5,7 +5,7 @@ export default function SEO({
   title = "NOVA - Xususiy Maktabi", 
   description = "NOVA xususiy maktabi klassik akademik an'analarni 21-asrning ilg'or texnologiyalari bilan birlashtiradi.", 
   name = "NOVA School",
-  image = "https://nova-maktab.uz/og-image.webp"
+  image = "https://nova-maktab.uz/logo.webp"
 }) {
   return (
     <Helmet>
