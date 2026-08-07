@@ -97,6 +97,21 @@ const sendNotification = async (message, appId = null) => {
   }
 };
 
+const sendDocument = async (filePath, caption = '') => {
+  if (!bot || !chatId || chatId === 'YOUR_CHAT_ID_HERE') {
+    console.log('\n[MOCK TELEGRAM DOCUMENT]');
+    console.log(`Sending: ${filePath} | Caption: ${caption}`);
+    console.log('-----------------------\n');
+    return;
+  }
+  try {
+    await bot.sendDocument(chatId, filePath, { caption });
+  } catch (error) {
+    console.error('Failed to send Telegram document:', error);
+  }
+};
+
 module.exports = {
   sendNotification,
+  sendDocument,
 };

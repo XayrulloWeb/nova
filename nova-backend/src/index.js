@@ -9,6 +9,7 @@ const applyRoutes = require('./routes/apply');
 const contactRoutes = require('./routes/contact');
 const adminRoutes = require('./routes/admin');
 const publicRoutes = require('./routes/public');
+const { initBackupService } = require('./services/backup');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -73,6 +74,7 @@ app.use((err, req, res, _next) => {
 
 // Start server
 const startServer = async () => {
+  initBackupService();
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
