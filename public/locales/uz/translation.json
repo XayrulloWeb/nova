@@ -143,28 +143,32 @@
     "title": "Ko'p beriladigan savollarga javoblar",
     "list": [
       {
-        "q": "Maktab litsenziyaga egami?",
-        "a": "Ha, maktab Ta'lim sifatini nazorat qilish davlat inspeksiyasidan rasmiy litsenziya olgan va davlat ta'lim standartlari asosida faoliyat yuritadi."
+        "q": "O‘quv to‘lovi qancha?",
+        "a": "Qulay to‘lov tizimi mavjud. Batafsil ma’lumot uchun biz bilan bog‘laning."
       },
       {
-        "q": "Tarbiya metodikasi nima degani?",
-        "a": "Bu bolalarda jamoaviy mas'uliyat, mustaqillik va intizomni amaliy mashg'ulotlar orqali tarbiyalashni anglatadi — har kuni sinfni tozalash, navbatchilik, guruhda ishlash kabi amaliyotlar."
+        "q": "Farzandim bu yerda nimalarni o‘rganadi?",
+        "a": "Asosiy fanlar bilan birga ingliz tili, IT, AI va robototexnika yo‘nalishlarida ham bilim oladi."
       },
       {
-        "q": "IT yo'nalishida nima o'rganiladi?",
-        "a": "Informatika, dasturlash asoslari, robototexnika, va yuqori sinflarda AI/mashinaviy o'rganish elementlari o'rganiladi."
+        "q": "AI va robototexnika darslari qanday o‘tiladi?",
+        "a": "Nazariya va amaliyot uyg‘unligida, zamonaviy uskunalar yordamida o‘qitiladi."
       },
       {
-        "q": "Ovqatlanish masalasi qanday hal qilingan?",
-        "a": "Maktabning o'z oshxonasi mavjud. Tushlik maktab ichida — o'quvchilar birgalikda ovqatlanadi, bu ham tarbiyaviy jarayonning bir qismi."
+        "q": "Ovqatlanish tashkil etilganmi?",
+        "a": "Ha, o‘quvchilar uchun sifatli va mazali ovqatlanish yo‘lga qo‘yilgan."
       },
       {
-        "q": "To'lov qancha?",
-        "a": "To'lov miqdori sinf va dasturga ko'ra farqlanadi. Batafsil ma'lumot uchun bizga murojaat qiling yoki Open House kuniga tashrif buyuring."
+        "q": "O‘quvchilar uchun qanday sharoitlar yaratilgan?",
+        "a": "Zamonaviy sinfxonalar, qulay muhit va qo‘shimcha to‘garaklar mavjud."
       },
       {
-        "q": "Maktabni qaydan topa olaman?",
-        "a": "Maktab Urganch shahrida joylashgan. Aniq manzilni qabul jarayoni boshlanganda e'lon qilamiz."
+        "q": "Nechinchi sinfgacha qabul qilasizlar?",
+        "a": "1–11-sinflarga qabul davom etmoqda."
+      },
+      {
+        "q": "Maktabda qanday fanlar chuqurlashtirib o‘qitiladi?",
+        "a": "Ingliz tili, matematika, IT, sun’iy intellekt va robototexnika fanlariga alohida e’tibor qaratiladi."
       }
     ]
   },
