@@ -6,7 +6,7 @@ router.get('/stats', async (req, res) => {
   try {
     const stats = await prisma.stats.findUnique({ where: { id: 1 } });
     if (!stats) {
-      return res.json({ students_count: '600+', experience_years: '15+', graduates_count: '12K+' });
+      return res.json({ students_count: '100%', experience_years: '3+', graduates_count: '24/7' });
     }
     res.json(stats);
   } catch (error) { // eslint-disable-line no-unused-vars
