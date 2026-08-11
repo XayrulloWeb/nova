@@ -133,7 +133,7 @@
     pointer-events: none;
   }
   
-  a, button, input, select, textarea, .glass-card, [role="button"] {
+  a, button, select, .glass-card, [role="button"] {
     cursor: none !important;
   }
 }
