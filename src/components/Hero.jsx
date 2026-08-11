@@ -121,7 +121,13 @@ export default function Hero() {
     const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
     camera.position.z = 20;
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    let renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    } catch (e) {
+      console.warn('WebGL is not supported or disabled. 3D foreground will not render.', e);
+      return;
+    }
     renderer.setSize(width, height);
     const isMobile = window.innerWidth < 768;
     renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5));
