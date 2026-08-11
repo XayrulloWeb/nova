@@ -30,7 +30,7 @@ export default function OverlayMenu({ isOpen, onClose }) {
       </nav>
       <div className="flex justify-center space-x-12 mt-auto pb-8 font-label-caps tracking-widest uppercase">
         <a className="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Telegram</a>
-        <a className="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Instagram</a>
+        <a className="text-on-surface-variant hover:text-primary transition-colors duration-300" href="https://www.instagram.com/nova_maktab?igsh=MWZ6YjZtcmI4czd2ag==" target="_blank" rel="noopener noreferrer">Instagram</a>
         <a className="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">YouTube</a>
       </div>
     </div>
