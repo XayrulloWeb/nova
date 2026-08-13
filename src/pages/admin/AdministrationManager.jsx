@@ -17,7 +17,7 @@ export default function AdministrationManager() {
   }, []);
 
   const fetchAdmins = async () => {
-    const res = await fetch('http://localhost:5000/api/public/administration');
+    const res = await fetch('/api/public/administration');
     if (res.ok) setAdmins(await res.json());
   };
 
@@ -33,7 +33,7 @@ export default function AdministrationManager() {
     data.append('desc_ru', form.desc_ru);
     if (form.image) data.append('image', form.image);
 
-    await fetch('http://localhost:5000/api/admin/administration', {
+    await fetch('/api/admin/administration', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${token}` },
       body: data
@@ -52,7 +52,7 @@ export default function AdministrationManager() {
   const handleDelete = async (id) => {
     if (!window.confirm(t('admin.confirmDelete'))) return;
     const token = localStorage.getItem('adminToken');
-    await fetch(`http://localhost:5000/api/admin/administration/${id}`, {
+    await fetch(`/api/admin/administration/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -100,7 +100,7 @@ export default function AdministrationManager() {
           <div key={admin.id} className="glass-card rounded-3xl overflow-hidden flex flex-col items-center text-center p-6">
             <div className="w-32 h-32 rounded-full overflow-hidden mb-4 bg-surface-container-high border-4 border-surface-container">
               {admin.image_url ? 
-                <img src={`http://localhost:5000${admin.image_url}`} alt={admin.name_uz} className="w-full h-full object-cover" />
+                <img src={`${admin.image_url}`} alt={admin.name_uz} className="w-full h-full object-cover" />
                 : <span className="material-symbols-outlined text-5xl text-on-surface-variant flex items-center justify-center h-full">person</span>
               }
             </div>

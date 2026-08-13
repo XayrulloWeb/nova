@@ -14,7 +14,7 @@ export default function LatestNews({ showAll = false }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/public/news')
+    fetch('/api/public/news')
       .then(res => res.json())
       .then(data => {
         const arr = data.data || data;
@@ -88,7 +88,7 @@ export default function LatestNews({ showAll = false }) {
             return (
               <Link to={`/news/${item.id}`} key={item.id} className="group flex flex-col glass-card rounded-[24px] overflow-hidden hover:shadow-[0_0_30px_rgba(0,219,233,0.1)] hover:-translate-y-2 transition-all duration-500">
                 <div className="relative h-64 overflow-hidden bg-surface-container-high">
-                  {item.image_url && <img src={`http://localhost:5000${item.image_url}`} alt={title} className="absolute inset-0 w-full h-full object-cover z-0" />}
+                  {item.image_url && <img src={`${item.image_url}`} alt={title} className="absolute inset-0 w-full h-full object-cover z-0" />}
                   <div className="absolute inset-0 bg-primary/20 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   {/* Fallback image background in case src fails */}
                   <div className="absolute inset-0 bg-gradient-to-br from-surface-variant to-background z-[-1]"></div>

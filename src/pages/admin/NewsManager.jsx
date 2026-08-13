@@ -22,7 +22,7 @@ export default function NewsManager() {
   }, [page]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchNews = async () => {
-    const res = await fetch(`http://localhost:5000/api/public/news?page=${page}&limit=10`);
+    const res = await fetch(`/api/public/news?page=${page}&limit=10`);
     if (res.ok) {
       const json = await res.json();
       setNews(json.data || []);
@@ -40,7 +40,7 @@ export default function NewsManager() {
     data.append('content_ru', form.content_ru);
     if (form.image) data.append('image', form.image);
 
-    await fetch('http://localhost:5000/api/admin/news', {
+    await fetch('/api/admin/news', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${token}` },
       body: data
@@ -54,7 +54,7 @@ export default function NewsManager() {
   const handleDelete = async (id) => {
     if (!window.confirm(t('admin.confirmDelete'))) return;
     const token = localStorage.getItem('adminToken');
-    await fetch(`http://localhost:5000/api/admin/news/${id}`, {
+    await fetch(`/api/admin/news/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -106,7 +106,7 @@ export default function NewsManager() {
         {news.map(item => (
           <div key={item.id} className="glass-card rounded-3xl overflow-hidden flex flex-col">
             <div className="h-48 bg-surface-container-high relative">
-              {item.image_url && <img src={`http://localhost:5000${item.image_url}`} alt="News" className="w-full h-full object-cover" />}
+              {item.image_url && <img src={`${item.image_url}`} alt="News" className="w-full h-full object-cover" />}
             </div>
             <div className="p-6 flex flex-col flex-grow">
               <h3 className="font-bold text-xl mb-2">{item.title_uz}</h3>

@@ -38,7 +38,7 @@ export default function ApplicationsManager() {
   const fetchApplications = async () => {
     const token = localStorage.getItem('adminToken');
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/applications?page=${appPage}&limit=10`, { headers: { 'Authorization': `Bearer ${token}` } });
+      const res = await fetch(`/api/admin/applications?page=${appPage}&limit=10`, { headers: { 'Authorization': `Bearer ${token}` } });
       if (res.ok) {
         const json = await res.json();
         setApplications(json.data || []);
@@ -52,7 +52,7 @@ export default function ApplicationsManager() {
   const fetchContacts = async () => {
     const token = localStorage.getItem('adminToken');
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/contacts?page=${contPage}&limit=10`, { headers: { 'Authorization': `Bearer ${token}` } });
+      const res = await fetch(`/api/admin/contacts?page=${contPage}&limit=10`, { headers: { 'Authorization': `Bearer ${token}` } });
       if (res.ok) {
         const json = await res.json();
         setContacts(json.data || []);
@@ -66,7 +66,7 @@ export default function ApplicationsManager() {
   const updateStatus = async (id, newStatus) => {
     const token = localStorage.getItem('adminToken');
     try {
-      await fetch(`http://localhost:5000/api/admin/applications/${id}/status`, {
+      await fetch(`/api/admin/applications/${id}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ export default function ApplicationsManager() {
   const updateComment = async (id, comment) => {
     const token = localStorage.getItem('adminToken');
     try {
-      await fetch(`http://localhost:5000/api/admin/applications/${id}/comment`, {
+      await fetch(`/api/admin/applications/${id}/comment`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ export default function ApplicationsManager() {
     const token = localStorage.getItem('adminToken');
     try {
       // Fetch all without limit for export
-      const res = await fetch(`http://localhost:5000/api/admin/applications?page=1&limit=1000`, { headers: { 'Authorization': `Bearer ${token}` } });
+      const res = await fetch(`/api/admin/applications?page=1&limit=1000`, { headers: { 'Authorization': `Bearer ${token}` } });
       if (res.ok) {
         const json = await res.json();
         const data = json.data;

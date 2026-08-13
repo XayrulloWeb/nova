@@ -6,7 +6,7 @@ export default function StatsTrust() {
   const [stats, setStats] = useState({ students_count: '...', experience_years: '...', graduates_count: '...' });
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/public/stats')
+    fetch('/api/public/stats')
       .then(res => res.json())
       .then(data => {
         if (data && data.students_count) {

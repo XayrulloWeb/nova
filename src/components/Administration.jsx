@@ -7,7 +7,7 @@ export default function Administration() {
   const lang = i18n.language?.startsWith('uz') ? 'uz' : 'ru';
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/public/administration')
+    fetch('/api/public/administration')
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) setAdmins(data);
@@ -48,7 +48,7 @@ export default function Administration() {
                 {/* Image Background */}
                 {admin.image_url ? (
                   <img 
-                    src={`http://localhost:5000${admin.image_url}`} 
+                    src={`${admin.image_url}`} 
                     alt={admin[`name_${lang}`]} 
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                   />

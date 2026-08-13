@@ -21,7 +21,7 @@ export default function TeacherManager() {
   }, [page]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchTeachers = async () => {
-    const res = await fetch(`http://localhost:5000/api/public/teachers?page=${page}&limit=10`);
+    const res = await fetch(`/api/public/teachers?page=${page}&limit=10`);
     if (res.ok) {
       const json = await res.json();
       setTeachers(json.data || []);
@@ -45,7 +45,7 @@ export default function TeacherManager() {
     data.append('subject_ru', form.subject_ru);
     if (form.image) data.append('image', form.image);
 
-    await fetch('http://localhost:5000/api/admin/teachers', {
+    await fetch('/api/admin/teachers', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${token}` },
       body: data
@@ -66,7 +66,7 @@ export default function TeacherManager() {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure?')) return;
     const token = localStorage.getItem('adminToken');
-    await fetch(`http://localhost:5000/api/admin/teachers/${id}`, {
+    await fetch(`/api/admin/teachers/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -120,7 +120,7 @@ export default function TeacherManager() {
           <div key={tItem.id} className="glass-card rounded-3xl overflow-hidden flex flex-col items-center text-center p-6">
             <div className="w-32 h-32 rounded-full overflow-hidden mb-4 bg-surface-container-high border-4 border-surface-container">
               {tItem.image_url ? 
-                <img src={`http://localhost:5000${tItem.image_url}`} alt={tItem.name_uz} className="w-full h-full object-cover" />
+                <img src={`${tItem.image_url}`} alt={tItem.name_uz} className="w-full h-full object-cover" />
                 : <span className="material-symbols-outlined text-5xl text-on-surface-variant flex items-center justify-center h-full">person</span>
               }
             </div>

@@ -11,7 +11,7 @@ export default function NewsArticle() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/public/news/${id}`)
+    fetch(`/api/public/news/${id}`)
       .then(res => res.json())
       .then(data => {
         setNewsItem(data);
@@ -83,7 +83,7 @@ export default function NewsArticle() {
           {newsItem.image_url && (
             <div className="w-full h-[400px] md:h-[600px] rounded-[32px] overflow-hidden mb-16 relative glass-card shadow-2xl">
               <img 
-                src={`http://localhost:5000${newsItem.image_url}`} 
+                src={`${newsItem.image_url}`} 
                 alt={title} 
                 className="w-full h-full object-cover" 
               />

@@ -11,7 +11,7 @@ export default function GalleryManager() {
 
   const fetchImages = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/public/gallery');
+      const res = await fetch('/api/public/gallery');
       if (!res.ok) throw new Error('Failed to fetch gallery');
       const data = await res.json();
       setImages(data);
@@ -36,7 +36,7 @@ export default function GalleryManager() {
 
     setUploading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/gallery', {
+      const res = await fetch('/api/admin/gallery', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -60,7 +60,7 @@ export default function GalleryManager() {
     
     const token = localStorage.getItem('adminToken');
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/gallery/${id}`, {
+      const res = await fetch(`/api/admin/gallery/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -115,7 +115,7 @@ export default function GalleryManager() {
           {images.map(img => (
             <div key={img.id} className="relative group rounded-2xl overflow-hidden aspect-square border border-outline/20 bg-surface-container">
               <img 
-                src={`http://localhost:5000${img.image_url}`} 
+                src={`${img.image_url}`} 
                 alt="Gallery" 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />

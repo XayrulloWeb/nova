@@ -39,10 +39,10 @@ export default function ParallaxGallery() {
   const [galleryImages, setGalleryImages] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/public/gallery')
+    fetch('/api/public/gallery')
       .then(res => res.json())
       .then(data => {
-        let urls = data.map(img => `http://localhost:5000${img.image_url}`);
+        let urls = data.map(img => `${img.image_url}`);
         if (urls.length === 0) {
           urls = FALLBACK_IMAGES;
         }

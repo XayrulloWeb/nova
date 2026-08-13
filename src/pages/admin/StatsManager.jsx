@@ -11,7 +11,7 @@ export default function StatsManager() {
   }, []);
 
   const fetchStats = async () => {
-    const res = await fetch('http://localhost:5000/api/public/stats');
+    const res = await fetch('/api/public/stats');
     if (res.ok) setStats(await res.json());
   };
 
@@ -20,7 +20,7 @@ export default function StatsManager() {
     setMessage('');
     const token = localStorage.getItem('adminToken');
     
-    const res = await fetch('http://localhost:5000/api/admin/stats', {
+    const res = await fetch('/api/admin/stats', {
       method: 'POST',
       headers: { 
         'Authorization': `Bearer ${token}`,

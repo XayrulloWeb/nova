@@ -7,7 +7,7 @@ export default function TeachersGrid() {
   const lang = i18n.language.startsWith('uz') ? 'uz' : 'ru';
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/public/teachers')
+    fetch('/api/public/teachers')
       .then(res => res.json())
       .then(data => setTeachers(data.data || data))
       .catch(err => console.error(err));
@@ -19,7 +19,7 @@ export default function TeachersGrid() {
     const title = teacher[`title_${lang}`] || teacher[`subject_${lang}`];
     const desc = teacher[`desc_${lang}`];
     const tags = teacher[`tags_${lang}`] ? teacher[`tags_${lang}`].split(',').map(tag => tag.trim()) : [];
-    const imageUrl = teacher.image_url ? `http://localhost:5000${teacher.image_url}` : null;
+    const imageUrl = teacher.image_url ? `${teacher.image_url}` : null;
 
     if (layoutType === 1) {
       return (
