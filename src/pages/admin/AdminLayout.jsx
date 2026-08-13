@@ -68,7 +68,7 @@ export default function AdminLayout() {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-grow p-8 overflow-y-auto h-screen">
+      <main className="flex-grow p-8 min-h-screen">
         <Outlet />
       </main>
     </div>
