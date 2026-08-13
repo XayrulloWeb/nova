@@ -30,8 +30,8 @@ export default function Admissions() {
     },
     {
       id: '04',
-      title: 'Shartnoma va qabul qilish',
-      desc: 'Hujjatlarni rasmiylashtirish va NOVA xususiy maktabining katta oilasiga rasmiy qabul qilinish.',
+      title: t('admissions.step4'),
+      desc: t('admissions.step4Desc'),
       align: 'right'
     }
   ];

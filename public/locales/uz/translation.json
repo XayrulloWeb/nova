@@ -353,7 +353,9 @@
     "step2": "Kirish sinovlari",
     "step2Desc": "Bolaning bilim darajasi va psixologik tayyorgarligini baholash uchun yoshiga mos suhbat va testlar.",
     "step3": "Ota-onalar bilan suhbat",
-    "step3Desc": "Farzandingizning ta'lim maqsadlari va kelajagini muhokama qilish uchun maktab ma'muriyati bilan uchrashuv."
+    "step3Desc": "Farzandingizning ta'lim maqsadlari va kelajagini muhokama qilish uchun maktab ma'muriyati bilan uchrashuv.",
+    "step4": "Shartnoma va qabul qilish",
+    "step4Desc": "Hujjatlarni rasmiylashtirish va NOVA xususiy maktabining katta oilasiga rasmiy qabul qilinish."
   },
   "diary": {
     "badge": "Elektron kundalik",
