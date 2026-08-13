@@ -293,7 +293,8 @@
     "title": "Bizning o'qituvchilarimiz",
     "desc": "Bizning o'qituvchilarimiz — yillar davomida to'plangan boy tajribaga ega bo'lgan va o'quvchilarni o'qish hamda hayotda yuksak natijalarga olib chiquvchi mutaxassislardir.",
     "empty": "O'qituvchilar ro'yxati bo'sh.",
-    "noDesc": "Ma'lumot kiritilmagan"
+    "noDesc": "Ma'lumot kiritilmagan",
+    "seeAll": "BARCHA O'QITUVCHILARNI KO'RISH"
   },
   "pages": {
     "about": {

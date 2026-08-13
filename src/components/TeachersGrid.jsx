@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 export default function TeachersGrid() {
   const [teachers, setTeachers] = useState([]);
@@ -118,8 +119,26 @@ export default function TeachersGrid() {
           {t('teachers.empty')}
         </p>
       ) : (
-        <div className="bento-grid">
-          {teachers.map((teacher, index) => renderCard(teacher, index))}
+        <div className="flex flex-col items-center">
+          <div className="bento-grid w-full">
+            {teachers.slice(0, 5).map((teacher, index) => renderCard(teacher, index))}
+          </div>
+          
+          <div className="mt-16 relative">
+            <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full opacity-0 hover:opacity-100 transition-opacity duration-700"></div>
+            <Link 
+              to="/teachers" 
+              className="relative overflow-hidden group inline-flex items-center justify-center px-8 py-4 bg-surface-container-highest border border-outline-variant/30 rounded-full hover:border-primary/50 transition-all duration-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(var(--brand-green-rgb),0.2)]"
+            >
+              <div className="absolute inset-0 w-0 bg-primary transition-all duration-[400ms] ease-out group-hover:w-full rounded-full"></div>
+              <span className="relative z-10 text-on-surface font-label-caps uppercase tracking-widest text-sm group-hover:text-on-primary transition-colors duration-300 flex items-center gap-3">
+                {t('teachers.seeAll')}
+                <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </span>
+            </Link>
+          </div>
         </div>
       )}
     </section>

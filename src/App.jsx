@@ -21,6 +21,7 @@ const NewsPage = lazy(() => import('./pages/NewsPage'));
 const NewsArticle = lazy(() => import('./pages/NewsArticle'));
 const ContactsPage = lazy(() => import('./pages/ContactsPage'));
 const ApplyPage = lazy(() => import('./pages/ApplyPage'));
+const TeachersPage = lazy(() => import('./pages/TeachersPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 // Lazy load Admin Pages
@@ -71,6 +72,7 @@ function AppContent() {
               <Route path="/news/:id" element={<NewsArticle />} />
               <Route path="/contacts" element={<ContactsPage />} />
               <Route path="/apply" element={<ApplyPage />} />
+              <Route path="/teachers" element={<TeachersPage />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLogin />} />
