@@ -155,6 +155,40 @@ export default function StudentProfileModal({ student, onClose, onUpdate }) {
                 )}
               </div>
 
+              {/* Financial Summary */}
+              {student.contract && (() => {
+                const monthlyFeeStr = String(student.contract.monthly_fee || '0').replace(/\D/g, '');
+                const monthlyFee = Number(monthlyFeeStr) || 0;
+                const totalContractAmount = monthlyFee * 10;
+                
+                let totalPaid = 0;
+                if (student.payments) {
+                  student.payments.forEach(p => {
+                    const amountStr = String(p.amount || '0').replace(/\D/g, '');
+                    totalPaid += (Number(amountStr) || 0);
+                  });
+                }
+                
+                const remaining = totalContractAmount - totalPaid;
+
+                return (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-2">
+                    <div className="bg-surface-container p-4 rounded-2xl border border-outline/10">
+                      <p className="text-xs text-on-surface-variant font-bold mb-1">Общая сумма контракта (10 мес.)</p>
+                      <p className="text-xl font-bold">{totalContractAmount.toLocaleString()} сум</p>
+                    </div>
+                    <div className="bg-green-500/10 p-4 rounded-2xl border border-green-500/20">
+                      <p className="text-xs text-green-700 font-bold mb-1">Всего оплачено</p>
+                      <p className="text-xl font-bold text-green-700">{totalPaid.toLocaleString()} сум</p>
+                    </div>
+                    <div className={`p-4 rounded-2xl border ${remaining > 0 ? 'bg-orange-500/10 border-orange-500/20' : 'bg-surface-container border-outline/10'}`}>
+                      <p className={`text-xs font-bold mb-1 ${remaining > 0 ? 'text-orange-700' : 'text-on-surface-variant'}`}>Остаток к оплате</p>
+                      <p className={`text-xl font-bold ${remaining > 0 ? 'text-orange-700' : ''}`}>{remaining.toLocaleString()} сум</p>
+                    </div>
+                  </div>
+                );
+              })()}
+
               {isAddingPayment && (
                 <form onSubmit={handleAddPayment} className="bg-surface-container-low p-5 rounded-2xl border border-primary/30 flex flex-col gap-4">
                   <h4 className="font-bold text-sm">Новый платеж</h4>

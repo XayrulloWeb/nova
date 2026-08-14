@@ -29,6 +29,7 @@ export default function AdminLogin() {
       
       if (response.ok) {
         localStorage.setItem('adminToken', data.token);
+        localStorage.setItem('adminRole', data.role || 'ADMIN');
         navigate('/admin/dashboard');
       } else {
         setError(t('admin.errorMsg') || 'Login failed');

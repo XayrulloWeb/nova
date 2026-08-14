@@ -23,8 +23,8 @@ api.interceptors.response.use((response) => response, (error) => {
   if (error.response && error.response.status === 401) {
     localStorage.removeItem('adminToken');
     // If not on login page, redirect
-    if (window.location.pathname !== '/admin/login' && window.location.pathname.startsWith('/admin')) {
-      window.location.href = '/admin/login';
+    if (window.location.pathname !== '/admin' && window.location.pathname.startsWith('/admin')) {
+      window.location.href = '/admin';
     }
   }
   return Promise.reject(error);

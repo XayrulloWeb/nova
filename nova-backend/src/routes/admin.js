@@ -82,8 +82,8 @@ router.post('/login', async (req, res, next) => {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    const token = jwt.sign({ id: admin.id, username: admin.username }, JWT_SECRET, { expiresIn: '1d' });
-    res.json({ token, username: admin.username });
+    const token = jwt.sign({ id: admin.id, username: admin.username, role: admin.role }, JWT_SECRET, { expiresIn: '30d' });
+    res.json({ token, username: admin.username, role: admin.role });
   } catch (error) {
     next(error);
   }
@@ -463,12 +463,58 @@ router.post('/students/:application_id/payments', auth, async (req, res, next) =
 
 // Delete a payment
 router.delete('/payments/:id', auth, async (req, res, next) => {
-  const { id } = req.params;
   try {
-    await prisma.payments.delete({
-      where: { id: parseInt(id) }
-    });
+    const id = parseInt(req.params.id);
+    await prisma.payments.delete({ where: { id } });
     res.json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// --- Finance Stats (Protected) ---
+router.get('/finance/stats', auth, async (req, res, next) => {
+  try {
+    // We only consider students with status = 'STUDENT'
+    const students = await prisma.applications.findMany({
+      where: { status: 'STUDENT' },
+      include: {
+        contract: true,
+        payments: true
+      }
+    });
+
+    let totalExpectedIncome = 0;
+    let totalReceivedIncome = 0;
+    
+    students.forEach(student => {
+      // Calculate expected from contract (monthly_fee * 10 months)
+      if (student.contract && student.contract.monthly_fee) {
+        // Strip any non-digit chars (spaces, 'сум')
+        const monthlyFeeStr = String(student.contract.monthly_fee).replace(/\D/g, '');
+        const monthlyFee = Number(monthlyFeeStr) || 0;
+        totalExpectedIncome += (monthlyFee * 10);
+      }
+
+      // Calculate received from payments
+      if (student.payments && student.payments.length > 0) {
+        student.payments.forEach(payment => {
+          const amountStr = String(payment.amount).replace(/\D/g, '');
+          const amount = Number(amountStr) || 0;
+          totalReceivedIncome += amount;
+        });
+      }
+    });
+
+    const totalRemaining = totalExpectedIncome - totalReceivedIncome;
+    const studentsCount = students.length;
+
+    res.json({
+      students_count: studentsCount,
+      total_expected: totalExpectedIncome,
+      total_received: totalReceivedIncome,
+      total_remaining: totalRemaining
+    });
   } catch (error) {
     next(error);
   }

@@ -73,8 +73,11 @@ export default function AdminLayout() {
     navigate('/admin');
   };
 
+  const adminRole = localStorage.getItem('adminRole');
+
   const navItems = [
-    { path: '/admin/dashboard', label: t('admin.dashboard', 'Заявки'), icon: 'inbox' },
+    ...(adminRole === 'SUPERADMIN' ? [{ path: '/admin/dashboard', label: 'Обзор и Финансы', icon: 'account_balance' }] : []),
+    { path: '/admin/applications', label: t('admin.dashboard', 'Заявки'), icon: 'inbox' },
     { path: '/admin/students', label: t('admin.students', 'Ученики'), icon: 'school' },
     { path: '/admin/news', label: t('admin.news'), icon: 'article' },
     { path: '/admin/teachers', label: t('admin.teachers'), icon: 'school' },
