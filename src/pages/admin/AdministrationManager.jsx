@@ -13,7 +13,7 @@ export default function AdministrationManager() {
     role_uz: '', role_ru: '', 
     desc_uz: '', desc_ru: '',
     experience_years: '', experience_period: '',
-    awards_uz: '', awards_ru: '',
+    awards_uz: [], awards_ru: [],
     image: null 
   });
 
@@ -30,6 +30,20 @@ export default function AdministrationManager() {
     }
   };
 
+  const parseAwards = (awards) => {
+    if (!awards) return [];
+    if (Array.isArray(awards)) return awards;
+    if (typeof awards === 'string') {
+      try {
+        const parsed = JSON.parse(awards);
+        if (Array.isArray(parsed)) return parsed;
+      } catch (e) {
+        return awards.split('\n').map(line => line.trim()).filter(l => l).map(title => ({ title, desc: '', year: '' }));
+      }
+    }
+    return [];
+  };
+
   const handleEditClick = (admin) => {
     setForm({
       name_uz: admin.name?.uz || '',
@@ -40,8 +54,8 @@ export default function AdministrationManager() {
       desc_ru: admin.desc?.ru || '',
       experience_years: admin.experience_years || '',
       experience_period: admin.experience_period || '',
-      awards_uz: admin.awards?.uz ? (typeof admin.awards.uz === 'string' ? admin.awards.uz : JSON.stringify(admin.awards.uz)) : '',
-      awards_ru: admin.awards?.ru ? (typeof admin.awards.ru === 'string' ? admin.awards.ru : JSON.stringify(admin.awards.ru)) : '',
+      awards_uz: parseAwards(admin.awards?.uz),
+      awards_ru: parseAwards(admin.awards?.ru),
       image: null
     });
     setEditId(admin.id);
@@ -61,9 +75,8 @@ export default function AdministrationManager() {
     data.append('experience_years', form.experience_years);
     data.append('experience_period', form.experience_period);
     
-    // Send awards as strings (JSON parsing on frontend will handle parsing later if needed)
-    data.append('awards_uz', form.awards_uz);
-    data.append('awards_ru', form.awards_ru);
+    data.append('awards_uz', JSON.stringify(form.awards_uz));
+    data.append('awards_ru', JSON.stringify(form.awards_ru));
     
     if (form.image) data.append('image', form.image);
 
@@ -102,7 +115,30 @@ export default function AdministrationManager() {
     setForm({ 
       name_uz: '', name_ru: '', role_uz: '', role_ru: '', 
       desc_uz: '', desc_ru: '', experience_years: '', experience_period: '',
-      awards_uz: '', awards_ru: '', image: null 
+      awards_uz: [], awards_ru: [], image: null 
+    });
+  };
+
+  const addAward = (lang) => {
+    setForm(prev => ({
+      ...prev,
+      [`awards_${lang}`]: [...prev[`awards_${lang}`], { title: '', desc: '', year: '' }]
+    }));
+  };
+
+  const updateAward = (lang, index, field, value) => {
+    setForm(prev => {
+      const newAwards = [...prev[`awards_${lang}`]];
+      newAwards[index] = { ...newAwards[index], [field]: value };
+      return { ...prev, [`awards_${lang}`]: newAwards };
+    });
+  };
+
+  const removeAward = (lang, index) => {
+    setForm(prev => {
+      const newAwards = [...prev[`awards_${lang}`]];
+      newAwards.splice(index, 1);
+      return { ...prev, [`awards_${lang}`]: newAwards };
     });
   };
 
@@ -142,8 +178,39 @@ export default function AdministrationManager() {
             <textarea placeholder="Биография UZ" value={form.desc_uz} onChange={e => setForm({...form, desc_uz: e.target.value})} className={`${inputClass} h-32`} required></textarea>
             <textarea placeholder="Биография RU" value={form.desc_ru} onChange={e => setForm({...form, desc_ru: e.target.value})} className={`${inputClass} h-32`} required></textarea>
 
-            <textarea placeholder="Награды UZ (можно использовать переносы строк)" value={form.awards_uz} onChange={e => setForm({...form, awards_uz: e.target.value})} className={`${inputClass} h-24`}></textarea>
-            <textarea placeholder="Награды RU (можно использовать переносы строк)" value={form.awards_ru} onChange={e => setForm({...form, awards_ru: e.target.value})} className={`${inputClass} h-24`}></textarea>
+            <div className="md:col-span-2">
+              <label className="block mb-2 font-bold text-sm text-on-surface-variant">Награды UZ</label>
+              {form.awards_uz.map((award, i) => (
+                <div key={i} className="flex gap-2 mb-2">
+                  <input type="text" placeholder="Название" value={award.title} onChange={e => updateAward('uz', i, 'title', e.target.value)} className={inputClass} />
+                  <input type="text" placeholder="Описание (опц.)" value={award.desc} onChange={e => updateAward('uz', i, 'desc', e.target.value)} className={inputClass} />
+                  <input type="text" placeholder="Год (опц.)" value={award.year} onChange={e => updateAward('uz', i, 'year', e.target.value)} className={inputClass} />
+                  <button type="button" onClick={() => removeAward('uz', i)} className="bg-red-500/10 text-red-500 px-4 rounded-xl flex items-center justify-center">
+                    <span className="material-symbols-outlined">delete</span>
+                  </button>
+                </div>
+              ))}
+              <button type="button" onClick={() => addAward('uz')} className="text-primary font-bold text-sm flex items-center gap-1 mt-2">
+                <span className="material-symbols-outlined text-sm">add</span> Добавить награду UZ
+              </button>
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block mb-2 font-bold text-sm text-on-surface-variant">Награды RU</label>
+              {form.awards_ru.map((award, i) => (
+                <div key={i} className="flex gap-2 mb-2">
+                  <input type="text" placeholder="Название" value={award.title} onChange={e => updateAward('ru', i, 'title', e.target.value)} className={inputClass} />
+                  <input type="text" placeholder="Описание (опц.)" value={award.desc} onChange={e => updateAward('ru', i, 'desc', e.target.value)} className={inputClass} />
+                  <input type="text" placeholder="Год (опц.)" value={award.year} onChange={e => updateAward('ru', i, 'year', e.target.value)} className={inputClass} />
+                  <button type="button" onClick={() => removeAward('ru', i)} className="bg-red-500/10 text-red-500 px-4 rounded-xl flex items-center justify-center">
+                    <span className="material-symbols-outlined">delete</span>
+                  </button>
+                </div>
+              ))}
+              <button type="button" onClick={() => addAward('ru')} className="text-primary font-bold text-sm flex items-center gap-1 mt-2">
+                <span className="material-symbols-outlined text-sm">add</span> Добавить награду RU
+              </button>
+            </div>
 
             <div className="md:col-span-2">
               <label className="block mb-2 font-bold">Фотография (оставьте пустым, чтобы не менять)</label>
