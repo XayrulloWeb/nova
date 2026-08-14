@@ -16,7 +16,7 @@ export default function PrintableContract({ application, contract, onClose }) {
     try {
       const html2pdf = (await import('html2pdf.js')).default;
       const opt = {
-        margin:       [15, 15, 15, 15],
+        margin:       [5, 5, 5, 5],
         filename:     `Shartnoma_${contract.contract_number}_${application.child_name}.pdf`,
         image:        { type: 'jpeg', quality: 0.98 },
         html2canvas:  { 
@@ -105,7 +105,7 @@ export default function PrintableContract({ application, contract, onClose }) {
 
       {/* Scrollable preview area */}
       <div className="flex-1 overflow-auto p-6" data-lenis-prevent="true">
-        <div ref={contractRef} id="printable-contract" className="max-w-[210mm] mx-auto bg-white p-[20mm] text-black shadow-2xl" style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: '12pt', lineHeight: '1.5' }}>
+        <div ref={contractRef} id="printable-contract" className="max-w-[210mm] mx-auto bg-white p-[15mm] text-black shadow-2xl" style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: '12pt', lineHeight: '1.5' }}>
         
         {/* HEADER */}
         <div className="text-center font-bold mb-6">
@@ -170,7 +170,7 @@ export default function PrintableContract({ application, contract, onClose }) {
           2.3. Intellektual salohiyati yuqori o'quvchilarga Maktabning ichki lokal hujjatlari asosida stipendiyalar beriladi.
         </p>
 
-        <div style={{ pageBreakBefore: 'always' }}></div>
+
 
         <h3 className="font-bold text-center uppercase mb-2">3. SHARTNOMA QIYMATI VA TO'LOV TARTIBI</h3>
         <div className="border border-black p-4 mb-4 text-center font-bold">
@@ -225,7 +225,7 @@ export default function PrintableContract({ application, contract, onClose }) {
           5.3. Taraflar fors-major holatlari (tabiiy ofat, epidemiya, harbiy holat va boshqa) yuzaga kelganda, Shartnoma bo'yicha majburiyatlarini bajarmaslik uchun javobgar bo'lmaydilar, biroq boshqa Tarafni bunday holat to'g'risida darhol — 3 (uch) ish kuni ichida yozma ravishda xabardor qilishlari shart.
         </p>
 
-        <div style={{ pageBreakBefore: 'always' }}></div>
+
 
         <h3 className="font-bold text-center uppercase mb-2">6. NIZOLARNI HAL ETISH TARTIBI</h3>
         <p className="mb-2 text-justify">
