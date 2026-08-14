@@ -3,6 +3,8 @@ import PageHeader from '../components/PageHeader';
 import { useTranslation } from 'react-i18next';
 import Schedule from '../components/Schedule';
 import Exams from '../components/Exams';
+import Extracurriculars from '../components/Extracurriculars';
+import Scholarships from '../components/Scholarships';
 
 export default function StudentsPage() {
   const { t } = useTranslation();
@@ -14,6 +16,8 @@ export default function StudentsPage() {
       />
       <Schedule />
       <Exams />
+      <Extracurriculars />
+      <Scholarships />
     </div>
   );
 }

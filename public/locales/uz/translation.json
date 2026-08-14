@@ -296,6 +296,27 @@
     "noDesc": "Ma'lumot kiritilmagan",
     "seeAll": "BARCHA O'QITUVCHILARNI KO'RISH"
   },
+  "students": {
+    "scholarshipsTitle": "Stipendiyalar",
+    "scholarshipsDesc1": "Har oylik moddiy qo'llab-quvvatlov o'quvchilarning mustaqil bo'lib o'sishlari, moliyaviy savodxonliklarini oshirishlari va maktabda arzonroq o'qishlariga yordam beradi.",
+    "scholarshipsDesc2": "Stipendiya o'quvchining shaxsiy kartasiga o'tkazib beriladi va uni o'quvchi o'zi xohlagancha tasarruf qilishi mumkin.",
+    "freeEducation": "deyarli bepulga o'qishadi",
+    "extraTitle": "Darsdan tashqari mashg'ulotlar",
+    "sportsTitle": "Sport mashg'ulotlari",
+    "sports1": "Shaxmat",
+    "sports2": "Taekvondo",
+    "sports3": "Futbol",
+    "sports4": "Basketbol",
+    "sports5": "Voleybol",
+    "sports6": "Stol tennisi",
+    "parentsTitle": "Ota-onalar bilan muloqot",
+    "parents1": "Psixologimiz har oy ota-onalar bilan bog'lanib fikr almashishadi",
+    "parents2": "Murabbiylarimiz ota-onalar bilan doimiy aloqada",
+    "parents3": "Har chorakda 1:1 ko'rinishida, ota-onalar bilan suhbatlashamiz",
+    "cultureTitle": "Madaniy sayohatlar",
+    "culture1": "Muzey, tog' va ma'rifiy ko'ngilochar maskanlarga ekskursiyalar",
+    "culture2": "Zavod, o'quv markazlari kabi joylarga sayohatlar"
+  },
   "pages": {
     "about": {
       "title": "Maktab haqida",
