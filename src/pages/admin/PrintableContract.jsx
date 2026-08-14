@@ -46,6 +46,11 @@ export default function PrintableContract({ application, contract, onClose }) {
               height: auto !important;
               min-height: auto !important;
             }
+            .contract-text {
+              font-family: "Times New Roman", Times, serif;
+              font-size: 12pt;
+              line-height: 1.5;
+            }
           }
         `}
       </style>
@@ -58,7 +63,7 @@ export default function PrintableContract({ application, contract, onClose }) {
         </div>
 
       {/* A4 Page container */}
-      <div className="max-w-[210mm] mx-auto bg-white p-[20mm] text-[14px] leading-relaxed font-serif text-black print:p-[20mm] print:m-0 print:w-full print:max-w-none print:overflow-visible">
+      <div className="max-w-[210mm] mx-auto bg-white p-[20mm] text-black print:p-[20mm] print:m-0 print:w-full print:max-w-none print:overflow-visible contract-text" style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: '12pt', lineHeight: '1.5' }}>
         
         {/* HEADER */}
         <div className="text-center font-bold mb-6">
