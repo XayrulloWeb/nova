@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import SEO from '../components/SEO';
 import PageHeader from '../components/PageHeader';
 
 export default function AdminProfilePage() {
@@ -63,7 +64,11 @@ export default function AdminProfilePage() {
 
   return (
     <div className="min-h-screen bg-surface-container-lowest font-sans">
-      
+      <SEO 
+        title={`${name} | NOVA`} 
+        description={role} 
+        image={profile.image_url ? `https://nova-maktab.uz${profile.image_url}` : undefined}
+      />
       {/* Light Clean Header Area */}
       <div className="bg-surface-container pt-32 pb-12 px-margin-mobile md:px-margin-desktop rounded-b-[3rem] relative overflow-hidden">
         {/* Decorative elements */}

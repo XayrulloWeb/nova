@@ -1,4 +1,5 @@
 import React from 'react';
+import SEO from '../components/SEO';
 import PageHeader from '../components/PageHeader';
 import { useTranslation } from 'react-i18next';
 import Admissions from '../components/Admissions';
@@ -9,6 +10,10 @@ export default function ParentsPage() {
   const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-surface-container-lowest">
+      <SEO 
+        title={`${t('pages.parents.title')} | NOVA`} 
+        description={t('pages.parents.subtitle')} 
+      />
       <PageHeader 
         title={t('pages.parents.title')} 
         subtitle={t('pages.parents.subtitle')} 

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import SEO from '../components/SEO';
 import PageHeader from '../components/PageHeader';
 import { useTranslation } from 'react-i18next';
 import MultiStepForm from '../components/MultiStepForm';
@@ -11,6 +12,10 @@ export default function ApplyPage() {
 
   return (
     <div className="min-h-screen bg-surface-container-lowest flex flex-col">
+      <SEO 
+        title={`${t('pages.apply.title')} | NOVA`} 
+        description={t('pages.apply.subtitle')} 
+      />
       <PageHeader 
         title={t('pages.apply.title')} 
         subtitle={t('pages.apply.subtitle')} 

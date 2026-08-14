@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import SEO from '../components/SEO';
 import PageHeader from '../components/PageHeader';
 
 export default function TeachersPage() {
@@ -37,6 +38,10 @@ export default function TeachersPage() {
 
   return (
     <div className="min-h-screen bg-surface-container-lowest">
+      <SEO 
+        title={`${t('teachers.title')} | NOVA`} 
+        description={t('teachers.desc')} 
+      />
       <PageHeader 
         title={t('teachers.title')} 
         subtitle={t('teachers.desc')} 

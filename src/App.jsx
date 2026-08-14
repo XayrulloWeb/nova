@@ -6,6 +6,7 @@ import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SocketProvider } from './providers/SocketProvider';
 import { Toaster } from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 import './index.css';
 
 const queryClient = new QueryClient({
@@ -54,6 +55,11 @@ function AppContent() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const isAdminRoute = location.pathname === '/admin' || location.pathname.startsWith('/admin/');
+  const { i18n } = useTranslation();
+
+  React.useEffect(() => {
+    document.documentElement.lang = i18n.language.startsWith('uz') ? 'uz' : 'ru';
+  }, [i18n.language]);
 
   return (
     <>
