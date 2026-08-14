@@ -40,8 +40,8 @@ export default function AdministrationManager() {
       desc_ru: admin.desc?.ru || '',
       experience_years: admin.experience_years || '',
       experience_period: admin.experience_period || '',
-      awards_uz: admin.awards?.uz ? JSON.stringify(admin.awards.uz) : '',
-      awards_ru: admin.awards?.ru ? JSON.stringify(admin.awards.ru) : '',
+      awards_uz: admin.awards?.uz ? (typeof admin.awards.uz === 'string' ? admin.awards.uz : JSON.stringify(admin.awards.uz)) : '',
+      awards_ru: admin.awards?.ru ? (typeof admin.awards.ru === 'string' ? admin.awards.ru : JSON.stringify(admin.awards.ru)) : '',
       image: null
     });
     setEditId(admin.id);
