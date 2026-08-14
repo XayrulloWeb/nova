@@ -71,8 +71,8 @@ export default function ContractWizard({ application, onClose, onComplete }) {
   const inputClass = "w-full bg-surface-container p-3 rounded-lg border border-outline/20 outline-none focus:border-primary transition-colors text-sm";
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4">
-      <div className="bg-surface w-full max-w-2xl rounded-3xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-[150] flex items-center justify-center bg-black/60 p-4">
+      <div className="bg-surface w-full max-w-2xl rounded-3xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]" data-lenis-prevent="true">
         
         <div className="p-6 border-b border-outline/10 flex justify-between items-center bg-surface-container-lowest">
           <h2 className="text-xl font-bold">Оформление договора (Шаг {step}/3)</h2>

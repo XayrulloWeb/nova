@@ -46,7 +46,7 @@ export default function PrintableContract({ application, contract, onClose }) {
           }
         `}
       </style>
-      <div id="printable-contract" className="fixed inset-0 z-[200] bg-white overflow-auto print:static print:bg-white">
+      <div id="printable-contract" data-lenis-prevent="true" className="fixed inset-0 z-[200] bg-white overflow-auto print:static print:bg-white">
         {/* Hide close button when printing */}
         <div className="fixed top-4 right-4 print:hidden">
           <button onClick={onClose} className="px-6 py-2 bg-red-500 text-white font-bold rounded-lg shadow-lg hover:bg-red-600">
