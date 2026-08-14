@@ -142,8 +142,8 @@ export default function AdministrationManager() {
             <textarea placeholder="Биография UZ" value={form.desc_uz} onChange={e => setForm({...form, desc_uz: e.target.value})} className={`${inputClass} h-32`} required></textarea>
             <textarea placeholder="Биография RU" value={form.desc_ru} onChange={e => setForm({...form, desc_ru: e.target.value})} className={`${inputClass} h-32`} required></textarea>
 
-            <textarea placeholder="Награды UZ (в формате JSON)" value={form.awards_uz} onChange={e => setForm({...form, awards_uz: e.target.value})} className={`${inputClass} h-24 font-mono text-sm`}></textarea>
-            <textarea placeholder="Награды RU (в формате JSON)" value={form.awards_ru} onChange={e => setForm({...form, awards_ru: e.target.value})} className={`${inputClass} h-24 font-mono text-sm`}></textarea>
+            <textarea placeholder="Награды UZ (можно использовать переносы строк)" value={form.awards_uz} onChange={e => setForm({...form, awards_uz: e.target.value})} className={`${inputClass} h-24`}></textarea>
+            <textarea placeholder="Награды RU (можно использовать переносы строк)" value={form.awards_ru} onChange={e => setForm({...form, awards_ru: e.target.value})} className={`${inputClass} h-24`}></textarea>
 
             <div className="md:col-span-2">
               <label className="block mb-2 font-bold">Фотография (оставьте пустым, чтобы не менять)</label>
