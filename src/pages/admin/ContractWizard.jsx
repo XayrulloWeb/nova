@@ -28,11 +28,11 @@ export default function ContractWizard({ application, onClose, onComplete }) {
       .then(res => {
         if (res.data && res.data.id) {
           const d = res.data;
-          setForm({
-            ...form,
+          setForm(prev => ({
+            ...prev,
             contract_number: d.contract_number || '',
-            contract_date: d.contract_date ? d.contract_date.split('T')[0] : form.contract_date,
-            academic_year: d.academic_year || form.academic_year,
+            contract_date: d.contract_date ? d.contract_date.split('T')[0] : prev.contract_date,
+            academic_year: d.academic_year || prev.academic_year,
             parent_passport_series: d.parent_passport_series || '',
             parent_passport_number: d.parent_passport_number || '',
             parent_passport_issue_date: d.parent_passport_issue_date ? d.parent_passport_issue_date.split('T')[0] : '',
@@ -44,8 +44,13 @@ export default function ContractWizard({ application, onClose, onComplete }) {
             child_doc_number: d.child_doc_number || '',
             child_doc_issue_date: d.child_doc_issue_date ? d.child_doc_issue_date.split('T')[0] : '',
             child_doc_issued_by: d.child_doc_issued_by || '',
-            monthly_fee: d.monthly_fee || ''
-          });
+            child_pinfl: d.child_pinfl || '',
+            child_dob: d.child_dob ? d.child_dob.split('T')[0] : '',
+            child_address: d.child_address || '',
+            group_name: d.group_name || '',
+            discount_amount: d.discount_amount || '',
+            discount_reason: d.discount_reason || '',
+          }));
         }
       })
       .catch(console.error);

@@ -1,8 +1,18 @@
 require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
 const Sentry = require("@sentry/node");
 const { nodeProfilingIntegration } = require("@sentry/profiling-node");
+
+Sentry.init({
+  dsn: process.env.SENTRY_DSN || "https://dummy@o0.ingest.sentry.io/0",
+  integrations: [
+    nodeProfilingIntegration(),
+  ],
+  tracesSampleRate: 1.0, 
+  profilesSampleRate: 1.0,
+});
+
+const express = require('express');
+const cors = require('cors');
 
 
 const applyRoutes = require('./routes/apply');
@@ -23,15 +33,6 @@ const io = new Server(server, {
 module.exports.io = io;
 
 const PORT = process.env.PORT || 5000;
-
-Sentry.init({
-  dsn: process.env.SENTRY_DSN || "https://dummy@o0.ingest.sentry.io/0",
-  integrations: [
-    nodeProfilingIntegration(),
-  ],
-  tracesSampleRate: 1.0, 
-  profilesSampleRate: 1.0,
-});
 
 Sentry.setupExpressErrorHandler(app);
 
