@@ -8,9 +8,12 @@ export default function StudentsManager() {
   const [gradeFilter, setGradeFilter] = useState('');
   const [selectedStudent, setSelectedStudent] = useState(null);
 
-  const { data: students = [], isLoading, refetch } = useQuery('adminStudents', async () => {
-    const res = await axios.get('/admin/students');
-    return res.data;
+  const { data: students = [], isLoading, refetch } = useQuery({
+    queryKey: ['adminStudents'],
+    queryFn: async () => {
+      const res = await axios.get('/admin/students');
+      return res.data;
+    }
   });
 
   const filteredStudents = students.filter(student => {
