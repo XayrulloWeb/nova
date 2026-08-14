@@ -14,6 +14,21 @@ export default function PrintableContract({ application, contract, onClose }) {
     if (!contractRef.current) return;
     setIsGenerating(true);
     try {
+      // html2pdf.js doesn't support oklch() colors (Tailwind v4).
+      // Force all computed colors to rgb before rendering.
+      const el = contractRef.current;
+      const allElements = el.querySelectorAll('*');
+      allElements.forEach(node => {
+        const computed = window.getComputedStyle(node);
+        node.style.color = computed.color;
+        node.style.backgroundColor = computed.backgroundColor;
+        node.style.borderColor = computed.borderColor;
+      });
+      // Also fix root element
+      const rootComputed = window.getComputedStyle(el);
+      el.style.color = rootComputed.color;
+      el.style.backgroundColor = rootComputed.backgroundColor;
+
       const html2pdf = (await import('html2pdf.js')).default;
       const opt = {
         margin:       [15, 15, 15, 15], // mm
@@ -23,7 +38,7 @@ export default function PrintableContract({ application, contract, onClose }) {
         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
         pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
       };
-      await html2pdf().set(opt).from(contractRef.current).save();
+      await html2pdf().set(opt).from(el).save();
     } catch (error) {
       console.error('PDF generation error:', error);
       alert('Ошибка при создании PDF файла');
