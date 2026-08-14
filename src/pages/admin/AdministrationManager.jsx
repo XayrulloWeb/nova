@@ -161,11 +161,23 @@ export default function AdministrationManager() {
         <form onSubmit={handleSubmit} className="glass-card p-8 rounded-3xl mb-12 flex flex-col gap-6">
           <h3 className="text-xl font-bold mb-4">{editId ? 'Редактировать сотрудника' : 'Добавить сотрудника'}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <input type="text" placeholder={t('admin.nameUz')} value={form.name_uz} onChange={e => setForm({...form, name_uz: e.target.value})} className={inputClass} required />
-            <input type="text" placeholder={t('admin.nameRu')} value={form.name_ru} onChange={e => setForm({...form, name_ru: e.target.value})} className={inputClass} required />
+            <div>
+              <label className="block mb-2 font-bold text-sm text-on-surface-variant">{t('admin.nameUz')} (UZ)</label>
+              <input type="text" placeholder={t('admin.nameUz')} value={form.name_uz} onChange={e => setForm({...form, name_uz: e.target.value})} className={inputClass} required />
+            </div>
+            <div>
+              <label className="block mb-2 font-bold text-sm text-on-surface-variant">{t('admin.nameRu')} (RU)</label>
+              <input type="text" placeholder={t('admin.nameRu')} value={form.name_ru} onChange={e => setForm({...form, name_ru: e.target.value})} className={inputClass} required />
+            </div>
             
-            <input type="text" placeholder={t('admin.roleUz')} value={form.role_uz} onChange={e => setForm({...form, role_uz: e.target.value})} className={inputClass} required />
-            <input type="text" placeholder={t('admin.roleRu')} value={form.role_ru} onChange={e => setForm({...form, role_ru: e.target.value})} className={inputClass} required />
+            <div>
+              <label className="block mb-2 font-bold text-sm text-on-surface-variant">{t('admin.roleUz')} (UZ)</label>
+              <input type="text" placeholder={t('admin.roleUz')} value={form.role_uz} onChange={e => setForm({...form, role_uz: e.target.value})} className={inputClass} required />
+            </div>
+            <div>
+              <label className="block mb-2 font-bold text-sm text-on-surface-variant">{t('admin.roleRu')} (RU)</label>
+              <input type="text" placeholder={t('admin.roleRu')} value={form.role_ru} onChange={e => setForm({...form, role_ru: e.target.value})} className={inputClass} required />
+            </div>
 
             <div className="md:col-span-2">
               <label className="block mb-2 font-bold text-sm text-on-surface-variant">Опыт работы (Опционально)</label>
@@ -175,8 +187,14 @@ export default function AdministrationManager() {
               </div>
             </div>
 
-            <textarea placeholder="Биография UZ" value={form.desc_uz} onChange={e => setForm({...form, desc_uz: e.target.value})} className={`${inputClass} h-32`} required></textarea>
-            <textarea placeholder="Биография RU" value={form.desc_ru} onChange={e => setForm({...form, desc_ru: e.target.value})} className={`${inputClass} h-32`} required></textarea>
+            <div>
+              <label className="block mb-2 font-bold text-sm text-on-surface-variant">Биография (UZ)</label>
+              <textarea placeholder="Биография UZ" value={form.desc_uz} onChange={e => setForm({...form, desc_uz: e.target.value})} className={`${inputClass} h-32`} required></textarea>
+            </div>
+            <div>
+              <label className="block mb-2 font-bold text-sm text-on-surface-variant">Биография (RU)</label>
+              <textarea placeholder="Биография RU" value={form.desc_ru} onChange={e => setForm({...form, desc_ru: e.target.value})} className={`${inputClass} h-32`} required></textarea>
+            </div>
 
             <div className="md:col-span-2">
               <label className="block mb-2 font-bold text-sm text-on-surface-variant">Награды UZ</label>
