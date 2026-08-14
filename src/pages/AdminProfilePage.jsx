@@ -41,7 +41,6 @@ export default function AdminProfilePage() {
   const desc = profile[`desc_${lang}`];
   
   let awardsJson = [];
-  let awardsString = null;
 
   if (profile[`awards_${lang}`]) {
     try {
@@ -49,10 +48,16 @@ export default function AdminProfilePage() {
       if (Array.isArray(parsed)) {
         awardsJson = parsed;
       } else {
-        awardsString = profile[`awards_${lang}`];
+        throw new Error('Not an array');
       }
     } catch (e) {
-      awardsString = profile[`awards_${lang}`];
+      // Fallback: treat plain text as a list of awards separated by newlines
+      const rawText = profile[`awards_${lang}`];
+      awardsJson = rawText
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => line.length > 0)
+        .map(line => ({ title: line }));
     }
   }
 
@@ -188,7 +193,7 @@ export default function AdminProfilePage() {
             )}
 
             {/* Awards */}
-            {(awardsJson.length > 0 || awardsString) && (
+            {awardsJson.length > 0 && (
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -203,28 +208,20 @@ export default function AdminProfilePage() {
                   </h2>
                 </div>
                 
-                {awardsJson.length > 0 ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {awardsJson.map((award, idx) => (
-                      <div key={idx} className="bg-surface-container rounded-2xl p-6 border border-outline/5 hover:border-primary/20 transition-colors">
-                        <h3 className="font-bold text-lg text-on-surface mb-2">{award.title}</h3>
-                        {award.desc && <p className="text-on-surface-variant text-sm mb-4 leading-relaxed">{award.desc}</p>}
-                        {award.year && (
-                          <span className="inline-flex items-center gap-1.5 text-xs font-bold bg-white px-3 py-1.5 rounded-full text-on-surface-variant shadow-sm border border-outline/10">
-                            <span className="material-symbols-outlined text-[14px]">event</span>
-                            {award.year}
-                          </span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="bg-surface-container rounded-2xl p-6 md:p-8 border border-outline/5">
-                    <p className="text-on-surface-variant leading-relaxed whitespace-pre-line">
-                      {awardsString}
-                    </p>
-                  </div>
-                )}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {awardsJson.map((award, idx) => (
+                    <div key={idx} className="bg-surface-container rounded-2xl p-6 border border-outline/5 hover:border-primary/20 transition-colors">
+                      <h3 className="font-bold text-lg text-on-surface mb-2">{award.title}</h3>
+                      {award.desc && <p className="text-on-surface-variant text-sm mb-4 leading-relaxed">{award.desc}</p>}
+                      {award.year && (
+                        <span className="inline-flex items-center gap-1.5 text-xs font-bold bg-white px-3 py-1.5 rounded-full text-on-surface-variant shadow-sm border border-outline/10">
+                          <span className="material-symbols-outlined text-[14px]">event</span>
+                          {award.year}
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </motion.div>
             )}
 
