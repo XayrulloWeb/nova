@@ -15,7 +15,8 @@
     "@react-three/fiber": "^9.7.0",
     "@sentry/react": "^10.69.0",
     "@tailwindcss/vite": "^4.3.3",
-    "framer-motion": "^13.0.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^13.1.0",
     "gltf-pipeline": "^4.3.1",
     "gsap": "^3.15.0",
     "i18next": "^26.3.6",
@@ -30,6 +31,7 @@
     "react-quill": "^2.0.0",
     "react-router-dom": "^7.18.2",
     "split-type": "^0.3.4",
+    "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.3.3",
     "three": "^0.185.1"
   },
