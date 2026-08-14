@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 
 // Helpers to format numbers
 const formatMoney = (amount) => {
@@ -7,12 +7,30 @@ const formatMoney = (amount) => {
 };
 
 export default function PrintableContract({ application, contract, onClose }) {
-  useEffect(() => {
-    // Automatically open print dialog when component mounts
-    setTimeout(() => {
-      window.print();
-    }, 500);
-  }, []);
+  const contractRef = useRef(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const handleDownloadPDF = async () => {
+    if (!contractRef.current) return;
+    setIsGenerating(true);
+    try {
+      const html2pdf = (await import('html2pdf.js')).default;
+      const opt = {
+        margin:       [15, 15, 15, 15], // mm
+        filename:     `Shartnoma_${contract.contract_number}_${application.child_name}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+      };
+      await html2pdf().set(opt).from(contractRef.current).save();
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      alert('Ошибка при создании PDF файла');
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   if (!contract || !application) return null;
 
@@ -21,49 +39,36 @@ export default function PrintableContract({ application, contract, onClose }) {
   const guaranteeFee = monthlyFee * 0.5; // 50% of monthly fee
 
   return (
-    <>
-      <style type="text/css">
-        {`
-          @media print {
-            body * {
-              visibility: hidden;
-            }
-            #printable-contract, #printable-contract * {
-              visibility: visible;
-            }
-            @page {
-              size: A4;
-              margin: 0;
-            }
-            #printable-contract {
-              position: absolute;
-              left: 0;
-              top: 0;
-              width: 100%;
-              margin: 0;
-              padding: 0;
-              overflow: visible !important;
-              height: auto !important;
-              min-height: auto !important;
-            }
-            .contract-text {
-              font-family: "Times New Roman", Times, serif;
-              font-size: 12pt;
-              line-height: 1.5;
-            }
-          }
-        `}
-      </style>
-      <div id="printable-contract" data-lenis-prevent="true" className="fixed inset-0 z-[200] bg-white overflow-auto print:overflow-visible print:static print:bg-white">
-        {/* Hide close button when printing */}
-        <div className="fixed top-4 right-4 print:hidden">
-          <button onClick={onClose} className="px-6 py-2 bg-red-500 text-white font-bold rounded-lg shadow-lg hover:bg-red-600">
-            Закрыть предпросмотр
+    <div className="fixed inset-0 z-[200] bg-black/70 flex flex-col" data-lenis-prevent="true">
+      
+      {/* Top bar with buttons */}
+      <div className="flex items-center justify-between px-6 py-4 bg-surface-container shadow-lg z-10">
+        <h3 className="text-lg font-bold text-on-surface">Предпросмотр договора</h3>
+        <div className="flex items-center gap-3">
+          <button 
+            onClick={handleDownloadPDF} 
+            disabled={isGenerating}
+            className="flex items-center gap-2 px-6 py-2.5 bg-primary text-on-primary font-bold rounded-xl shadow-lg shadow-primary/30 hover:bg-primary/90 transition-all disabled:opacity-50"
+          >
+            <span className="material-symbols-outlined text-sm">picture_as_pdf</span>
+            {isGenerating ? 'Генерация...' : 'Скачать PDF'}
+          </button>
+          <button 
+            onClick={() => { window.print(); }} 
+            className="flex items-center gap-2 px-6 py-2.5 bg-surface-container-high text-on-surface font-bold rounded-xl hover:bg-surface-container-highest transition-all"
+          >
+            <span className="material-symbols-outlined text-sm">print</span>
+            Печать
+          </button>
+          <button onClick={onClose} className="px-5 py-2.5 bg-red-500 text-white font-bold rounded-xl hover:bg-red-600 transition-all">
+            Закрыть
           </button>
         </div>
+      </div>
 
-      {/* A4 Page container */}
-      <div className="max-w-[210mm] mx-auto bg-white p-[20mm] text-black print:p-[20mm] print:m-0 print:w-full print:max-w-none print:overflow-visible contract-text" style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: '12pt', lineHeight: '1.5' }}>
+      {/* Scrollable preview area */}
+      <div className="flex-1 overflow-auto p-6" data-lenis-prevent="true">
+        <div ref={contractRef} id="printable-contract" className="max-w-[210mm] mx-auto bg-white p-[20mm] text-black shadow-2xl" style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: '12pt', lineHeight: '1.5' }}>
         
         {/* HEADER */}
         <div className="text-center font-bold mb-6">
@@ -128,8 +133,7 @@ export default function PrintableContract({ application, contract, onClose }) {
           2.3. Intellektual salohiyati yuqori o'quvchilarga Maktabning ichki lokal hujjatlari asosida stipendiyalar beriladi.
         </p>
 
-        {/* PAGE BREAK (CSS class for print) */}
-        <div className="break-before-page"></div>
+        <div style={{ pageBreakBefore: 'always' }}></div>
 
         <h3 className="font-bold text-center uppercase mb-2">3. SHARTNOMA QIYMATI VA TO'LOV TARTIBI</h3>
         <div className="border border-black p-4 mb-4 text-center font-bold">
@@ -184,7 +188,7 @@ export default function PrintableContract({ application, contract, onClose }) {
           5.3. Taraflar fors-major holatlari (tabiiy ofat, epidemiya, harbiy holat va boshqa) yuzaga kelganda, Shartnoma bo'yicha majburiyatlarini bajarmaslik uchun javobgar bo'lmaydilar, biroq boshqa Tarafni bunday holat to'g'risida darhol — 3 (uch) ish kuni ichida yozma ravishda xabardor qilishlari shart.
         </p>
 
-        <div className="break-before-page"></div>
+        <div style={{ pageBreakBefore: 'always' }}></div>
 
         <h3 className="font-bold text-center uppercase mb-2">6. NIZOLARNI HAL ETISH TARTIBI</h3>
         <p className="mb-2 text-justify">
@@ -252,7 +256,30 @@ export default function PrintableContract({ application, contract, onClose }) {
           </div>
         </div>
       </div>
+      </div>
+
+      {/* Print-only styles */}
+      <style type="text/css">{`
+        @media print {
+          body * { visibility: hidden; }
+          #printable-contract, #printable-contract * { visibility: visible; }
+          @page { size: A4; margin: 15mm; }
+          #printable-contract {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            margin: 0;
+            padding: 15mm;
+            overflow: visible !important;
+            height: auto !important;
+            box-shadow: none !important;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 12pt;
+            line-height: 1.5;
+          }
+        }
+      `}</style>
     </div>
-    </>
   );
 }
