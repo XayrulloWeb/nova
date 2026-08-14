@@ -8,6 +8,7 @@ const path = require('path');
 const fs = require('fs');
 const auth = require('../middleware/auth');
 const sharp = require('sharp');
+const { io } = require('../index');
 
 // Multer storage in memory to allow sharp to process
 const storage = multer.memoryStorage();
@@ -135,11 +136,15 @@ router.put('/applications/:id/status', auth, async (req, res, next) => {
   try {
     const id = parseInt(req.params.id);
     const { status } = req.body;
-    const application = await prisma.applications.update({
-      where: { id },
+    const updatedApp = await prisma.applications.update({
+      where: { id: parseInt(id) },
       data: { status }
     });
-    res.json(application);
+    
+    // Emit status change
+    io.emit('status_change', updatedApp);
+    
+    res.json(updatedApp);
   } catch (error) {
     next(error);
   }

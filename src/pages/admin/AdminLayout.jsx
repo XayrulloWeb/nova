@@ -1,15 +1,65 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useSocket } from '../../providers/SocketProvider';
+import { useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
 export default function AdminLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const { t, i18n } = useTranslation();
+  const socket = useSocket();
+  const queryClient = useQueryClient();
 
   const changeLang = (lang) => {
     i18n.changeLanguage(lang);
   };
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const playSound = () => {
+      const audio = new Audio('data:audio/mp3;base64,//OExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
+      audio.volume = 0.5;
+      audio.play().catch(e => console.log('Audio autoplay blocked', e));
+    };
+
+    socket.on('new_application', (app) => {
+      playSound();
+      toast.success(
+        <div>
+          <b>Новая заявка!</b><br/>
+          Ученик: {app.child_name} ({app.grade} класс)
+        </div>,
+        { duration: 6000, icon: '🎓' }
+      );
+      queryClient.invalidateQueries({ queryKey: ['adminApplications'] });
+    });
+
+    socket.on('new_message', (msg) => {
+      playSound();
+      toast.success(
+        <div>
+          <b>Новое сообщение!</b><br/>
+          От: {msg.name}
+        </div>,
+        { duration: 6000, icon: '💬' }
+      );
+      queryClient.invalidateQueries({ queryKey: ['adminContacts'] });
+    });
+
+    socket.on('status_change', () => {
+      queryClient.invalidateQueries({ queryKey: ['adminApplications'] });
+      queryClient.invalidateQueries({ queryKey: ['adminStudents'] });
+    });
+
+    return () => {
+      socket.off('new_application');
+      socket.off('new_message');
+      socket.off('status_change');
+    };
+  }, [socket, queryClient]);
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');

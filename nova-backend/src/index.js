@@ -10,8 +10,18 @@ const contactRoutes = require('./routes/contact');
 const adminRoutes = require('./routes/admin');
 const publicRoutes = require('./routes/public');
 const { initBackupService } = require('./services/backup');
+const http = require('http');
+const { Server } = require('socket.io');
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: { origin: '*' } // Allow all origins for simplicity, in production you might restrict this
+});
+
+// Export io so routes can use it
+module.exports.io = io;
+
 const PORT = process.env.PORT || 5000;
 
 Sentry.init({
@@ -75,7 +85,12 @@ app.use((err, req, res, _next) => {
 // Start server
 const startServer = async () => {
   initBackupService();
-  app.listen(PORT, () => {
+  
+  io.on('connection', (socket) => {
+    console.log('Admin connected to WebSockets:', socket.id);
+  });
+
+  server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
 };

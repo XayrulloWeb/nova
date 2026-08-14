@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const prisma = require('../prisma');
 const { sendNotification } = require('../services/telegram');
+const { io } = require('../index');
 
 router.post('/', async (req, res) => {
   const { parentName, parentPhone, childName, childDob, grade } = req.body;
@@ -40,6 +41,9 @@ router.post('/', async (req, res) => {
     } catch (telegramErr) {
       console.error('Telegram notification failed, but application was saved:', telegramErr);
     }
+
+    // Emit event to admin panel
+    io.emit('new_application', application);
     
     res.status(201).json({ success: true, applicationId: id });
   } catch (err) {

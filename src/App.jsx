@@ -4,6 +4,8 @@ import { ReactLenis } from 'lenis/react';
 import { ThemeProvider } from './context/ThemeContext';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { SocketProvider } from './providers/SocketProvider';
+import { Toaster } from 'react-hot-toast';
 import './index.css';
 
 const queryClient = new QueryClient({
@@ -53,7 +55,7 @@ function AppContent() {
   const isAdminRoute = location.pathname === '/admin' || location.pathname.startsWith('/admin/');
 
   return (
-    <HelmetProvider>
+    <>
       <div className="min-h-screen bg-background text-on-surface font-sans selection:bg-primary/30">
         <Helmet>
           <title>NOVA | International AI School</title>
@@ -107,21 +109,26 @@ function AppContent() {
 
         {!isAdminRoute && <Footer />}
       </div>
-    </HelmetProvider>
+    </>
   );
 }
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
-          <BrowserRouter>
-            <AppContent />
-          </BrowserRouter>
-        </ReactLenis>
-      </ThemeProvider>
-    </QueryClientProvider>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <SocketProvider>
+          <ThemeProvider>
+            <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
+              <BrowserRouter>
+                <Toaster position="bottom-right" reverseOrder={false} />
+                <AppContent />
+              </BrowserRouter>
+            </ReactLenis>
+          </ThemeProvider>
+        </SocketProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
   );
 }
 
