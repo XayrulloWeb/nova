@@ -71,6 +71,21 @@ router.get('/administration', async (req, res) => {
   }
 });
 
+router.get('/administration/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const adminProfile = await prisma.administration.findUnique({
+      where: { id: parseInt(id) }
+    });
+    if (!adminProfile) {
+      return res.status(404).json({ error: 'Administration member not found' });
+    }
+    res.json(adminProfile);
+  } catch (error) { // eslint-disable-line no-unused-vars
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 router.get('/gallery', async (req, res) => {
   try {
     const images = await prisma.gallery.findMany({ orderBy: { created_at: 'desc' } });

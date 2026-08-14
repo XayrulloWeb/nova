@@ -9,6 +9,8 @@ export default function AdministrationManager() {
     name_uz: '', name_ru: '', 
     role_uz: '', role_ru: '', 
     desc_uz: '', desc_ru: '',
+    experience_years: '', experience_period: '',
+    awards_uz: '', awards_ru: '',
     image: null 
   });
 
@@ -31,6 +33,10 @@ export default function AdministrationManager() {
     data.append('role_ru', form.role_ru);
     data.append('desc_uz', form.desc_uz);
     data.append('desc_ru', form.desc_ru);
+    data.append('experience_years', form.experience_years);
+    data.append('experience_period', form.experience_period);
+    data.append('awards_uz', form.awards_uz);
+    data.append('awards_ru', form.awards_ru);
     if (form.image) data.append('image', form.image);
 
     await fetch('/api/admin/administration', {
@@ -43,6 +49,8 @@ export default function AdministrationManager() {
       name_uz: '', name_ru: '', 
       role_uz: '', role_ru: '', 
       desc_uz: '', desc_ru: '',
+      experience_years: '', experience_period: '',
+      awards_uz: '', awards_ru: '',
       image: null 
     });
     setIsAdding(false);
@@ -81,8 +89,19 @@ export default function AdministrationManager() {
             <input type="text" placeholder={t('admin.roleUz')} value={form.role_uz} onChange={e => setForm({...form, role_uz: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20" required />
             <input type="text" placeholder={t('admin.roleRu')} value={form.role_ru} onChange={e => setForm({...form, role_ru: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20" required />
 
-            <textarea placeholder={t('admin.descUz')} value={form.desc_uz} onChange={e => setForm({...form, desc_uz: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20 h-24" required></textarea>
-            <textarea placeholder={t('admin.descRu')} value={form.desc_ru} onChange={e => setForm({...form, desc_ru: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20 h-24" required></textarea>
+            <div className="md:col-span-2">
+              <label className="block mb-2 font-bold text-sm text-on-surface-variant">Опыт работы (Опционально)</label>
+              <div className="grid grid-cols-2 gap-4">
+                <input type="text" placeholder="Лет (напр. 28)" value={form.experience_years} onChange={e => setForm({...form, experience_years: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20" />
+                <input type="text" placeholder="Период (напр. 1998-2026)" value={form.experience_period} onChange={e => setForm({...form, experience_period: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20" />
+              </div>
+            </div>
+
+            <textarea placeholder="Биография UZ (можно использовать переносы строк)" value={form.desc_uz} onChange={e => setForm({...form, desc_uz: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20 h-32" required></textarea>
+            <textarea placeholder="Биография RU (можно использовать переносы строк)" value={form.desc_ru} onChange={e => setForm({...form, desc_ru: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20 h-32" required></textarea>
+
+            <textarea placeholder="Награды UZ (в формате JSON массива, например: [{&quot;title&quot;:&quot;Активный исследователь&quot;,&quot;desc&quot;:&quot;Знак...&quot;,&quot;year&quot;:&quot;2023 год&quot;}])" value={form.awards_uz} onChange={e => setForm({...form, awards_uz: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20 h-24 font-mono text-sm"></textarea>
+            <textarea placeholder="Награды RU (в формате JSON массива)" value={form.awards_ru} onChange={e => setForm({...form, awards_ru: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20 h-24 font-mono text-sm"></textarea>
 
             <div className="md:col-span-2">
               <label className="block mb-2 font-bold">{t('admin.image')}</label>

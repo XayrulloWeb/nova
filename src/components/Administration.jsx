@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 export default function Administration() {
   const [admins, setAdmins] = useState([]);
@@ -41,9 +42,10 @@ export default function Administration() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
             {admins.map((admin) => (
-              <div 
+              <Link 
+                to={`/administration/${admin.id}`}
                 key={admin.id} 
-                className="group relative h-[450px] md:h-[550px] rounded-[2rem] overflow-hidden cursor-pointer"
+                className="group relative h-[450px] md:h-[550px] rounded-[2rem] overflow-hidden cursor-pointer block"
               >
                 {/* Image Background */}
                 {admin.image_url ? (
@@ -82,18 +84,19 @@ export default function Administration() {
                     {admin[`role_${lang}`]}
                   </p>
 
-                  {/* Biography/Description (Visible on hover) */}
-                  <div className="h-0 opacity-0 overflow-hidden group-hover:h-auto group-hover:opacity-100 transition-all duration-500 delay-200">
-                    <p className="text-white/80 text-sm md:text-base line-clamp-4 mt-2 font-medium">
-                      {admin[`desc_${lang}`] || t('administration.noDesc')}
-                    </p>
+                  {/* View Profile Prompt (Visible on hover) */}
+                  <div className="h-0 opacity-0 overflow-hidden group-hover:h-auto group-hover:opacity-100 transition-all duration-500 delay-200 mt-2">
+                    <span className="inline-flex items-center gap-2 text-white font-bold text-sm bg-white/10 px-4 py-2 rounded-full border border-white/20 backdrop-blur-sm">
+                      {lang === 'uz' ? 'Profilni ko\'rish' : 'Смотреть профиль'}
+                      <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                    </span>
                   </div>
                   
                 </div>
                 
                 {/* Border highlight effect on hover */}
                 <div className="absolute inset-0 rounded-[2rem] border-2 border-primary/0 group-hover:border-primary/50 transition-colors duration-500 pointer-events-none"></div>
-              </div>
+              </Link>
             ))}
           </div>
         )}

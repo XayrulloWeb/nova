@@ -111,7 +111,7 @@ router.get('/contacts', auth, async (req, res, next) => {
 
 // --- Administration Management (Protected) ---
 router.post('/administration', auth, upload.single('image'), processImage, async (req, res, next) => {
-  const { name_uz, name_ru, role_uz, role_ru, desc_uz, desc_ru } = req.body;
+  const { name_uz, name_ru, role_uz, role_ru, desc_uz, desc_ru, experience_years, experience_period, awards_uz, awards_ru } = req.body;
   let imageUrl = null;
   if (req.file) {
     imageUrl = `/uploads/${req.file.filename}`;
@@ -126,6 +126,10 @@ router.post('/administration', auth, upload.single('image'), processImage, async
         role_ru,
         desc_uz,
         desc_ru,
+        experience_years,
+        experience_period,
+        awards_uz,
+        awards_ru,
         image_url: imageUrl
       }
     });
