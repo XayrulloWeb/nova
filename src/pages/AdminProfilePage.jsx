@@ -100,7 +100,7 @@ export default function AdminProfilePage() {
           >
             <Link to="/about" className="inline-flex items-center gap-2 text-primary hover:text-primary-container transition-colors mb-6 font-bold uppercase tracking-wider text-sm">
               <span className="material-symbols-outlined text-xl">arrow_back</span>
-              {lang === 'uz' ? 'Rahbariyatga qaytish' : 'К списку руководства'}
+              {lang?.startsWith('uz') ? 'Rahbariyatga qaytish' : 'К списку руководства'}
             </Link>
             <br />
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white shadow-sm text-primary mb-4 font-bold text-xs tracking-widest uppercase">
@@ -135,14 +135,14 @@ export default function AdminProfilePage() {
                   <span className="material-symbols-outlined text-8xl">work_history</span>
                 </div>
                 <h4 className="text-[#1e619c] font-bold text-sm tracking-widest uppercase mb-4 relative z-10">
-                  {lang === 'uz' ? 'Ish tajribasi' : 'Опыт работы'}
+                  {lang?.startsWith('uz') ? 'Ish tajribasi' : 'Опыт работы'}
                 </h4>
                 <div className="flex items-end gap-2 relative z-10 text-[#1e619c]">
                   <span className="text-7xl font-black leading-none tracking-tighter">
                     {profile.experience_years}
                   </span>
                   <span className="text-xl font-bold mb-2">
-                    {lang === 'uz' ? 'yil' : 'лет'}
+                    {lang?.startsWith('uz') ? 'yil' : 'лет'}
                   </span>
                 </div>
                 {profile.experience_period && (
@@ -164,10 +164,10 @@ export default function AdminProfilePage() {
                 <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
                   <span className="material-symbols-outlined text-2xl">mail</span>
                 </div>
-                <h4 className="font-bold">{lang === 'uz' ? "Bog'lanish" : 'Контакты'}</h4>
+                <h4 className="font-bold">{lang?.startsWith('uz') ? "Bog'lanish" : 'Контакты'}</h4>
               </div>
               <p className="text-[#e69f00]/80 text-sm font-medium">
-                {lang === 'uz' ? "Maktab ma'muriyati orqali" : "Через администрацию школы"}
+                {lang?.startsWith('uz') ? "Maktab ma'muriyati orqali" : "Через администрацию школы"}
               </p>
             </motion.div>
           </div>
@@ -188,7 +188,7 @@ export default function AdminProfilePage() {
                     <span className="material-symbols-outlined text-2xl">menu_book</span>
                   </div>
                   <h2 className="text-2xl font-bold text-on-surface">
-                    {lang === 'uz' ? 'Kasbiy Biografiya' : 'Профессиональная биография'}
+                    {lang?.startsWith('uz') ? 'Kasbiy Biografiya' : 'Профессиональная биография'}
                   </h2>
                 </div>
                 <div className="prose prose-lg max-w-none text-on-surface-variant leading-relaxed font-medium whitespace-pre-line">
@@ -209,7 +209,7 @@ export default function AdminProfilePage() {
                     <span className="material-symbols-outlined text-2xl">workspace_premium</span>
                   </div>
                   <h2 className="text-2xl font-bold text-on-surface">
-                    {lang === 'uz' ? 'Yutuqlar va Mukofotlar' : 'Награды и достижения'}
+                    {lang?.startsWith('uz') ? 'Yutuqlar va Mukofotlar' : 'Награды и достижения'}
                   </h2>
                 </div>
                 

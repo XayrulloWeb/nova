@@ -108,7 +108,7 @@ export default function NewsCard({ item, variant = 'standard', className, index 
 
         <div className="mt-auto">
           <span className="text-sm font-bold text-on-surface group-hover:text-primary transition-colors flex items-center gap-2">
-            {lang === 'uz' ? "O'qish" : "Читать"} 
+            {lang?.startsWith('uz') ? "O'qish" : "Читать"} 
             <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">east</span>
           </span>
         </div>

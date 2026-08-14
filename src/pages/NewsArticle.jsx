@@ -54,10 +54,10 @@ export default function NewsArticle() {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 text-center">
         <h2 className="text-3xl font-bold text-on-surface mb-6">
-          {lang === 'uz' ? 'Yangilik topilmadi' : 'Новость не найдена'}
+          {lang?.startsWith('uz') ? 'Yangilik topilmadi' : 'Новость не найдена'}
         </h2>
         <Link to="/news" className="bg-primary text-on-primary px-8 py-3 rounded-full font-bold hover:shadow-[0_0_20px_rgba(0,219,233,0.3)] transition-all">
-          {lang === 'uz' ? 'Barcha yangiliklarga qaytish' : 'Вернуться ко всем новостям'}
+          {lang?.startsWith('uz') ? 'Barcha yangiliklarga qaytish' : 'Вернуться ко всем новостям'}
         </Link>
       </div>
     );
@@ -86,7 +86,7 @@ export default function NewsArticle() {
         <Link 
           to="/news" 
           className="w-12 h-12 rounded-full glass-card flex items-center justify-center text-on-surface hover:text-primary hover:bg-surface-container-high transition-all border border-outline/10 shadow-lg group"
-          title={lang === 'uz' ? 'Orqaga' : 'Назад'}
+          title={lang?.startsWith('uz') ? 'Orqaga' : 'Назад'}
         >
           <span className="material-symbols-outlined transition-transform group-hover:-translate-x-1">arrow_back</span>
         </Link>
@@ -131,7 +131,7 @@ export default function NewsArticle() {
         </div>
       ) : (
         <PageHeader 
-          title={lang === 'uz' ? 'Yangiliklar' : 'Новости'} 
+          title={lang?.startsWith('uz') ? 'Yangiliklar' : 'Новости'} 
           subtitle={title} 
         />
       )}
@@ -143,7 +143,7 @@ export default function NewsArticle() {
           <div className="mb-12 md:hidden">
             <Link to="/news" className="inline-flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors font-bold text-sm bg-surface-container py-2 px-4 rounded-full">
               <span className="material-symbols-outlined text-xl">arrow_back</span>
-              {lang === 'uz' ? 'Barcha yangiliklar' : 'Все новости'}
+              {lang?.startsWith('uz') ? 'Barcha yangiliklar' : 'Все новости'}
             </Link>
           </div>
 
@@ -163,8 +163,8 @@ export default function NewsArticle() {
 
           <div className="mt-20 pt-10 border-t border-outline/10 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4">
-              <span className="text-on-surface-variant font-medium">{lang === 'uz' ? 'Ulashish:' : 'Поделиться:'}</span>
-              <button onClick={() => navigator.clipboard.writeText(window.location.href)} className="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-colors" title={lang === 'uz' ? "Nusxa olish" : "Копировать ссылку"}>
+              <span className="text-on-surface-variant font-medium">{lang?.startsWith('uz') ? 'Ulashish:' : 'Поделиться:'}</span>
+              <button onClick={() => navigator.clipboard.writeText(window.location.href)} className="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-colors" title={lang?.startsWith('uz') ? "Nusxa olish" : "Копировать ссылку"}>
                 <span className="material-symbols-outlined text-sm">link</span>
               </button>
             </div>

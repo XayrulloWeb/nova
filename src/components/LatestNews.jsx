@@ -43,8 +43,8 @@ export default function LatestNews({ showAll = false }) {
       <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16">
           <div>
-            <span className="text-primary font-bold uppercase tracking-widest block mb-4 text-sm">{lang === 'uz' ? 'Mediamarkaz' : 'Медиацентр'}</span>
-            <h2 className="text-5xl md:text-6xl font-extrabold text-on-surface tracking-tight">{t('header.news') || (lang === 'uz' ? "Yangiliklar" : "Новости")}</h2>
+            <span className="text-primary font-bold uppercase tracking-widest block mb-4 text-sm">{lang?.startsWith('uz') ? 'Mediamarkaz' : 'Медиацентр'}</span>
+            <h2 className="text-5xl md:text-6xl font-extrabold text-on-surface tracking-tight">{t('header.news') || (lang?.startsWith('uz') ? "Yangiliklar" : "Новости")}</h2>
           </div>
           
           {!showAll && (
@@ -55,7 +55,7 @@ export default function LatestNews({ showAll = false }) {
               </div>
               
               <Link to="/news" className="group px-6 py-3 border-2 border-on-surface/20 text-on-surface rounded-full font-bold flex items-center gap-3 transition-all duration-300 hover:border-primary hover:text-primary hover:bg-primary/5">
-                {lang === 'uz' ? "Barcha yangiliklar" : "Все новости"} 
+                {lang?.startsWith('uz') ? "Barcha yangiliklar" : "Все новости"} 
                 <span className="material-symbols-outlined text-xl transition-transform group-hover:translate-x-1">arrow_forward</span>
               </Link>
             </div>
@@ -66,9 +66,11 @@ export default function LatestNews({ showAll = false }) {
           {isLoading ? (
             renderSkeletons()
           ) : isError ? (
-            <p className="text-error col-span-3 text-center py-12">Ошибка загрузки новостей</p>
+            <p className="text-error col-span-3 text-center py-12">
+              {i18n.language?.startsWith('uz') ? 'Yangiliklarni yuklashda xatolik yuz berdi' : 'Ошибка загрузки новостей'}
+            </p>
           ) : news.length === 0 ? (
-            <p className="text-on-surface-variant col-span-3 py-12">{lang === 'uz' ? "Yangiliklar topilmadi." : "Новости не найдены."}</p>
+            <p className="text-on-surface-variant col-span-3 py-12">{lang?.startsWith('uz') ? "Yangiliklar topilmadi." : "Новости не найдены."}</p>
           ) : (
             news.map((item, index) => {
               // First item on page 1 is the Hero

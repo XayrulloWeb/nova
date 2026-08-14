@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 
 export default function Schedule() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   
   const items = t('schedule.items', { returnObjects: true });
   const schedule = Array.isArray(items) ? items : [];
@@ -57,7 +57,7 @@ export default function Schedule() {
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-5xl font-black text-on-surface tracking-tight"
           >
-            Распорядок дня
+            {i18n.language?.startsWith('uz') ? 'Kun tartibi' : 'Распорядок дня'}
           </motion.h2>
         </div>
 

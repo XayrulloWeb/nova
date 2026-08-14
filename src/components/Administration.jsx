@@ -38,7 +38,11 @@ export default function Administration() {
             <div className="w-12 h-12 rounded-full border-4 border-primary/30 border-t-primary animate-spin"></div>
           </div>
         ) : isError ? (
-          <p className="text-error text-center text-lg py-12">Ошибка загрузки данных</p>
+          <div className="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop text-center">
+            <p className="text-error text-center text-lg py-12">
+              {i18n.language?.startsWith('uz') ? 'Rahbariyatni yuklashda xatolik yuz berdi' : 'Ошибка загрузки руководства'}
+            </p>
+          </div>
         ) : admins.length === 0 ? (
           <p className="text-on-surface-variant text-center text-lg">
             {t('administration.empty')}

@@ -217,7 +217,8 @@
     "contactMessage": "Xabar",
     "contactSubmit": "YUBORISH",
     "placeholderName": "Falonchiyev Pistonchi",
-    "placeholderMsg": "Savolingiz..."
+    "placeholderMsg": "Savolingiz...",
+    "fillRequired": "Iltimos, barcha majburiy maydonlarni to'ldiring!"
   },
   "admin": {
     "loginTitle": "Admin Panelga kirish",

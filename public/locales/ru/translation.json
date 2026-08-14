@@ -217,7 +217,8 @@
     "contactMessage": "Сообщение",
     "contactSubmit": "ОТПРАВИТЬ",
     "placeholderName": "Иванов Иван",
-    "placeholderMsg": "Ваш вопрос..."
+    "placeholderMsg": "Ваш вопрос...",
+    "fillRequired": "Пожалуйста, заполните все обязательные поля!"
   },
   "admin": {
     "loginTitle": "Вход в Админ Панель",
