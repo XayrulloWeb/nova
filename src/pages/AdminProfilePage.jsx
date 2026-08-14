@@ -81,6 +81,11 @@ export default function AdminProfilePage() {
             animate={{ opacity: 1, x: 0 }}
             className="text-center md:text-left flex-grow"
           >
+            <Link to="/about" className="inline-flex items-center gap-2 text-primary hover:text-primary-container transition-colors mb-6 font-bold uppercase tracking-wider text-sm">
+              <span className="material-symbols-outlined text-xl">arrow_back</span>
+              {lang === 'uz' ? 'Rahbariyatga qaytish' : 'К списку руководства'}
+            </Link>
+            <br />
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white shadow-sm text-primary mb-4 font-bold text-xs tracking-widest uppercase">
               <span className="material-symbols-outlined text-sm">stars</span>
               NOVA AI School
