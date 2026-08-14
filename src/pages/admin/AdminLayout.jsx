@@ -24,7 +24,8 @@ export default function AdminLayout() {
   };
 
   const navItems = [
-    { path: '/admin/dashboard', label: t('admin.dashboard'), icon: 'inbox' },
+    { path: '/admin/dashboard', label: t('admin.dashboard', 'Заявки'), icon: 'inbox' },
+    { path: '/admin/students', label: t('admin.students', 'Ученики'), icon: 'school' },
     { path: '/admin/news', label: t('admin.news'), icon: 'article' },
     { path: '/admin/teachers', label: t('admin.teachers'), icon: 'school' },
     { path: '/admin/administration', label: t('admin.administration'), icon: 'admin_panel_settings' },

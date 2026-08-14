@@ -412,4 +412,61 @@ router.delete('/gallery/:id', auth, async (req, res, next) => {
   }
 });
 
+// STUDENTS CRM (Applications with CONTRACT_ISSUED status)
+router.get('/students', auth, async (req, res, next) => {
+  try {
+    const students = await prisma.applications.findMany({
+      where: { status: 'CONTRACT_ISSUED' },
+      include: {
+        contract: true,
+        payments: {
+          orderBy: { created_at: 'desc' }
+        }
+      },
+      orderBy: { created_at: 'desc' }
+    });
+    res.json(students);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Add a payment
+router.post('/students/:application_id/payments', auth, async (req, res, next) => {
+  const { application_id } = req.params;
+  const { amount, payment_month, payment_method, comment } = req.body;
+  
+  if (!amount || !payment_month || !payment_method) {
+    return res.status(400).json({ error: 'All payment fields are required.' });
+  }
+  
+  try {
+    const payment = await prisma.payments.create({
+      data: {
+        application_id: parseInt(application_id),
+        amount: String(amount),
+        payment_month,
+        payment_method,
+        comment
+      }
+    });
+    res.status(201).json(payment);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Delete a payment
+router.delete('/payments/:id', auth, async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await prisma.payments.delete({
+      where: { id: parseInt(id) }
+    });
+    res.json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

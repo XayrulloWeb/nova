@@ -45,6 +45,7 @@ const TeacherManager = lazy(() => import('./pages/admin/TeacherManager'));
 const StatsManager = lazy(() => import('./pages/admin/StatsManager'));
 const AdministrationManager = lazy(() => import('./pages/admin/AdministrationManager'));
 const GalleryManager = lazy(() => import('./pages/admin/GalleryManager'));
+const StudentsManager = lazy(() => import('./pages/admin/StudentsManager'));
 
 function AppContent() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -91,6 +92,7 @@ function AppContent() {
               <Route path="/admin" element={<AdminLogin />} />
               <Route path="/admin/*" element={<AdminLayout />}>
                 <Route path="dashboard" element={<ApplicationsManager />} />
+                <Route path="students" element={<StudentsManager />} />
                 <Route path="news" element={<NewsManager />} />
                 <Route path="teachers" element={<TeacherManager />} />
                 <Route path="administration" element={<AdministrationManager />} />

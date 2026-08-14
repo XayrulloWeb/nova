@@ -18,6 +18,7 @@ model applications {
   comment      String?  @db.Text
   created_at   DateTime @default(now()) @db.Timestamp(6)
   contract     contracts?
+  payments     payments[]
 }
 
 model contracts {
@@ -104,4 +105,15 @@ model gallery {
   id         Int      @id @default(autoincrement())
   image_url  String   @db.VarChar(255)
   created_at DateTime @default(now()) @db.Timestamp(6)
+}
+
+model payments {
+  id             Int          @id @default(autoincrement())
+  application_id Int
+  application    applications @relation(fields: [application_id], references: [id], onDelete: Cascade)
+  amount         String       @db.VarChar(50)
+  payment_month  String       @db.VarChar(50) // e.g. "Сентябрь 2026"
+  payment_method String       @db.VarChar(50) // e.g. "Наличные", "Терминал", "Перевод"
+  comment        String?      @db.Text
+  created_at     DateTime     @default(now()) @db.Timestamp(6)
 }
