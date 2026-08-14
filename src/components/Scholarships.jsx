@@ -51,7 +51,7 @@ export default function Scholarships() {
               <div className="inline-flex items-center gap-4 px-6 py-4 rounded-2xl bg-surface-container-lowest border border-outline/10 self-start">
                 <span className="material-symbols-outlined text-primary text-3xl">workspace_premium</span>
                 <p className="font-medium text-sm md:text-base text-on-surface">
-                  IELTS va SAT sertifikatiga ega o'quvchilar <br className="hidden md:block" />
+                  {t('students.ieltsSat')} <br className="hidden md:block" />
                   <strong className="text-primary font-bold">{t('students.freeEducation')}</strong>
                 </p>
               </div>
