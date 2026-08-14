@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 
 export default function SchoolHistory() {
   const { t } = useTranslation();
-  const [active, setActive] = useState(0);
 
   const infoCards = [
     { 
@@ -12,42 +11,48 @@ export default function SchoolHistory() {
       icon: 'account_balance', 
       label: t('history.foundersLabel'), 
       value: t('history.foundersValue'),
-      image: 'https://images.unsplash.com/photo-1577415124269-b9140d52d924?w=1200&q=80'
+      gradient: 'from-blue-500/20 to-purple-500/20',
+      iconColor: 'text-blue-500'
     },
     { 
       id: 'hours', 
       icon: 'schedule', 
       label: t('history.hoursLabel'), 
       value: t('history.hoursValue'),
-      image: 'https://images.unsplash.com/photo-1501139083538-0139583c060f?w=1200&q=80'
+      gradient: 'from-emerald-500/20 to-teal-500/20',
+      iconColor: 'text-emerald-500'
     },
     { 
       id: 'langs', 
       icon: 'language', 
       label: t('history.langsLabel'), 
       value: t('history.langsValue'),
-      image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&q=80'
+      gradient: 'from-orange-500/20 to-amber-500/20',
+      iconColor: 'text-orange-500'
     },
     { 
       id: 'infra', 
       icon: 'architecture', 
       label: t('history.infraLabel'), 
       value: t('history.infraValue'),
-      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&q=80'
+      gradient: 'from-pink-500/20 to-rose-500/20',
+      iconColor: 'text-pink-500'
     }
   ];
 
   return (
     <section className="py-24 px-margin-mobile md:px-margin-desktop bg-surface-container overflow-hidden">
-      <div className="max-w-[1600px] mx-auto">
+      <div className="max-w-[1200px] mx-auto">
+        
+        {/* Header */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8"
+          className="mb-16 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-8"
         >
-          <div className="max-w-2xl">
+          <div className="max-w-2xl mx-auto md:mx-0">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-label-caps text-xs mb-4 uppercase tracking-widest border border-primary/20">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
               NOVA AI School
@@ -56,76 +61,50 @@ export default function SchoolHistory() {
               {t('history.title')}
             </h2>
           </div>
-          <p className="text-body-lg text-on-surface-variant max-w-xl whitespace-pre-line leading-relaxed text-lg pb-2">
+          <p className="text-body-lg text-on-surface-variant max-w-xl mx-auto md:mx-0 whitespace-pre-line leading-relaxed text-lg pb-2 text-center md:text-right">
             {t('history.desc')}
           </p>
         </motion.div>
 
-        <div className="flex flex-col lg:flex-row w-full h-[800px] lg:h-[600px] gap-4">
-          {infoCards.map((card, index) => {
-            const isActive = active === index;
-            
-            return (
-              <motion.div 
-                key={card.id}
-                layout
-                onMouseEnter={() => setActive(index)}
-                onClick={() => setActive(index)}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ 
-                  layout: { type: "spring", stiffness: 200, damping: 25 },
-                  opacity: { duration: 0.5, delay: index * 0.1 }
-                }}
-                className={`relative overflow-hidden rounded-3xl cursor-pointer group flex-shrink-0 ${isActive ? 'lg:flex-grow-[3] flex-grow-[2]' : 'lg:flex-grow-[1] flex-grow-[1] lg:basis-[15%] basis-[15%]'}`}
-              >
-                {/* Background Image */}
-                <img 
-                  src={card.image} 
-                  alt={card.label}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110"
-                />
-                
-                {/* Gradients for readability */}
-                <div className={`absolute inset-0 bg-black transition-opacity duration-700 ${isActive ? 'opacity-40' : 'opacity-60 group-hover:opacity-50'}`}></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
-                
-                {/* Content */}
-                <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end">
-                  <div className={`flex flex-col ${isActive ? 'h-full justify-end' : 'h-full justify-end lg:justify-start lg:items-center'}`}>
-                    
-                    {/* Icon */}
-                    <motion.div 
-                      layout
-                      className={`flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white ${isActive ? 'w-14 h-14 mb-6' : 'w-12 h-12 mb-4 lg:mb-0 lg:mt-4'}`}
-                    >
-                      <span className="material-symbols-outlined text-2xl">{card.icon}</span>
-                    </motion.div>
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {infoCards.map((card, index) => (
+            <motion.div 
+              key={card.id}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="group relative h-[320px] rounded-[2rem] overflow-hidden bg-surface-container-highest border border-outline-variant/30 cursor-pointer shadow-sm hover:shadow-2xl transition-shadow duration-500"
+            >
+              {/* Background Gradient */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} opacity-30 group-hover:opacity-100 transition-opacity duration-700`}></div>
+              
+              {/* Glass Overlay */}
+              <div className="absolute inset-0 bg-surface-container-highest/60 backdrop-blur-3xl"></div>
 
-                    {/* Text content */}
-                    <motion.div layout className={`flex flex-col ${isActive ? 'items-start' : 'items-start lg:items-center'}`}>
-                      <h3 className={`font-bold text-white leading-tight ${isActive ? 'text-2xl md:text-3xl mb-3' : 'text-lg md:text-xl lg:writing-vertical-rl lg:rotate-180 lg:mt-6'}`}>
-                        {card.label}
-                      </h3>
-                      
-                      {isActive && (
-                        <motion.p 
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.2, duration: 0.4 }}
-                          className="text-white/80 font-medium text-lg md:text-xl max-w-lg whitespace-pre-line"
-                        >
-                          {card.value}
-                        </motion.p>
-                      )}
-                    </motion.div>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
+              {/* Default State (Giant Icon) */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-8 transition-transform duration-500 group-hover:-translate-y-8">
+                <span className={`material-symbols-outlined text-[80px] mb-4 ${card.iconColor} drop-shadow-lg transition-transform duration-500 group-hover:scale-75 group-hover:opacity-50`}>
+                  {card.icon}
+                </span>
+                <h3 className="font-bold text-2xl text-on-surface tracking-tight text-center">
+                  {card.label}
+                </h3>
+              </div>
+
+              {/* Hover Reveal State (Text slides up) */}
+              <div className="absolute inset-x-0 bottom-0 p-8 pt-0 flex flex-col justify-end translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">
+                <div className="w-full h-[1px] bg-outline-variant/30 mb-6"></div>
+                <p className="text-on-surface font-medium text-lg leading-relaxed text-center whitespace-pre-line">
+                  {card.value}
+                </p>
+              </div>
+
+            </motion.div>
+          ))}
         </div>
+
       </div>
     </section>
   );
