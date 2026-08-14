@@ -155,6 +155,39 @@ router.post('/administration', auth, upload.single('image'), processImage, async
   }
 });
 
+router.put('/administration/:id', auth, upload.single('image'), processImage, async (req, res, next) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { name_uz, name_ru, role_uz, role_ru, desc_uz, desc_ru, experience_years, experience_period, awards_uz, awards_ru } = req.body;
+    
+    // Find existing to conditionally delete old image if a new one is uploaded
+    const existing = await prisma.administration.findUnique({ where: { id } });
+    if (!existing) return res.status(404).json({ error: 'Not found' });
+
+    let imageUrl = existing.image_url;
+    if (req.file) {
+      imageUrl = `/uploads/${req.file.filename}`;
+      // deleteImage(existing.image_url); // Optional: delete old image
+    }
+
+    const updatedAdmin = await prisma.administration.update({
+      where: { id },
+      data: {
+        name: { uz: name_uz, ru: name_ru },
+        role: { uz: role_uz, ru: role_ru },
+        desc: { uz: desc_uz || '', ru: desc_ru || '' },
+        experience_years: experience_years || null,
+        experience_period: experience_period || null,
+        awards: { uz: awards_uz || '', ru: awards_ru || '' },
+        image_url: imageUrl
+      }
+    });
+    res.json(updatedAdmin);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.delete('/administration/:id', auth, async (req, res, next) => {
   try {
     const id = parseInt(req.params.id);
