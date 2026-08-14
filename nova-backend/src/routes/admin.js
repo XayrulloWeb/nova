@@ -571,6 +571,36 @@ router.post('/teachers', auth, upload.single('image'), processImage, async (req,
   }
 });
 
+router.put('/teachers/:id', auth, upload.single('image'), processImage, async (req, res, next) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { name_uz, name_ru, subject_uz, subject_ru, title_uz, title_ru, desc_uz, desc_ru, tags_uz, tags_ru } = req.body;
+    
+    const existing = await prisma.teachers.findUnique({ where: { id } });
+    if (!existing) return res.status(404).json({ error: 'Not found' });
+
+    let imageUrl = existing.image_url;
+    if (req.file) {
+      imageUrl = `/uploads/${req.file.filename}`;
+    }
+
+    const updatedTeacher = await prisma.teachers.update({
+      where: { id },
+      data: {
+        name: { uz: name_uz, ru: name_ru },
+        subject: { uz: subject_uz || '', ru: subject_ru || '' },
+        title: { uz: title_uz || '', ru: title_ru || '' },
+        desc: { uz: desc_uz || '', ru: desc_ru || '' },
+        tags: { uz: tags_uz || '', ru: tags_ru || '' },
+        image_url: imageUrl
+      }
+    });
+    res.json(updatedTeacher);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.delete('/teachers/:id', auth, async (req, res, next) => {
   try {
     const id = parseInt(req.params.id);

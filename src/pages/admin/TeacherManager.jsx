@@ -6,6 +6,7 @@ export default function TeacherManager() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
+  const [editingId, setEditingId] = useState(null);
   const { t } = useTranslation();
   const [form, setForm] = useState({ 
     name_uz: '', name_ru: '', 
@@ -29,6 +30,19 @@ export default function TeacherManager() {
     }
   };
 
+  const handleEditClick = (tItem) => {
+    setForm({
+      name_uz: tItem.name?.uz || '', name_ru: tItem.name?.ru || '',
+      title_uz: tItem.title?.uz || '', title_ru: tItem.title?.ru || '',
+      desc_uz: tItem.desc?.uz || '', desc_ru: tItem.desc?.ru || '',
+      tags_uz: tItem.tags?.uz || '', tags_ru: tItem.tags?.ru || '',
+      subject_uz: tItem.subject?.uz || '', subject_ru: tItem.subject?.ru || '',
+      image: null
+    });
+    setEditingId(tItem.id);
+    setIsAdding(true);
+  };
+
   const handleAdd = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('adminToken');
@@ -45,8 +59,11 @@ export default function TeacherManager() {
     data.append('subject_ru', form.subject_ru);
     if (form.image) data.append('image', form.image);
 
-    await fetch('/api/admin/teachers', {
-      method: 'POST',
+    const url = editingId ? `/api/admin/teachers/${editingId}` : '/api/admin/teachers';
+    const method = editingId ? 'PUT' : 'POST';
+
+    await fetch(url, {
+      method,
       headers: { 'Authorization': `Bearer ${token}` },
       body: data
     });
@@ -60,6 +77,7 @@ export default function TeacherManager() {
       image: null 
     });
     setIsAdding(false);
+    setEditingId(null);
     fetchTeachers();
   };
 
@@ -78,7 +96,23 @@ export default function TeacherManager() {
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-3xl font-bold">{t('admin.teachers')}</h2>
         <button 
-          onClick={() => setIsAdding(!isAdding)}
+          onClick={() => {
+            if (isAdding) {
+              setIsAdding(false);
+              setEditingId(null);
+            } else {
+              setForm({ 
+                name_uz: '', name_ru: '', 
+                title_uz: '', title_ru: '', 
+                desc_uz: '', desc_ru: '',
+                tags_uz: '', tags_ru: '',
+                subject_uz: '', subject_ru: '', 
+                image: null 
+              });
+              setEditingId(null);
+              setIsAdding(true);
+            }
+          }}
           className="bg-primary text-on-primary px-6 py-2 rounded-full font-bold flex items-center gap-2 hover:opacity-90"
         >
           <span className="material-symbols-outlined">{isAdding ? 'close' : 'add'}</span>
@@ -126,12 +160,20 @@ export default function TeacherManager() {
             </div>
             <h3 className="font-bold text-xl mb-1">{tItem.name?.uz || tItem.name?.ru || ''}</h3>
             <p className="text-primary text-sm font-bold mb-6">{tItem.subject?.uz || tItem.title?.uz || ''}</p>
-            <button 
-              onClick={() => handleDelete(tItem.id)}
-              className="mt-auto bg-red-500/10 text-red-500 px-4 py-2 rounded-lg font-bold hover:bg-red-500/20 w-full"
-            >
-              {t('admin.delete')}
-            </button>
+            <div className="mt-auto w-full flex gap-2">
+              <button 
+                onClick={() => handleEditClick(tItem)}
+                className="bg-primary/10 text-primary px-4 py-2 rounded-lg font-bold hover:bg-primary/20 w-1/2"
+              >
+                {t('admin.edit', 'Edit')}
+              </button>
+              <button 
+                onClick={() => handleDelete(tItem.id)}
+                className="bg-red-500/10 text-red-500 px-4 py-2 rounded-lg font-bold hover:bg-red-500/20 w-1/2"
+              >
+                {t('admin.delete')}
+              </button>
+            </div>
           </div>
         ))}
       </div>
