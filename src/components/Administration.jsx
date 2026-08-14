@@ -1,22 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import api from '../api/axios';
 
 export default function Administration() {
-  const [admins, setAdmins] = useState([]);
   const { t, i18n } = useTranslation();
   const lang = i18n.language?.startsWith('uz') ? 'uz' : 'ru';
 
-  useEffect(() => {
-    fetch('/api/public/administration')
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data)) setAdmins(data);
-        else if (data && Array.isArray(data.data)) setAdmins(data.data);
-        else setAdmins([]);
-      })
-      .catch(err => console.error(err));
-  }, []);
+  const { data: admins = [], isLoading, isError } = useQuery({
+    queryKey: ['administration'],
+    queryFn: async () => {
+      const response = await api.get('/public/administration');
+      return Array.isArray(response.data) ? response.data : (response.data?.data || []);
+    }
+  });
 
   return (
     <section className="py-24 px-margin-mobile md:px-margin-desktop bg-surface-container-lowest border-y border-outline/10 relative overflow-hidden">
@@ -35,7 +33,13 @@ export default function Administration() {
           </h2>
         </div>
         
-        {admins.length === 0 ? (
+        {isLoading ? (
+          <div className="flex justify-center items-center py-12">
+            <div className="w-12 h-12 rounded-full border-4 border-primary/30 border-t-primary animate-spin"></div>
+          </div>
+        ) : isError ? (
+          <p className="text-error text-center text-lg py-12">Ошибка загрузки данных</p>
+        ) : admins.length === 0 ? (
           <p className="text-on-surface-variant text-center text-lg">
             {t('administration.empty')}
           </p>
@@ -52,7 +56,7 @@ export default function Administration() {
                   {admin.image_url ? (
                     <img 
                       src={`${admin.image_url}`} 
-                      alt={admin[`name_${lang}`]} 
+                      alt={admin.name?.[lang] || ''} 
                       className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110" 
                     />
                   ) : (
@@ -66,11 +70,11 @@ export default function Administration() {
 
                 {/* Info */}
                 <h3 className="text-2xl font-bold text-on-surface mb-2 group-hover:text-primary transition-colors duration-300">
-                  {admin[`name_${lang}`]}
+                  {admin.name?.[lang] || ''}
                 </h3>
                 
                 <p className="text-primary font-bold text-sm tracking-widest uppercase mb-4">
-                  {admin[`role_${lang}`]}
+                  {admin.role?.[lang] || ''}
                 </p>
 
                 {/* Animated Arrow */}

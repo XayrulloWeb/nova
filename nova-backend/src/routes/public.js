@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const prisma = require('../prisma');
+const apicache = require('apicache');
 
-router.get('/stats', async (req, res) => {
+let cache = apicache.middleware;
+
+router.get('/stats', cache('5 minutes'), async (req, res) => {
   try {
     const stats = await prisma.stats.findUnique({ where: { id: 1 } });
     if (!stats) {
@@ -14,7 +17,7 @@ router.get('/stats', async (req, res) => {
   }
 });
 
-router.get('/news', async (req, res) => {
+router.get('/news', cache('5 minutes'), async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
@@ -30,7 +33,7 @@ router.get('/news', async (req, res) => {
   }
 });
 
-router.get('/news/:id', async (req, res) => {
+router.get('/news/:id', cache('5 minutes'), async (req, res) => {
   try {
     const { id } = req.params;
     const newsItem = await prisma.news.findUnique({
@@ -45,7 +48,7 @@ router.get('/news/:id', async (req, res) => {
   }
 });
 
-router.get('/teachers', async (req, res) => {
+router.get('/teachers', cache('5 minutes'), async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
@@ -61,7 +64,7 @@ router.get('/teachers', async (req, res) => {
   }
 });
 
-router.get('/administration', async (req, res) => {
+router.get('/administration', cache('5 minutes'), async (req, res) => {
   try {
     const adminList = await prisma.administration.findMany({ orderBy: { id: 'asc' } });
     res.json(adminList);
@@ -71,7 +74,7 @@ router.get('/administration', async (req, res) => {
   }
 });
 
-router.get('/administration/:id', async (req, res) => {
+router.get('/administration/:id', cache('5 minutes'), async (req, res) => {
   try {
     const { id } = req.params;
     const adminProfile = await prisma.administration.findUnique({
@@ -86,7 +89,7 @@ router.get('/administration/:id', async (req, res) => {
   }
 });
 
-router.get('/gallery', async (req, res) => {
+router.get('/gallery', cache('5 minutes'), async (req, res) => {
   try {
     const images = await prisma.gallery.findMany({ orderBy: { created_at: 'desc' } });
     res.json(images);

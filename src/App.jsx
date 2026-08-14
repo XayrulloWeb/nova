@@ -3,7 +3,18 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { ReactLenis } from 'lenis/react';
 import { ThemeProvider } from './context/ThemeContext';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './index.css';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+    },
+  },
+});
 
 import Header from './components/Header';
 import OverlayMenu from './components/OverlayMenu';
@@ -100,13 +111,15 @@ function AppContent() {
 
 function App() {
   return (
-    <ThemeProvider>
-      <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
-        <BrowserRouter>
-          <AppContent />
-        </BrowserRouter>
-      </ReactLenis>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
+          <BrowserRouter>
+            <AppContent />
+          </BrowserRouter>
+        </ReactLenis>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
 

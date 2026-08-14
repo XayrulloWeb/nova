@@ -21,7 +21,11 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-const upload = multer({ storage: storage, fileFilter: fileFilter });
+const upload = multer({ 
+  storage: storage, 
+  fileFilter: fileFilter,
+  limits: { fileSize: 3 * 1024 * 1024 } // 3MB limit
+});
 
 // Middleware to process image to WebP
 const processImage = async (req, res, next) => {
@@ -87,11 +91,19 @@ router.post('/login', async (req, res, next) => {
 // --- Get Applications & Contacts (Protected) ---
 router.get('/applications', auth, async (req, res, next) => {
   try {
-    const applications = await prisma.applications.findMany({ 
-      orderBy: { created_at: 'desc' },
-      take: 50
-    });
-    res.json({ data: applications, totalPages: 1 });
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await Promise.all([
+      prisma.applications.findMany({ 
+        orderBy: { created_at: 'desc' },
+        skip,
+        take: limit
+      }),
+      prisma.applications.count()
+    ]);
+    res.json({ data, totalPages: Math.ceil(total / limit), page, total });
   } catch (error) {
     next(error);
   }
@@ -99,11 +111,19 @@ router.get('/applications', auth, async (req, res, next) => {
 
 router.get('/contacts', auth, async (req, res, next) => {
   try {
-    const contacts = await prisma.contacts.findMany({ 
-      orderBy: { created_at: 'desc' },
-      take: 50
-    });
-    res.json({ data: contacts, totalPages: 1 });
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await Promise.all([
+      prisma.contacts.findMany({ 
+        orderBy: { created_at: 'desc' },
+        skip,
+        take: limit
+      }),
+      prisma.contacts.count()
+    ]);
+    res.json({ data, totalPages: Math.ceil(total / limit), page, total });
   } catch (error) {
     next(error);
   }
@@ -120,16 +140,12 @@ router.post('/administration', auth, upload.single('image'), processImage, async
   try {
     const newAdmin = await prisma.administration.create({
       data: {
-        name_uz,
-        name_ru,
-        role_uz,
-        role_ru,
-        desc_uz,
-        desc_ru,
+        name: { uz: name_uz, ru: name_ru },
+        role: { uz: role_uz, ru: role_ru },
+        desc: { uz: desc_uz || '', ru: desc_ru || '' },
         experience_years,
         experience_period,
-        awards_uz,
-        awards_ru,
+        awards: { uz: awards_uz || '', ru: awards_ru || '' },
         image_url: imageUrl
       }
     });
@@ -175,7 +191,11 @@ router.post('/news', auth, upload.single('image'), processImage, async (req, res
     const image_url = req.file ? `/uploads/${req.file.filename}` : null;
     
     const news = await prisma.news.create({
-      data: { title_uz, title_ru, content_uz, content_ru, image_url }
+      data: { 
+        title: { uz: title_uz, ru: title_ru }, 
+        content: { uz: content_uz, ru: content_ru }, 
+        image_url 
+      }
     });
     res.status(201).json(news);
   } catch (error) {
@@ -208,16 +228,11 @@ router.post('/teachers', auth, upload.single('image'), processImage, async (req,
   try {
     const newTeacher = await prisma.teachers.create({
       data: {
-        name_uz,
-        name_ru,
-        subject_uz,
-        subject_ru,
-        title_uz,
-        title_ru,
-        desc_uz,
-        desc_ru,
-        tags_uz,
-        tags_ru,
+        name: { uz: name_uz, ru: name_ru },
+        subject: { uz: subject_uz || '', ru: subject_ru || '' },
+        title: { uz: title_uz || '', ru: title_ru || '' },
+        desc: { uz: desc_uz || '', ru: desc_ru || '' },
+        tags: { uz: tags_uz || '', ru: tags_ru || '' },
         image_url: imageUrl
       }
     });
