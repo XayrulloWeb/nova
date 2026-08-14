@@ -61,16 +61,9 @@ export default function AdministrationManager() {
     data.append('experience_years', form.experience_years);
     data.append('experience_period', form.experience_period);
     
-    // Safety check for JSON
-    try {
-      if (form.awards_uz) JSON.parse(form.awards_uz);
-      if (form.awards_ru) JSON.parse(form.awards_ru);
-      data.append('awards_uz', form.awards_uz);
-      data.append('awards_ru', form.awards_ru);
-    } catch(err) {
-      alert("Ошибка в формате JSON наград");
-      return;
-    }
+    // Send awards as strings (JSON parsing on frontend will handle parsing later if needed)
+    data.append('awards_uz', form.awards_uz);
+    data.append('awards_ru', form.awards_ru);
     
     if (form.image) data.append('image', form.image);
 
@@ -85,20 +78,11 @@ export default function AdministrationManager() {
         });
       }
       
-      setForm({ 
-        name_uz: '', name_ru: '', 
-        role_uz: '', role_ru: '', 
-        desc_uz: '', desc_ru: '',
-        experience_years: '', experience_period: '',
-        awards_uz: '', awards_ru: '',
-        image: null 
-      });
-      setIsAdding(false);
-      setEditId(null);
+      handleCancel();
       fetchAdmins();
     } catch (err) {
       console.error(err);
-      alert("Ошибка при сохранении");
+      alert("Ошибка при сохранении: " + (err.response?.data?.error || err.message));
     }
   };
 
@@ -122,6 +106,8 @@ export default function AdministrationManager() {
     });
   };
 
+  const inputClass = "bg-surface-container p-4 rounded-xl border border-outline/20 text-on-surface placeholder-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary caret-primary w-full";
+
   return (
     <div>
       <div className="flex justify-between items-center mb-8">
@@ -139,29 +125,29 @@ export default function AdministrationManager() {
         <form onSubmit={handleSubmit} className="glass-card p-8 rounded-3xl mb-12 flex flex-col gap-6">
           <h3 className="text-xl font-bold mb-4">{editId ? 'Редактировать сотрудника' : 'Добавить сотрудника'}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <input type="text" placeholder={t('admin.nameUz')} value={form.name_uz} onChange={e => setForm({...form, name_uz: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20" required />
-            <input type="text" placeholder={t('admin.nameRu')} value={form.name_ru} onChange={e => setForm({...form, name_ru: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20" required />
+            <input type="text" placeholder={t('admin.nameUz')} value={form.name_uz} onChange={e => setForm({...form, name_uz: e.target.value})} className={inputClass} required />
+            <input type="text" placeholder={t('admin.nameRu')} value={form.name_ru} onChange={e => setForm({...form, name_ru: e.target.value})} className={inputClass} required />
             
-            <input type="text" placeholder={t('admin.roleUz')} value={form.role_uz} onChange={e => setForm({...form, role_uz: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20" required />
-            <input type="text" placeholder={t('admin.roleRu')} value={form.role_ru} onChange={e => setForm({...form, role_ru: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20" required />
+            <input type="text" placeholder={t('admin.roleUz')} value={form.role_uz} onChange={e => setForm({...form, role_uz: e.target.value})} className={inputClass} required />
+            <input type="text" placeholder={t('admin.roleRu')} value={form.role_ru} onChange={e => setForm({...form, role_ru: e.target.value})} className={inputClass} required />
 
             <div className="md:col-span-2">
               <label className="block mb-2 font-bold text-sm text-on-surface-variant">Опыт работы (Опционально)</label>
               <div className="grid grid-cols-2 gap-4">
-                <input type="text" placeholder="Лет (напр. 28)" value={form.experience_years} onChange={e => setForm({...form, experience_years: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20" />
-                <input type="text" placeholder="Период (напр. 1998-2026)" value={form.experience_period} onChange={e => setForm({...form, experience_period: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20" />
+                <input type="text" placeholder="Лет (напр. 28)" value={form.experience_years} onChange={e => setForm({...form, experience_years: e.target.value})} className={inputClass} />
+                <input type="text" placeholder="Период (напр. 1998-2026)" value={form.experience_period} onChange={e => setForm({...form, experience_period: e.target.value})} className={inputClass} />
               </div>
             </div>
 
-            <textarea placeholder="Биография UZ (можно использовать переносы строк)" value={form.desc_uz} onChange={e => setForm({...form, desc_uz: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20 h-32" required></textarea>
-            <textarea placeholder="Биография RU (можно использовать переносы строк)" value={form.desc_ru} onChange={e => setForm({...form, desc_ru: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20 h-32" required></textarea>
+            <textarea placeholder="Биография UZ" value={form.desc_uz} onChange={e => setForm({...form, desc_uz: e.target.value})} className={`${inputClass} h-32`} required></textarea>
+            <textarea placeholder="Биография RU" value={form.desc_ru} onChange={e => setForm({...form, desc_ru: e.target.value})} className={`${inputClass} h-32`} required></textarea>
 
-            <textarea placeholder="Награды UZ (в формате JSON массива, например: [{&quot;title&quot;:&quot;Активный исследователь&quot;,&quot;desc&quot;:&quot;Знак...&quot;,&quot;year&quot;:&quot;2023 год&quot;}])" value={form.awards_uz} onChange={e => setForm({...form, awards_uz: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20 h-24 font-mono text-sm"></textarea>
-            <textarea placeholder="Награды RU (в формате JSON массива)" value={form.awards_ru} onChange={e => setForm({...form, awards_ru: e.target.value})} className="bg-surface-container p-4 rounded-xl border border-outline/20 h-24 font-mono text-sm"></textarea>
+            <textarea placeholder="Награды UZ (в формате JSON)" value={form.awards_uz} onChange={e => setForm({...form, awards_uz: e.target.value})} className={`${inputClass} h-24 font-mono text-sm`}></textarea>
+            <textarea placeholder="Награды RU (в формате JSON)" value={form.awards_ru} onChange={e => setForm({...form, awards_ru: e.target.value})} className={`${inputClass} h-24 font-mono text-sm`}></textarea>
 
             <div className="md:col-span-2">
               <label className="block mb-2 font-bold">Фотография (оставьте пустым, чтобы не менять)</label>
-              <input type="file" accept="image/*" onChange={e => setForm({...form, image: e.target.files[0]})} className="bg-surface-container p-4 rounded-xl border border-outline/20 w-full" />
+              <input type="file" accept="image/*" onChange={e => setForm({...form, image: e.target.files[0]})} className={inputClass} />
             </div>
           </div>
           <button type="submit" className="bg-primary text-on-primary py-4 rounded-xl font-bold hover:opacity-90 mt-4">
