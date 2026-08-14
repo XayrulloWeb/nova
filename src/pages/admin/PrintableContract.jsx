@@ -24,54 +24,37 @@ export default function PrintableContract({ application, contract, onClose }) {
           useCORS: true, 
           letterRendering: true,
           onclone: (clonedDoc) => {
-            // Remove ALL stylesheets from cloned doc to avoid oklch parsing
-            const styles = clonedDoc.querySelectorAll('style, link[rel="stylesheet"]');
-            styles.forEach(s => s.remove());
+            // Replace oklch() values in all stylesheets with fallback rgb
+            clonedDoc.querySelectorAll('style').forEach(styleEl => {
+              if (styleEl.textContent.includes('oklch')) {
+                // Replace all oklch(...) with transparent or #000
+                styleEl.textContent = styleEl.textContent.replace(
+                  /oklch\([^)]*\)/gi, 
+                  'transparent'
+                );
+              }
+            });
             
-            // Apply clean styles to the contract container
-            const contract = clonedDoc.getElementById('printable-contract');
-            if (contract) {
-              contract.style.cssText = 'font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; color: #000000; background-color: #ffffff; padding: 20mm; max-width: 210mm; margin: 0 auto;';
-              // Force all children to simple black text on transparent bg
-              contract.querySelectorAll('*').forEach(el => {
-                el.style.color = '#000000';
-                el.style.backgroundColor = 'transparent';
-                if (el.style.borderColor) el.style.borderColor = '#000000';
-              });
-              // Fix bold elements
-              contract.querySelectorAll('b, strong, h1, h2, h3, h4').forEach(el => {
-                el.style.fontWeight = 'bold';
-              });
-              // Fix text alignment
-              contract.querySelectorAll('.text-center, [class*="text-center"]').forEach(el => {
-                el.style.textAlign = 'center';
-              });
-              contract.querySelectorAll('.text-justify, [class*="text-justify"]').forEach(el => {
-                el.style.textAlign = 'justify';
-              });
-              // Fix border box
-              contract.querySelectorAll('.border, [class*="border"]').forEach(el => {
-                el.style.border = '1px solid #000000';
-              });
-              // Fix grid for requisites section
-              contract.querySelectorAll('.grid-cols-2, [class*="grid-cols-2"]').forEach(el => {
-                el.style.display = 'grid';
-                el.style.gridTemplateColumns = '1fr 1fr';
-                el.style.gap = '32px';
-              });
-              // Fix list styles
-              contract.querySelectorAll('ul').forEach(el => {
-                el.style.paddingLeft = '32px';
-                el.style.listStyleType = 'lower-alpha';
-              });
-              // Fix flex containers
-              contract.querySelectorAll('.flex, [class*="flex"]').forEach(el => {
-                el.style.display = 'flex';
-              });
-              contract.querySelectorAll('.justify-between, [class*="justify-between"]').forEach(el => {
-                el.style.justifyContent = 'space-between';
-              });
-            }
+            // Override CSS custom properties on :root that use oklch
+            const overrideStyle = clonedDoc.createElement('style');
+            overrideStyle.textContent = `
+              :root, *, *::before, *::after {
+                --tw-ring-color: transparent !important;
+                --tw-shadow-color: transparent !important;
+              }
+              #printable-contract, #printable-contract * {
+                color: #000000 !important;
+                background-color: transparent !important;
+              }
+              #printable-contract {
+                background-color: #ffffff !important;
+              }
+              #printable-contract .border,
+              #printable-contract [class*="border"] {
+                border-color: #000000 !important;
+              }
+            `;
+            clonedDoc.head.appendChild(overrideStyle);
           }
         },
         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
