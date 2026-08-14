@@ -16,10 +16,10 @@ export default function TeachersGrid() {
 
   const renderCard = (teacher, index) => {
     const layoutType = (index % 5) + 1;
-    const name = teacher[`name_${lang}`];
-    const title = teacher[`title_${lang}`] || teacher[`subject_${lang}`];
-    const desc = teacher[`desc_${lang}`];
-    const tags = teacher[`tags_${lang}`] ? teacher[`tags_${lang}`].split(',').map(tag => tag.trim()) : [];
+    const name = teacher.name?.[lang] || '';
+    const title = teacher.title?.[lang] || teacher.subject?.[lang] || '';
+    const desc = teacher.desc?.[lang] || '';
+    const tags = teacher.tags?.[lang] ? teacher.tags[lang].split(',').map(tag => tag.trim()) : [];
     const imageUrl = teacher.image_url ? `${teacher.image_url}` : null;
 
     if (layoutType === 1) {

@@ -120,12 +120,12 @@ export default function TeacherManager() {
           <div key={tItem.id} className="glass-card rounded-3xl overflow-hidden flex flex-col items-center text-center p-6">
             <div className="w-32 h-32 rounded-full overflow-hidden mb-4 bg-surface-container-high border-4 border-surface-container">
               {tItem.image_url ? 
-                <img src={`${tItem.image_url}`} alt={tItem.name_uz} className="w-full h-full object-cover" />
+                <img src={`${tItem.image_url}`} alt={tItem.name?.uz || 'Teacher'} className="w-full h-full object-cover" />
                 : <span className="material-symbols-outlined text-5xl text-on-surface-variant flex items-center justify-center h-full">person</span>
               }
             </div>
-            <h3 className="font-bold text-xl mb-1">{tItem.name_uz}</h3>
-            <p className="text-primary text-sm font-bold mb-6">{tItem.subject_uz}</p>
+            <h3 className="font-bold text-xl mb-1">{tItem.name?.uz || tItem.name?.ru || ''}</h3>
+            <p className="text-primary text-sm font-bold mb-6">{tItem.subject?.uz || tItem.title?.uz || ''}</p>
             <button 
               onClick={() => handleDelete(tItem.id)}
               className="mt-auto bg-red-500/10 text-red-500 px-4 py-2 rounded-lg font-bold hover:bg-red-500/20 w-full"
