@@ -109,6 +109,103 @@ router.get('/applications', auth, async (req, res, next) => {
   }
 });
 
+router.post('/applications', auth, async (req, res, next) => {
+  const { parentName, parentPhone, childName, childDob, grade } = req.body;
+  if (!parentName || !parentPhone || !childName || !childDob || !grade) {
+    return res.status(400).json({ error: 'All fields are required.' });
+  }
+  try {
+    const application = await prisma.applications.create({
+      data: {
+        parent_name: parentName,
+        parent_phone: parentPhone,
+        child_name: childName,
+        child_dob: new Date(childDob),
+        grade: String(grade),
+        status: 'NEW'
+      }
+    });
+    res.status(201).json(application);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put('/applications/:id/status', auth, async (req, res, next) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { status } = req.body;
+    const application = await prisma.applications.update({
+      where: { id },
+      data: { status }
+    });
+    res.json(application);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put('/applications/:id/comment', auth, async (req, res, next) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { comment } = req.body;
+    const application = await prisma.applications.update({
+      where: { id },
+      data: { comment }
+    });
+    res.json(application);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// --- Contracts Management (Protected) ---
+router.get('/contracts/:application_id', auth, async (req, res, next) => {
+  try {
+    const application_id = parseInt(req.params.application_id);
+    const contract = await prisma.contracts.findUnique({ where: { application_id } });
+    res.json(contract || {});
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/contracts/:application_id', auth, async (req, res, next) => {
+  try {
+    const application_id = parseInt(req.params.application_id);
+    const data = req.body;
+    
+    const contract = await prisma.contracts.upsert({
+      where: { application_id },
+      update: {
+        ...data,
+        contract_date: new Date(data.contract_date),
+        parent_passport_issue_date: new Date(data.parent_passport_issue_date),
+        parent_dob: new Date(data.parent_dob),
+        child_doc_issue_date: new Date(data.child_doc_issue_date)
+      },
+      create: {
+        ...data,
+        application_id,
+        contract_date: new Date(data.contract_date),
+        parent_passport_issue_date: new Date(data.parent_passport_issue_date),
+        parent_dob: new Date(data.parent_dob),
+        child_doc_issue_date: new Date(data.child_doc_issue_date)
+      }
+    });
+    
+    // Automatically update application status to CONTRACT_ISSUED
+    await prisma.applications.update({
+      where: { id: application_id },
+      data: { status: 'CONTRACT_ISSUED' }
+    });
+    
+    res.json(contract);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get('/contacts', auth, async (req, res, next) => {
   try {
     const page = parseInt(req.query.page) || 1;

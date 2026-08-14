@@ -17,6 +17,33 @@ model applications {
   status       String   @default("NEW") @db.VarChar(50)
   comment      String?  @db.Text
   created_at   DateTime @default(now()) @db.Timestamp(6)
+  contract     contracts?
+}
+
+model contracts {
+  id                         Int          @id @default(autoincrement())
+  application_id             Int          @unique
+  application                applications @relation(fields: [application_id], references: [id], onDelete: Cascade)
+  contract_number            String       @db.VarChar(50)
+  contract_date              DateTime     @db.Date
+  academic_year              String       @db.VarChar(50)
+  
+  parent_passport_series     String       @db.VarChar(10)
+  parent_passport_number     String       @db.VarChar(50)
+  parent_passport_issue_date DateTime     @db.Date
+  parent_passport_issued_by  String       @db.VarChar(255)
+  parent_pinfl               String       @db.VarChar(14)
+  parent_dob                 DateTime     @db.Date
+  parent_address             String       @db.Text
+  
+  child_doc_series           String       @db.VarChar(10)
+  child_doc_number           String       @db.VarChar(50)
+  child_doc_issue_date       DateTime     @db.Date
+  child_doc_issued_by        String       @db.VarChar(255)
+  
+  monthly_fee                String       @db.VarChar(50)
+  
+  created_at                 DateTime     @default(now()) @db.Timestamp(6)
 }
 
 model administration {

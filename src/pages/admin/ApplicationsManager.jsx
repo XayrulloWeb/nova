@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import api from '../../api/axios';
+import ContractWizard from './ContractWizard';
+import PrintableContract from './PrintableContract';
 
 const STATUS_MAP = {
   'NEW': '🆕 Новая',
   'CALLED': '📞 Позвонили',
   'THINKING': '🤔 Думают',
   'AGREED': '✅ Согласны',
-  'REJECTED': '❌ Отказ'
+  'REJECTED': '❌ Отказ',
+  'CONTRACT_ISSUED': '📜 Договор выдан'
 };
 
 const STATUS_COLORS = {
@@ -14,7 +18,8 @@ const STATUS_COLORS = {
   'CALLED': 'bg-purple-500/20 text-purple-400 border-purple-500/30',
   'THINKING': 'bg-orange-500/20 text-orange-400 border-orange-500/30',
   'AGREED': 'bg-green-500/20 text-green-400 border-green-500/30',
-  'REJECTED': 'bg-red-500/20 text-red-400 border-red-500/30'
+  'REJECTED': 'bg-red-500/20 text-red-400 border-red-500/30',
+  'CONTRACT_ISSUED': 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30'
 };
 
 export default function ApplicationsManager() {
@@ -25,6 +30,11 @@ export default function ApplicationsManager() {
   const [contacts, setContacts] = useState([]);
   const [contPage, setContPage] = useState(1);
   const [contTotalPages, setContTotalPages] = useState(1);
+
+  const [isAddingApp, setIsAddingApp] = useState(false);
+  const [addAppForm, setAddAppForm] = useState({ parentName: '', parentPhone: '', childName: '', childDob: '', grade: '1' });
+  const [wizardApp, setWizardApp] = useState(null);
+  const [printContract, setPrintContract] = useState(null);
 
   const { t } = useTranslation();
 
@@ -37,100 +47,96 @@ export default function ApplicationsManager() {
   }, [contPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchApplications = async () => {
-    const token = localStorage.getItem('adminToken');
     try {
-      const res = await fetch(`/api/admin/applications?page=${appPage}&limit=10`, { headers: { 'Authorization': `Bearer ${token}` } });
-      if (res.ok) {
-        const json = await res.json();
-        setApplications(json.data || []);
-        setAppTotalPages(json.totalPages || 1);
-      }
-    } catch (error) { // eslint-disable-line no-unused-vars
+      const res = await api.get(`/admin/applications?page=${appPage}&limit=10`);
+      setApplications(res.data.data || []);
+      setAppTotalPages(res.data.totalPages || 1);
+    } catch (error) {
       console.error('Failed to fetch applications');
     }
   };
 
   const fetchContacts = async () => {
-    const token = localStorage.getItem('adminToken');
     try {
-      const res = await fetch(`/api/admin/contacts?page=${contPage}&limit=10`, { headers: { 'Authorization': `Bearer ${token}` } });
-      if (res.ok) {
-        const json = await res.json();
-        setContacts(json.data || []);
-        setContTotalPages(json.totalPages || 1);
-      }
-    } catch (error) { // eslint-disable-line no-unused-vars
+      const res = await api.get(`/admin/contacts?page=${contPage}&limit=10`);
+      setContacts(res.data.data || []);
+      setContTotalPages(res.data.totalPages || 1);
+    } catch (error) {
       console.error('Failed to fetch contacts');
     }
   };
 
   const updateStatus = async (id, newStatus) => {
-    const token = localStorage.getItem('adminToken');
     try {
-      await fetch(`/api/admin/applications/${id}/status`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ status: newStatus })
-      });
-      fetchApplications();
+      await api.put(`/admin/applications/${id}/status`, { status: newStatus });
+      setApplications(applications.map(app => 
+        app.id === id ? { ...app, status: newStatus } : app
+      ));
     } catch (err) {
       console.error('Failed to update status', err);
     }
   };
 
   const updateComment = async (id, comment) => {
-    const token = localStorage.getItem('adminToken');
     try {
-      await fetch(`/api/admin/applications/${id}/comment`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ comment })
-      });
-      fetchApplications();
+      await api.put(`/admin/applications/${id}/comment`, { comment });
+      setApplications(applications.map(app => 
+        app.id === id ? { ...app, comment } : app
+      ));
     } catch (err) {
       console.error('Failed to update comment', err);
     }
   };
 
-  const exportToCSV = async () => {
-    const token = localStorage.getItem('adminToken');
+  const handleAddApplication = async (e) => {
+    e.preventDefault();
     try {
-      // Fetch all without limit for export
-      const res = await fetch(`/api/admin/applications?page=1&limit=1000`, { headers: { 'Authorization': `Bearer ${token}` } });
-      if (res.ok) {
-        const json = await res.json();
-        const data = json.data;
-        
-        const headers = ["ID", "Родитель", "Телефон", "Ученик", "Д.Рождения", "Класс", "Статус", "Дата", "Комментарий"];
-        const rows = data.map(app => [
-          app.id,
-          app.parent_name,
-          app.parent_phone,
-          app.child_name,
-          new Date(app.child_dob).toLocaleDateString(),
-          app.grade,
-          STATUS_MAP[app.status] || app.status,
-          new Date(app.created_at).toLocaleString(),
-          app.comment || ''
-        ]);
+      await api.post('/admin/applications', addAppForm);
+      setIsAddingApp(false);
+      setAddAppForm({ parentName: '', parentPhone: '', childName: '', childDob: '', grade: '1' });
+      fetchApplications();
+    } catch (err) {
+      console.error('Failed to add application', err);
+      alert('Ошибка при добавлении ученика');
+    }
+  };
 
-        const csvContent = "data:text/csv;charset=utf-8,\uFEFF" 
-          + [headers.join(","), ...rows.map(e => e.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(","))].join("\n");
-        
-        const encodedUri = encodeURI(csvContent);
-        const link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `applications_${new Date().toLocaleDateString()}.csv`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
+  const onContractWizardComplete = (contractData) => {
+    setApplications(applications.map(app => 
+      app.id === wizardApp.id ? { ...app, status: 'CONTRACT_ISSUED' } : app
+    ));
+    setPrintContract({ application: wizardApp, contract: contractData });
+    setWizardApp(null);
+  };
+
+  const exportToCSV = async () => {
+    try {
+      const res = await api.get(`/admin/applications?page=1&limit=1000`);
+      const data = res.data.data;
+      
+      const headers = ["ID", "Родитель", "Телефон", "Ученик", "Д.Рождения", "Класс", "Статус", "Дата", "Комментарий"];
+      const rows = data.map(app => [
+        app.id,
+        app.parent_name,
+        app.parent_phone,
+        app.child_name,
+        new Date(app.child_dob).toLocaleDateString(),
+        app.grade,
+        STATUS_MAP[app.status] || app.status,
+        new Date(app.created_at).toLocaleString(),
+        app.comment || ''
+      ]);
+
+      const csvContent = "data:text/csv;charset=utf-8,\uFEFF" 
+        + [headers.join(","), ...rows.map(e => e.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(","))].join("\n");
+      
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `applications_${new Date().toLocaleDateString()}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } catch (error) {
       console.error('Export failed', error);
     }
@@ -141,13 +147,22 @@ export default function ApplicationsManager() {
       <section>
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
           <h2 className="text-3xl font-bold">{t('admin.applications')}</h2>
-          <button 
-            onClick={exportToCSV}
-            className="px-6 py-2 bg-primary text-on-primary rounded-lg font-semibold hover:opacity-90 flex items-center gap-2 mt-4 md:mt-0"
-          >
-            <span className="material-symbols-outlined">download</span>
-            Экспорт в CSV
-          </button>
+          <div className="flex gap-2">
+            <button 
+              onClick={() => setIsAddingApp(true)}
+              className="px-6 py-2 bg-primary text-on-primary rounded-lg font-semibold hover:opacity-90 flex items-center gap-2"
+            >
+              <span className="material-symbols-outlined">add</span>
+              Добавить
+            </button>
+            <button 
+              onClick={exportToCSV}
+              className="px-6 py-2 bg-primary text-on-primary rounded-lg font-semibold hover:opacity-90 flex items-center gap-2"
+            >
+              <span className="material-symbols-outlined">download</span>
+              CSV
+            </button>
+          </div>
         </div>
 
         <div className="bg-surface-container rounded-2xl overflow-hidden border border-outline/20 overflow-x-auto">
@@ -173,15 +188,26 @@ export default function ApplicationsManager() {
                     <div className="text-sm text-on-surface-variant">{app.grade} ({new Date(app.child_dob).toLocaleDateString()})</div>
                   </td>
                   <td className="p-4 align-top">
-                    <select
-                      value={app.status || 'NEW'}
-                      onChange={(e) => updateStatus(app.id, e.target.value)}
-                      className={`px-3 py-1.5 rounded border outline-none appearance-none font-semibold text-sm cursor-pointer ${STATUS_COLORS[app.status || 'NEW'] || STATUS_COLORS['NEW']}`}
-                    >
-                      {Object.entries(STATUS_MAP).map(([key, label]) => (
-                        <option key={key} value={key} className="bg-surface text-on-surface">{label}</option>
-                      ))}
-                    </select>
+                    <div className="flex flex-col gap-2">
+                      <select
+                        value={app.status || 'NEW'}
+                        onChange={(e) => updateStatus(app.id, e.target.value)}
+                        className={`px-3 py-1.5 rounded border outline-none appearance-none font-semibold text-sm cursor-pointer ${STATUS_COLORS[app.status || 'NEW'] || STATUS_COLORS['NEW']}`}
+                      >
+                        {Object.entries(STATUS_MAP).map(([key, label]) => (
+                          <option key={key} value={key} className="bg-surface text-on-surface">{label}</option>
+                        ))}
+                      </select>
+                      {(app.status === 'AGREED' || app.status === 'CONTRACT_ISSUED') && (
+                        <button 
+                          onClick={() => setWizardApp(app)}
+                          className="px-3 py-1 bg-indigo-600 text-white text-xs font-bold rounded-lg shadow-sm hover:bg-indigo-700 transition-colors flex items-center justify-center gap-1"
+                        >
+                          <span className="material-symbols-outlined text-[14px]">contract</span>
+                          Shartnoma
+                        </button>
+                      )}
+                    </div>
                   </td>
                   <td className="p-4 align-top min-w-[200px]">
                     <textarea
@@ -245,6 +271,58 @@ export default function ApplicationsManager() {
           </table>
         </div>
       </section>
+
+      {isAddingApp && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4">
+          <form onSubmit={handleAddApplication} className="bg-surface w-full max-w-md rounded-3xl p-6 shadow-xl flex flex-col gap-4">
+            <h2 className="text-xl font-bold">Добавить ученика</h2>
+            <div>
+              <label className="block text-xs font-bold mb-1">Ф.И.О. Родителя</label>
+              <input required type="text" value={addAppForm.parentName} onChange={e => setAddAppForm({...addAppForm, parentName: e.target.value})} className="w-full bg-surface-container p-3 rounded-lg border border-outline/20 outline-none" />
+            </div>
+            <div>
+              <label className="block text-xs font-bold mb-1">Телефон</label>
+              <input required type="tel" value={addAppForm.parentPhone} onChange={e => setAddAppForm({...addAppForm, parentPhone: e.target.value})} className="w-full bg-surface-container p-3 rounded-lg border border-outline/20 outline-none" />
+            </div>
+            <div>
+              <label className="block text-xs font-bold mb-1">Ф.И.О. Ученика</label>
+              <input required type="text" value={addAppForm.childName} onChange={e => setAddAppForm({...addAppForm, childName: e.target.value})} className="w-full bg-surface-container p-3 rounded-lg border border-outline/20 outline-none" />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold mb-1">Дата рождения</label>
+                <input required type="date" value={addAppForm.childDob} onChange={e => setAddAppForm({...addAppForm, childDob: e.target.value})} className="w-full bg-surface-container p-3 rounded-lg border border-outline/20 outline-none" />
+              </div>
+              <div>
+                <label className="block text-xs font-bold mb-1">Класс</label>
+                <input required type="number" min="1" max="11" value={addAppForm.grade} onChange={e => setAddAppForm({...addAppForm, grade: e.target.value})} className="w-full bg-surface-container p-3 rounded-lg border border-outline/20 outline-none" />
+              </div>
+            </div>
+            <div className="flex gap-2 justify-end mt-4">
+              <button type="button" onClick={() => setIsAddingApp(false)} className="px-4 py-2 font-bold text-on-surface-variant">Отмена</button>
+              <button type="submit" className="px-4 py-2 bg-primary text-on-primary rounded-xl font-bold">Сохранить</button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* Contract Wizard Modal */}
+      {wizardApp && (
+        <ContractWizard 
+          application={wizardApp} 
+          onClose={() => setWizardApp(null)} 
+          onComplete={onContractWizardComplete} 
+        />
+      )}
+
+      {/* Printable Contract Overlay */}
+      {printContract && (
+        <PrintableContract 
+          application={printContract.application} 
+          contract={printContract.contract} 
+          onClose={() => setPrintContract(null)} 
+        />
+      )}
     </div>
   );
 }
