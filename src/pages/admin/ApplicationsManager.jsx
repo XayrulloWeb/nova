@@ -23,7 +23,8 @@ export default function ApplicationsManager() {
   const [appTotalPages, setAppTotalPages] = useState(1);
 
   const [contacts, setContacts] = useState([]);
-  const [contPage] = useState(1);
+  const [contPage, setContPage] = useState(1);
+  const [contTotalPages, setContTotalPages] = useState(1);
 
   const { t } = useTranslation();
 
