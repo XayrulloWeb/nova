@@ -25,7 +25,7 @@ export default function Administration() {
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary-container/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/4 pointer-events-none"></div>
 
       <div className="max-w-[1400px] mx-auto relative z-10">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 md:mb-24">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary mb-6 font-label-caps text-xs tracking-widest uppercase">
             <span className="material-symbols-outlined text-sm">stars</span>
             {t('administration.title')}
@@ -40,53 +40,42 @@ export default function Administration() {
             {t('administration.empty')}
           </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 md:gap-16">
             {admins.map((admin) => (
               <Link 
                 to={`/administration/${admin.id}`}
                 key={admin.id} 
-                className="group relative h-[450px] md:h-[550px] rounded-[2rem] overflow-hidden cursor-pointer block bg-white border border-outline/10 shadow-sm hover:shadow-xl transition-all duration-500"
+                className="group flex flex-col items-center text-center cursor-pointer"
               >
-                {/* Image Background */}
-                <div className="absolute inset-0 h-[80%] rounded-b-[2rem] overflow-hidden">
+                {/* Circular Image */}
+                <div className="w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden bg-surface-container shadow-sm border border-outline/10 mb-6 transition-all duration-500 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-primary/30 relative">
                   {admin.image_url ? (
                     <img 
                       src={`${admin.image_url}`} 
                       alt={admin[`name_${lang}`]} 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 object-top" 
+                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110" 
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-primary/10 via-secondary/10 to-tertiary/10 flex items-center justify-center transition-transform duration-700 group-hover:scale-110">
-                      <div className="w-32 h-32 rounded-full bg-white/40 backdrop-blur-md flex items-center justify-center border border-white/50 shadow-sm">
-                        <span className="material-symbols-outlined text-6xl text-primary/50">school</span>
-                      </div>
+                    <div className="w-full h-full bg-gradient-to-br from-primary/10 via-secondary/10 to-tertiary/10 flex items-center justify-center">
+                      <span className="material-symbols-outlined text-6xl text-primary/30">person</span>
                     </div>
                   )}
-                  {/* Subtle dark gradient overlay for contrast if needed, but keeping it light */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
 
-                {/* Floating Info Card */}
-                <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-xl border border-white/50 shadow-lg rounded-[1.5rem] p-6 transform transition-transform duration-500 group-hover:-translate-y-2">
-                  
-                  {/* Name */}
-                  <h3 className="text-xl md:text-2xl font-black text-on-surface mb-1 leading-tight line-clamp-2">
-                    {admin[`name_${lang}`]}
-                  </h3>
-                  
-                  {/* Role */}
-                  <p className="text-primary font-bold text-sm tracking-wide uppercase">
-                    {admin[`role_${lang}`]}
-                  </p>
+                {/* Info */}
+                <h3 className="text-2xl font-bold text-on-surface mb-2 group-hover:text-primary transition-colors duration-300">
+                  {admin[`name_${lang}`]}
+                </h3>
+                
+                <p className="text-primary font-bold text-sm tracking-widest uppercase mb-4">
+                  {admin[`role_${lang}`]}
+                </p>
 
-                  {/* Hidden Content (Revealed on hover) */}
-                  <div className="max-h-0 opacity-0 overflow-hidden group-hover:max-h-[60px] group-hover:opacity-100 group-hover:mt-4 transition-all duration-500 ease-out">
-                    <span className="inline-flex items-center justify-center w-full gap-2 text-white font-bold text-sm bg-primary px-4 py-3 rounded-xl shadow-md hover:bg-primary-container hover:text-primary-on transition-colors">
-                      {lang === 'uz' ? 'Profilni ko\'rish' : 'Смотреть профиль'}
-                      <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
-                    </span>
-                  </div>
-                  
+                {/* Animated Arrow */}
+                <div className="w-10 h-10 rounded-full border border-outline/20 flex items-center justify-center group-hover:bg-primary group-hover:text-primary-on group-hover:border-primary transition-all duration-300">
+                  <span className="material-symbols-outlined text-lg">arrow_forward</span>
                 </div>
               </Link>
             ))}
