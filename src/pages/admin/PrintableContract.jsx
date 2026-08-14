@@ -31,6 +31,10 @@ export default function PrintableContract({ application, contract, onClose }) {
             #printable-contract, #printable-contract * {
               visibility: visible;
             }
+            @page {
+              size: A4;
+              margin: 0;
+            }
             #printable-contract {
               position: absolute;
               left: 0;
@@ -38,15 +42,14 @@ export default function PrintableContract({ application, contract, onClose }) {
               width: 100%;
               margin: 0;
               padding: 0;
-            }
-            @page {
-              size: A4;
-              margin: 0;
+              overflow: visible !important;
+              height: auto !important;
+              min-height: auto !important;
             }
           }
         `}
       </style>
-      <div id="printable-contract" data-lenis-prevent="true" className="fixed inset-0 z-[200] bg-white overflow-auto print:static print:bg-white">
+      <div id="printable-contract" data-lenis-prevent="true" className="fixed inset-0 z-[200] bg-white overflow-auto print:overflow-visible print:static print:bg-white">
         {/* Hide close button when printing */}
         <div className="fixed top-4 right-4 print:hidden">
           <button onClick={onClose} className="px-6 py-2 bg-red-500 text-white font-bold rounded-lg shadow-lg hover:bg-red-600">
@@ -55,7 +58,7 @@ export default function PrintableContract({ application, contract, onClose }) {
         </div>
 
       {/* A4 Page container */}
-      <div className="max-w-[210mm] min-h-[297mm] mx-auto bg-white p-[20mm] text-[14px] leading-relaxed font-serif text-black print:p-[20mm] print:m-0 print:w-full print:max-w-none">
+      <div className="max-w-[210mm] mx-auto bg-white p-[20mm] text-[14px] leading-relaxed font-serif text-black print:p-[20mm] print:m-0 print:w-full print:max-w-none print:overflow-visible">
         
         {/* HEADER */}
         <div className="text-center font-bold mb-6">
