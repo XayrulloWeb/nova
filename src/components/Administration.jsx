@@ -80,7 +80,7 @@ export default function Administration() {
                   </p>
 
                   {/* Hidden Content (Revealed on hover) */}
-                  <div className="h-0 opacity-0 overflow-hidden group-hover:h-auto group-hover:opacity-100 group-hover:mt-4 transition-all duration-500 ease-out">
+                  <div className="max-h-0 opacity-0 overflow-hidden group-hover:max-h-[60px] group-hover:opacity-100 group-hover:mt-4 transition-all duration-500 ease-out">
                     <span className="inline-flex items-center justify-center w-full gap-2 text-white font-bold text-sm bg-primary px-4 py-3 rounded-xl shadow-md hover:bg-primary-container hover:text-primary-on transition-colors">
                       {lang === 'uz' ? 'Profilni ko\'rish' : 'Смотреть профиль'}
                       <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
