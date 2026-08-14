@@ -41,7 +41,7 @@ export default function PrintableContract({ application, contract, onClose }) {
             }
             @page {
               size: A4;
-              margin: 20mm;
+              margin: 0;
             }
           }
         `}
@@ -55,7 +55,7 @@ export default function PrintableContract({ application, contract, onClose }) {
         </div>
 
       {/* A4 Page container */}
-      <div className="max-w-[210mm] min-h-[297mm] mx-auto bg-white p-[20mm] text-[14px] leading-relaxed font-serif text-black print:p-0 print:m-0 print:w-full print:max-w-none">
+      <div className="max-w-[210mm] min-h-[297mm] mx-auto bg-white p-[20mm] text-[14px] leading-relaxed font-serif text-black print:p-[20mm] print:m-0 print:w-full print:max-w-none">
         
         {/* HEADER */}
         <div className="text-center font-bold mb-6">
