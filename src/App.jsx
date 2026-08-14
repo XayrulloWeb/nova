@@ -38,7 +38,7 @@ const GalleryManager = lazy(() => import('./pages/admin/GalleryManager'));
 function AppContent() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith('/admin');
+  const isAdminRoute = location.pathname === '/admin' || location.pathname.startsWith('/admin/');
 
   return (
     <HelmetProvider>
