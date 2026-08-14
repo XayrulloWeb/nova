@@ -14,31 +14,70 @@ export default function PrintableContract({ application, contract, onClose }) {
     if (!contractRef.current) return;
     setIsGenerating(true);
     try {
-      // html2pdf.js doesn't support oklch() colors (Tailwind v4).
-      // Force all computed colors to rgb before rendering.
-      const el = contractRef.current;
-      const allElements = el.querySelectorAll('*');
-      allElements.forEach(node => {
-        const computed = window.getComputedStyle(node);
-        node.style.color = computed.color;
-        node.style.backgroundColor = computed.backgroundColor;
-        node.style.borderColor = computed.borderColor;
-      });
-      // Also fix root element
-      const rootComputed = window.getComputedStyle(el);
-      el.style.color = rootComputed.color;
-      el.style.backgroundColor = rootComputed.backgroundColor;
-
       const html2pdf = (await import('html2pdf.js')).default;
       const opt = {
-        margin:       [15, 15, 15, 15], // mm
+        margin:       [15, 15, 15, 15],
         filename:     `Shartnoma_${contract.contract_number}_${application.child_name}.pdf`,
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+        html2canvas:  { 
+          scale: 2, 
+          useCORS: true, 
+          letterRendering: true,
+          onclone: (clonedDoc) => {
+            // Remove ALL stylesheets from cloned doc to avoid oklch parsing
+            const styles = clonedDoc.querySelectorAll('style, link[rel="stylesheet"]');
+            styles.forEach(s => s.remove());
+            
+            // Apply clean styles to the contract container
+            const contract = clonedDoc.getElementById('printable-contract');
+            if (contract) {
+              contract.style.cssText = 'font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; color: #000000; background-color: #ffffff; padding: 20mm; max-width: 210mm; margin: 0 auto;';
+              // Force all children to simple black text on transparent bg
+              contract.querySelectorAll('*').forEach(el => {
+                el.style.color = '#000000';
+                el.style.backgroundColor = 'transparent';
+                if (el.style.borderColor) el.style.borderColor = '#000000';
+              });
+              // Fix bold elements
+              contract.querySelectorAll('b, strong, h1, h2, h3, h4').forEach(el => {
+                el.style.fontWeight = 'bold';
+              });
+              // Fix text alignment
+              contract.querySelectorAll('.text-center, [class*="text-center"]').forEach(el => {
+                el.style.textAlign = 'center';
+              });
+              contract.querySelectorAll('.text-justify, [class*="text-justify"]').forEach(el => {
+                el.style.textAlign = 'justify';
+              });
+              // Fix border box
+              contract.querySelectorAll('.border, [class*="border"]').forEach(el => {
+                el.style.border = '1px solid #000000';
+              });
+              // Fix grid for requisites section
+              contract.querySelectorAll('.grid-cols-2, [class*="grid-cols-2"]').forEach(el => {
+                el.style.display = 'grid';
+                el.style.gridTemplateColumns = '1fr 1fr';
+                el.style.gap = '32px';
+              });
+              // Fix list styles
+              contract.querySelectorAll('ul').forEach(el => {
+                el.style.paddingLeft = '32px';
+                el.style.listStyleType = 'lower-alpha';
+              });
+              // Fix flex containers
+              contract.querySelectorAll('.flex, [class*="flex"]').forEach(el => {
+                el.style.display = 'flex';
+              });
+              contract.querySelectorAll('.justify-between, [class*="justify-between"]').forEach(el => {
+                el.style.justifyContent = 'space-between';
+              });
+            }
+          }
+        },
         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
         pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
       };
-      await html2pdf().set(opt).from(el).save();
+      await html2pdf().set(opt).from(contractRef.current).save();
     } catch (error) {
       console.error('PDF generation error:', error);
       alert('Ошибка при создании PDF файла');
