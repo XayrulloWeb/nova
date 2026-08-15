@@ -1,9 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { useTheme } from '../context/ThemeContext';
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
-export default function PageHeader({ title, subtitle }) {
+export default function PageHeader({ title, subtitle, showBack = true }) {
   const canvasRef = useRef(null);
   const { theme } = useTheme();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -116,6 +119,17 @@ export default function PageHeader({ title, subtitle }) {
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full object-cover z-0"></canvas>
       <div className="absolute inset-0 bg-background/50 z-10 pointer-events-none mix-blend-overlay"></div>
       
+      {showBack && (
+        <div className="absolute top-[100px] left-4 md:left-12 z-30">
+          <Link to="/" className="inline-flex items-center gap-2 text-on-surface hover:text-primary transition-all duration-300 font-label-caps uppercase text-xs tracking-widest bg-surface-container/60 backdrop-blur-md px-5 py-2.5 rounded-full border border-outline-variant/30 hover:border-primary/50 shadow-lg hover:shadow-xl hover:-translate-x-1">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            <span style={{ mixBlendMode: theme === 'light' ? 'normal' : 'difference', color: theme === 'light' ? '#000' : '#fff' }} className="font-bold">{t('nav.home') || 'Asosiy'}</span>
+          </Link>
+        </div>
+      )}
+
       <div className="relative z-20 text-center px-4" style={{ mixBlendMode: theme === 'light' ? 'normal' : 'difference', color: theme === 'light' ? '#000' : '#fff' }}>
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter uppercase mb-4 text-shimmer">
           {title}
