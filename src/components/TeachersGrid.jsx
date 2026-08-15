@@ -14,83 +14,55 @@ export default function TeachersGrid() {
       .catch(err => console.error(err));
   }, []);
 
-  const renderCard = (teacher, index) => {
-    const layoutType = (index % 5) + 1;
+  const renderCard = (teacher) => {
     const name = teacher.name?.[lang] || '';
     const title = teacher.title?.[lang] || teacher.subject?.[lang] || '';
     const desc = teacher.desc?.[lang] || '';
     const tags = teacher.tags?.[lang] ? teacher.tags[lang].split(',').map(tag => tag.trim()).filter(Boolean) : [];
     const imageUrl = teacher.image_url ? `${teacher.image_url}` : null;
 
-    // Premium Image Component
-    const TeacherImage = ({ className }) => (
-      <div className={`relative overflow-hidden rounded-[20px] bg-surface-container-highest shadow-inner ${className}`}>
+    return (
+      <div key={teacher.id} className="relative w-full aspect-[4/5] rounded-[32px] overflow-hidden group shadow-xl hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 bg-surface-container border border-outline-variant/30 hover:border-primary/50">
+        
+        {/* Background Image or Fallback */}
         {imageUrl ? (
-          <img className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" alt={name} src={imageUrl} />
+          <img className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-110" alt={name} src={imageUrl} />
         ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-surface-container-highest to-primary/5 flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity duration-500">
-             <span className="material-symbols-outlined text-[48px] text-on-surface-variant/20">school</span>
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-surface-container to-primary/5 flex items-center justify-center transition-transform duration-1000 group-hover:scale-110">
+             <span className="material-symbols-outlined text-[80px] text-primary/30">school</span>
           </div>
         )}
+
+        {/* Dark Overlays */}
+        <div className="absolute inset-0 bg-black/10 group-hover:bg-black/40 transition-colors duration-500 z-10 pointer-events-none"></div>
+        <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-black/95 via-black/60 to-transparent z-10 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:h-full group-hover:from-black/95 group-hover:via-black/80 pointer-events-none"></div>
+
+        {/* Content Box */}
+        <div className="absolute inset-x-0 bottom-0 z-20 p-8 flex flex-col justify-end pointer-events-none">
+          <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]">
+            
+            {/* Title & Name */}
+            <div className="text-primary font-label-caps text-[11px] mb-3 uppercase tracking-[0.2em] font-extrabold drop-shadow-md">{title}</div>
+            <h3 className="text-[28px] sm:text-[32px] font-extrabold text-white leading-tight drop-shadow-lg mb-1">{name}</h3>
+            
+            {/* Expandable Description & Tags */}
+            <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] pointer-events-auto">
+              <div className="overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                <div className="pt-5">
+                  <p className="text-white/80 text-sm mb-6 line-clamp-4 leading-relaxed font-medium drop-shadow-sm">{desc}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {tags.slice(0, 4).map((tag, i) => (
+                      <span key={i} className="px-3 py-1.5 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-label-caps uppercase font-bold tracking-widest shadow-lg">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
       </div>
     );
-
-    if (layoutType === 1) {
-      return (
-        <div key={teacher.id} className="glass-card bento-item-1 p-8 md:p-10 flex flex-col md:flex-row items-stretch justify-between relative overflow-hidden group shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] border border-outline-variant/30 hover:border-primary/30 transition-colors duration-500 bg-surface">
-          <div className="z-20 md:w-[55%] flex flex-col justify-center pr-0 md:pr-8 mb-8 md:mb-0">
-            <div className="text-primary font-label-caps text-xs md:text-sm mb-4 uppercase tracking-widest font-semibold">{title}</div>
-            <h2 className="text-[32px] md:text-[42px] font-extrabold text-on-surface mb-4 leading-tight tracking-tight">{name}</h2>
-            <p className="text-body-md text-on-surface-variant mb-8 line-clamp-4 leading-relaxed">{desc}</p>
-            <div className="flex flex-wrap gap-2 mt-auto">
-              {tags.map((tag, i) => (
-                <span key={i} className="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface text-[11px] font-label-caps uppercase font-semibold tracking-wider shadow-sm border border-outline-variant/50">{tag}</span>
-              ))}
-            </div>
-          </div>
-          <div className="relative md:w-[45%] h-[300px] md:h-auto flex-shrink-0">
-            <TeacherImage className="w-full h-full" />
-          </div>
-        </div>
-      );
-    }
-
-    if (layoutType === 2 || layoutType === 3) {
-      return (
-        <div key={teacher.id} className={`glass-card bento-item-${layoutType} p-6 flex flex-col relative overflow-hidden group min-h-[450px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] border border-outline-variant/30 hover:border-primary/30 transition-colors duration-500 bg-surface`}>
-          <TeacherImage className="w-full h-[220px] mb-6 flex-shrink-0" />
-          <div className="z-20 relative flex flex-col flex-grow">
-            <div className="text-primary font-label-caps text-[10px] mb-2 uppercase tracking-widest font-semibold">{title}</div>
-            <h3 className="text-[22px] font-bold text-on-surface mb-3 leading-tight tracking-tight">{name}</h3>
-            <p className="text-body-sm text-on-surface-variant mb-6 line-clamp-3 leading-relaxed">{desc}</p>
-            <div className="flex flex-wrap gap-1.5 mt-auto">
-              {tags.slice(0, 3).map((tag, i) => (
-                <span key={i} className="px-2 py-1 rounded-md bg-surface-container text-on-surface text-[9px] font-label-caps uppercase font-semibold tracking-wider shadow-sm border border-outline-variant/50">{tag}</span>
-              ))}
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    if (layoutType === 4 || layoutType === 5) {
-      const isReverse = layoutType === 5;
-      return (
-        <div key={teacher.id} className={`glass-card bento-item-${layoutType} p-6 flex flex-col sm:flex-row items-stretch relative overflow-hidden group min-h-[260px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] border border-outline-variant/30 hover:border-primary/30 transition-colors duration-500 bg-surface gap-6 ${isReverse ? 'sm:flex-row-reverse' : ''}`}>
-          <TeacherImage className="w-full sm:w-[40%] h-[200px] sm:h-auto flex-shrink-0" />
-          <div className={`z-20 flex flex-col justify-center w-full sm:w-[60%] ${isReverse ? 'sm:text-right' : 'sm:text-left'}`}>
-            <div className="text-primary font-label-caps text-[10px] mb-2 uppercase tracking-widest font-semibold">{title}</div>
-            <h3 className="text-[22px] font-bold text-on-surface mb-3 leading-tight tracking-tight">{name}</h3>
-            <p className="text-body-sm text-on-surface-variant mb-6 line-clamp-3 leading-relaxed">{desc}</p>
-            <div className={`flex flex-wrap gap-1.5 mt-auto ${isReverse ? 'sm:justify-end' : 'sm:justify-start'}`}>
-              {tags.slice(0, 4).map((tag, i) => (
-                <span key={i} className="px-2 py-1 rounded-md bg-surface-container text-on-surface text-[9px] font-label-caps uppercase font-semibold tracking-wider shadow-sm border border-outline-variant/50">{tag}</span>
-              ))}
-            </div>
-          </div>
-        </div>
-      );
-    }
   };
 
   return (
@@ -110,8 +82,8 @@ export default function TeachersGrid() {
         </p>
       ) : (
         <div className="flex flex-col items-center">
-          <div className="bento-grid w-full">
-            {teachers.slice(0, 5).map((teacher, index) => renderCard(teacher, index))}
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8 w-full max-w-[1400px] mx-auto">
+            {teachers.slice(0, 6).map((teacher) => renderCard(teacher))}
           </div>
           
           <div className="mt-16 relative">
