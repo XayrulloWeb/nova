@@ -125,7 +125,7 @@ export default function PageHeader({ title, subtitle, showBack = true }) {
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            <span style={{ mixBlendMode: theme === 'light' ? 'normal' : 'difference', color: theme === 'light' ? '#000' : '#fff' }} className="font-bold">{t('nav.home') || 'Asosiy'}</span>
+            <span style={{ mixBlendMode: theme === 'light' ? 'normal' : 'difference', color: theme === 'light' ? '#000' : '#fff' }} className="font-bold">{t('header.home') || 'Asosiy'}</span>
           </Link>
         </div>
       )}
