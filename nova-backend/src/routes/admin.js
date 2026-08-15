@@ -9,6 +9,18 @@ const fs = require('fs');
 const auth = require('../middleware/auth');
 const sharp = require('sharp');
 const { io } = require('../index');
+const apicache = require('apicache');
+
+// Auto-clear cache on successful mutations
+router.use((req, res, next) => {
+  res.on('finish', () => {
+    if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(req.method) && res.statusCode >= 200 && res.statusCode < 300) {
+      apicache.clear();
+      console.log('Cache cleared due to Admin mutation');
+    }
+  });
+  next();
+});
 
 // Multer storage in memory to allow sharp to process
 const storage = multer.memoryStorage();

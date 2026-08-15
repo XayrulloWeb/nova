@@ -63,7 +63,7 @@ export default function ContactsMap() {
             
             <div className="relative flex-grow rounded-2xl overflow-hidden bg-[#111113] border border-white/5">
               <iframe 
-                src="https://maps.google.com/maps?q=Urgench,%20Uzbekistan&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+                src="https://maps.google.com/maps?q=41.534194,60.599068&t=&z=15&ie=UTF8&iwloc=&output=embed" 
                 width="100%" 
                 height="100%" 
                 frameBorder="0" 
