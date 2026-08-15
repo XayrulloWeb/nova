@@ -19,25 +19,37 @@ export default function TeachersGrid() {
     const name = teacher.name?.[lang] || '';
     const title = teacher.title?.[lang] || teacher.subject?.[lang] || '';
     const desc = teacher.desc?.[lang] || '';
-    const tags = teacher.tags?.[lang] ? teacher.tags[lang].split(',').map(tag => tag.trim()) : [];
+    const tags = teacher.tags?.[lang] ? teacher.tags[lang].split(',').map(tag => tag.trim()).filter(Boolean) : [];
     const imageUrl = teacher.image_url ? `${teacher.image_url}` : null;
+
+    // Premium Image Component
+    const TeacherImage = ({ className }) => (
+      <div className={`relative overflow-hidden rounded-[20px] bg-surface-container-highest shadow-inner ${className}`}>
+        {imageUrl ? (
+          <img className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" alt={name} src={imageUrl} />
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-surface-container-highest to-primary/5 flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+             <span className="material-symbols-outlined text-[48px] text-on-surface-variant/20">school</span>
+          </div>
+        )}
+      </div>
+    );
 
     if (layoutType === 1) {
       return (
-        <div key={teacher.id} className="glass-card bento-item-1 p-10 flex flex-col md:flex-row items-end md:items-center justify-between relative overflow-hidden group shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
-          <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent z-10 md:hidden"></div>
-          <div className="z-20 md:w-1/2 relative">
-            <div className="text-primary-container font-label-caps text-label-caps mb-4 uppercase tracking-widest">{title}</div>
-            <h2 className="text-[32px] md:text-[48px] font-bold text-on-surface mb-4">{name}</h2>
-            <p className="text-body-md text-on-surface-variant mb-8">{desc}</p>
-            <div className="flex flex-wrap gap-2 mt-6 mb-6">
+        <div key={teacher.id} className="glass-card bento-item-1 p-8 md:p-10 flex flex-col md:flex-row items-stretch justify-between relative overflow-hidden group shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] border border-outline-variant/30 hover:border-primary/30 transition-colors duration-500 bg-surface">
+          <div className="z-20 md:w-[55%] flex flex-col justify-center pr-0 md:pr-8 mb-8 md:mb-0">
+            <div className="text-primary font-label-caps text-xs md:text-sm mb-4 uppercase tracking-widest font-semibold">{title}</div>
+            <h2 className="text-[32px] md:text-[42px] font-extrabold text-on-surface mb-4 leading-tight tracking-tight">{name}</h2>
+            <p className="text-body-md text-on-surface-variant mb-8 line-clamp-4 leading-relaxed">{desc}</p>
+            <div className="flex flex-wrap gap-2 mt-auto">
               {tags.map((tag, i) => (
-                <span key={i} className="px-3 py-1 rounded-full bg-surface-container-highest text-on-surface-variant text-[10px] font-label-caps uppercase border border-outline-variant/20">{tag}</span>
+                <span key={i} className="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface text-[11px] font-label-caps uppercase font-semibold tracking-wider shadow-sm border border-outline-variant/50">{tag}</span>
               ))}
             </div>
           </div>
-          <div className="absolute md:relative md:w-1/2 h-full flex items-end justify-end pt-10">
-            {imageUrl && <img className="w-full h-auto object-contain max-h-[400px] object-bottom blend-adaptive opacity-80 group-hover:opacity-100 transition-opacity duration-500" alt={name} src={imageUrl} />}
+          <div className="relative md:w-[45%] h-[300px] md:h-auto flex-shrink-0">
+            <TeacherImage className="w-full h-full" />
           </div>
         </div>
       );
@@ -45,16 +57,15 @@ export default function TeachersGrid() {
 
     if (layoutType === 2 || layoutType === 3) {
       return (
-        <div key={teacher.id} className={`glass-card bento-item-${layoutType} p-8 flex flex-col justify-end relative overflow-hidden group min-h-[400px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]`}>
-          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent z-10"></div>
-          {imageUrl && <img className="absolute inset-0 w-full h-full object-cover object-top blend-adaptive opacity-70 group-hover:opacity-90 transition-opacity duration-500 z-0" alt={name} src={imageUrl} />}
-          <div className="z-20 relative mt-auto">
-            <div className="text-primary-container font-label-caps text-xs mb-2 uppercase tracking-widest">{title}</div>
-            <h3 className="text-[24px] font-bold text-on-surface mb-2">{name}</h3>
-            <p className="text-body-md text-on-surface-variant text-sm">{desc}</p>
-            <div className="flex flex-wrap gap-2 mt-4">
-              {tags.map((tag, i) => (
-                <span key={i} className="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant text-[10px] font-label-caps uppercase border border-outline-variant/20">{tag}</span>
+        <div key={teacher.id} className={`glass-card bento-item-${layoutType} p-6 flex flex-col relative overflow-hidden group min-h-[450px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] border border-outline-variant/30 hover:border-primary/30 transition-colors duration-500 bg-surface`}>
+          <TeacherImage className="w-full h-[220px] mb-6 flex-shrink-0" />
+          <div className="z-20 relative flex flex-col flex-grow">
+            <div className="text-primary font-label-caps text-[10px] mb-2 uppercase tracking-widest font-semibold">{title}</div>
+            <h3 className="text-[22px] font-bold text-on-surface mb-3 leading-tight tracking-tight">{name}</h3>
+            <p className="text-body-sm text-on-surface-variant mb-6 line-clamp-3 leading-relaxed">{desc}</p>
+            <div className="flex flex-wrap gap-1.5 mt-auto">
+              {tags.slice(0, 3).map((tag, i) => (
+                <span key={i} className="px-2 py-1 rounded-md bg-surface-container text-on-surface text-[9px] font-label-caps uppercase font-semibold tracking-wider shadow-sm border border-outline-variant/50">{tag}</span>
               ))}
             </div>
           </div>
@@ -62,41 +73,20 @@ export default function TeachersGrid() {
       );
     }
 
-    if (layoutType === 4) {
+    if (layoutType === 4 || layoutType === 5) {
+      const isReverse = layoutType === 5;
       return (
-        <div key={teacher.id} className="glass-card bento-item-4 p-8 flex flex-row items-center relative overflow-hidden group min-h-[250px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
-          <div className="w-1/3 h-full relative">
-            {imageUrl && <img className="absolute inset-0 w-full h-full object-cover object-center blend-adaptive opacity-70 group-hover:opacity-100 transition-opacity duration-500" alt={name} src={imageUrl} />}
-          </div>
-          <div className="w-2/3 pl-8 z-20">
-            <div className="text-primary-container font-label-caps text-xs mb-2 uppercase tracking-widest">{title}</div>
-            <h3 className="text-[24px] font-bold text-on-surface mb-2">{name}</h3>
-            <p className="text-body-md text-on-surface-variant mb-4 text-sm">{desc}</p>
-            <div className="flex flex-wrap gap-2 mb-4">
-              {tags.map((tag, i) => (
-                <span key={i} className="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant text-[10px] font-label-caps uppercase border border-outline-variant/20">{tag}</span>
+        <div key={teacher.id} className={`glass-card bento-item-${layoutType} p-6 flex flex-col sm:flex-row items-stretch relative overflow-hidden group min-h-[260px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] border border-outline-variant/30 hover:border-primary/30 transition-colors duration-500 bg-surface gap-6 ${isReverse ? 'sm:flex-row-reverse' : ''}`}>
+          <TeacherImage className="w-full sm:w-[40%] h-[200px] sm:h-auto flex-shrink-0" />
+          <div className={`z-20 flex flex-col justify-center w-full sm:w-[60%] ${isReverse ? 'sm:text-right' : 'sm:text-left'}`}>
+            <div className="text-primary font-label-caps text-[10px] mb-2 uppercase tracking-widest font-semibold">{title}</div>
+            <h3 className="text-[22px] font-bold text-on-surface mb-3 leading-tight tracking-tight">{name}</h3>
+            <p className="text-body-sm text-on-surface-variant mb-6 line-clamp-3 leading-relaxed">{desc}</p>
+            <div className={`flex flex-wrap gap-1.5 mt-auto ${isReverse ? 'sm:justify-end' : 'sm:justify-start'}`}>
+              {tags.slice(0, 4).map((tag, i) => (
+                <span key={i} className="px-2 py-1 rounded-md bg-surface-container text-on-surface text-[9px] font-label-caps uppercase font-semibold tracking-wider shadow-sm border border-outline-variant/50">{tag}</span>
               ))}
             </div>
-          </div>
-        </div>
-      );
-    }
-
-    if (layoutType === 5) {
-      return (
-        <div key={teacher.id} className="glass-card bento-item-5 p-8 flex flex-row items-center relative overflow-hidden group min-h-[250px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
-          <div className="w-2/3 pr-8 z-20 text-right">
-            <div className="text-primary-container font-label-caps text-xs mb-2 uppercase tracking-widest">{title}</div>
-            <h3 className="text-[24px] font-bold text-on-surface mb-2">{name}</h3>
-            <p className="text-body-md text-on-surface-variant mb-4 text-sm">{desc}</p>
-            <div className="flex flex-wrap gap-2 mb-4 justify-end">
-              {tags.map((tag, i) => (
-                <span key={i} className="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant text-[10px] font-label-caps uppercase border border-outline-variant/20">{tag}</span>
-              ))}
-            </div>
-          </div>
-          <div className="w-1/3 h-full relative">
-            {imageUrl && <img className="absolute inset-0 w-full h-full object-cover object-center blend-adaptive opacity-70 group-hover:opacity-100 transition-opacity duration-500" alt={name} src={imageUrl} />}
           </div>
         </div>
       );
