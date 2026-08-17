@@ -144,6 +144,29 @@ router.post('/applications', auth, async (req, res, next) => {
   }
 });
 
+router.put('/applications/:id', auth, async (req, res, next) => {
+  const id = parseInt(req.params.id);
+  const { parentName, parentPhone, childName, childDob, grade } = req.body;
+  
+  try {
+    const updatedApp = await prisma.applications.update({
+      where: { id },
+      data: {
+        parent_name: parentName,
+        parent_phone: parentPhone,
+        child_name: childName,
+        child_dob: new Date(childDob),
+        grade: String(grade)
+      }
+    });
+    // Emit the update via websocket so clients update immediately
+    io.emit('application_updated', updatedApp);
+    res.json(updatedApp);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.put('/applications/:id/status', auth, async (req, res, next) => {
   try {
     const id = parseInt(req.params.id);

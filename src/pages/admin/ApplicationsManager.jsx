@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import api from '../../api/axios';
+import { socket } from '../../api/socket';
 import ContractWizard from './ContractWizard';
 import PrintableContract from './PrintableContract';
 
@@ -33,6 +34,8 @@ export default function ApplicationsManager() {
 
   const [isAddingApp, setIsAddingApp] = useState(false);
   const [addAppForm, setAddAppForm] = useState({ parentName: '', parentPhone: '', childName: '', childDob: '', grade: '1' });
+  const [isEditingApp, setIsEditingApp] = useState(false);
+  const [editAppForm, setEditAppForm] = useState({ id: null, parentName: '', parentPhone: '', childName: '', childDob: '', grade: '1' });
   const [wizardApp, setWizardApp] = useState(null);
   const [printContract, setPrintContract] = useState(null);
 
@@ -63,6 +66,39 @@ export default function ApplicationsManager() {
       setContTotalPages(res.data.totalPages || 1);
     } catch (error) {
       console.error('Failed to fetch contacts');
+    }
+  };
+
+  useEffect(() => {
+    socket.on('new_application', (newApp) => {
+      setApplications(prev => [newApp, ...prev].slice(0, 10));
+    });
+    socket.on('status_change', (updatedApp) => {
+      setApplications(prev => prev.map(app => app.id === updatedApp.id ? updatedApp : app));
+    });
+    socket.on('application_updated', (updatedApp) => {
+      setApplications(prev => prev.map(app => app.id === updatedApp.id ? updatedApp : app));
+    });
+    socket.on('new_message', (newContact) => {
+      setContacts(prev => [newContact, ...prev].slice(0, 10));
+    });
+    return () => {
+      socket.off('new_application');
+      socket.off('status_change');
+      socket.off('application_updated');
+      socket.off('new_message');
+    };
+  }, []);
+
+  const handleEditApplication = async (e) => {
+    e.preventDefault();
+    try {
+      await api.put(`/admin/applications/${editAppForm.id}`, editAppForm);
+      setIsEditingApp(false);
+      setEditAppForm({ id: null, parentName: '', parentPhone: '', childName: '', childDob: '', grade: '1' });
+    } catch (err) {
+      console.error('Failed to edit application', err);
+      alert('Ошибка при изменении ученика');
     }
   };
 
@@ -198,6 +234,23 @@ export default function ApplicationsManager() {
                           <option key={key} value={key} className="bg-surface text-on-surface">{label}</option>
                         ))}
                       </select>
+                      <button 
+                        onClick={() => {
+                          setEditAppForm({
+                            id: app.id,
+                            parentName: app.parent_name,
+                            parentPhone: app.parent_phone,
+                            childName: app.child_name,
+                            childDob: new Date(app.child_dob).toISOString().split('T')[0],
+                            grade: app.grade
+                          });
+                          setIsEditingApp(true);
+                        }}
+                        className="px-3 py-1 bg-yellow-500/20 text-yellow-600 text-xs font-bold rounded-lg shadow-sm hover:bg-yellow-500/30 transition-colors flex items-center justify-center gap-1"
+                      >
+                        <span className="material-symbols-outlined text-[14px]">edit</span>
+                        Tahrirlash
+                      </button>
                       {(app.status === 'AGREED' || app.status === 'CONTRACT_ISSUED') && (
                         <button 
                           onClick={() => setWizardApp(app)}
@@ -301,6 +354,40 @@ export default function ApplicationsManager() {
             <div className="flex gap-2 justify-end mt-4">
               <button type="button" onClick={() => setIsAddingApp(false)} className="px-4 py-2 font-bold text-on-surface-variant">Отмена</button>
               <button type="submit" className="px-4 py-2 bg-primary text-on-primary rounded-xl font-bold">Сохранить</button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {isEditingApp && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4">
+          <form onSubmit={handleEditApplication} className="bg-surface w-full max-w-md rounded-3xl p-6 shadow-xl flex flex-col gap-4">
+            <h2 className="text-xl font-bold">Изменить ученика</h2>
+            <div>
+              <label className="block text-xs font-bold mb-1">Ф.И.О. Родителя</label>
+              <input required type="text" value={editAppForm.parentName} onChange={e => setEditAppForm({...editAppForm, parentName: e.target.value})} className="w-full bg-surface-container p-3 rounded-lg border border-outline/20 outline-none" />
+            </div>
+            <div>
+              <label className="block text-xs font-bold mb-1">Телефон</label>
+              <input required type="tel" value={editAppForm.parentPhone} onChange={e => setEditAppForm({...editAppForm, parentPhone: e.target.value})} className="w-full bg-surface-container p-3 rounded-lg border border-outline/20 outline-none" />
+            </div>
+            <div>
+              <label className="block text-xs font-bold mb-1">Ф.И.О. Ученика</label>
+              <input required type="text" value={editAppForm.childName} onChange={e => setEditAppForm({...editAppForm, childName: e.target.value})} className="w-full bg-surface-container p-3 rounded-lg border border-outline/20 outline-none" />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold mb-1">Дата рождения</label>
+                <input required type="date" value={editAppForm.childDob} onChange={e => setEditAppForm({...editAppForm, childDob: e.target.value})} className="w-full bg-surface-container p-3 rounded-lg border border-outline/20 outline-none" />
+              </div>
+              <div>
+                <label className="block text-xs font-bold mb-1">Класс</label>
+                <input required type="number" min="1" max="11" value={editAppForm.grade} onChange={e => setEditAppForm({...editAppForm, grade: e.target.value})} className="w-full bg-surface-container p-3 rounded-lg border border-outline/20 outline-none" />
+              </div>
+            </div>
+            <div className="flex gap-2 justify-end mt-4">
+              <button type="button" onClick={() => setIsEditingApp(false)} className="px-4 py-2 font-bold text-on-surface-variant">Отмена</button>
+              <button type="submit" className="px-4 py-2 bg-yellow-500 text-white rounded-xl font-bold hover:bg-yellow-600">Сохранить</button>
             </div>
           </form>
         </div>
