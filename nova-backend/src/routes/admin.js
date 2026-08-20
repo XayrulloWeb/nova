@@ -8,7 +8,7 @@ const path = require('path');
 const fs = require('fs');
 const auth = require('../middleware/auth');
 const sharp = require('sharp');
-const { io } = require('../index');
+
 const apicache = require('apicache');
 
 // Auto-clear cache on successful mutations
@@ -160,7 +160,7 @@ router.put('/applications/:id', auth, async (req, res, next) => {
       }
     });
     // Emit the update via websocket so clients update immediately
-    io.emit('application_updated', updatedApp);
+    require('../index').io.emit('application_updated', updatedApp);
     res.json(updatedApp);
   } catch (error) {
     next(error);
@@ -177,7 +177,7 @@ router.put('/applications/:id/status', auth, async (req, res, next) => {
     });
     
     // Emit status change
-    io.emit('status_change', updatedApp);
+    require('../index').io.emit('status_change', updatedApp);
     
     res.json(updatedApp);
   } catch (error) {
